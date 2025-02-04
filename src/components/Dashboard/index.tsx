@@ -1,10 +1,14 @@
 import Header from "@components/Dashboard/Header";
 import View from "@components/Dashboard/View";
 
-const Dashboard = () => {
+interface DashboardProps {
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Dashboard = ({ setIsOpen }: DashboardProps) => {
   return (
     <div className="ml-64 min-h-screen w-screen">
-      <Header />
+      <Header setIsOpen={setIsOpen} />
       <View />
     </div>
   );
