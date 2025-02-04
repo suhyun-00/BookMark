@@ -3,6 +3,41 @@ import type { Data } from "@customTypes/data";
 import SearchBar from "@components/common/SearchBar";
 import Card from "@components/Modal/Card";
 
+const NAVER_CLIENT_ID = import.meta.env.VITE_NAVER_CLIENT_ID;
+const NAVER_CLIENT_SECRET = import.meta.env.VITE_NAVER_CLIENT_SECRET;
+
+  const sendFormData = async (form: HTMLFormElement) => {
+    const formData = new FormData(form);
+    const keyword = formData.get("keyword");
+
+    const response = await fetch(`${API_BASE_URL}${keyword}`, {
+      method: "GET",
+      headers: {
+        "X-Naver-Client-Id": NAVER_CLIENT_ID,
+        "X-Naver-Client-Secret": NAVER_CLIENT_SECRET,
+      },
+    });
+
+    const data = await response.json();
+    setDatas(data.items);
+  };
+
+  const handleOnKeyDown = (event: React.KeyboardEvent<HTMLFormElement>) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      const form = event.currentTarget;
+      sendFormData(form);
+    }
+  };
+
+  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    sendFormData(event.currentTarget);
+  };
+const API_BASE_URL = import.meta.env.DEV
+  ? "/api"
+  : import.meta.env.VITE_NAVER_API_URL;
+
 const SearchView = () => {
   const [datas, setDatas] = useState<Data[]>();
 
@@ -11,6 +46,8 @@ const SearchView = () => {
   return (
     <div>
       <form
+        onSubmit={handleOnSubmit}
+        onKeyDown={handleOnKeyDown}
         className="flex items-start justify-center gap-3"
       >
         <SearchBar
