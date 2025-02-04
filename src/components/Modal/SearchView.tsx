@@ -5,6 +5,12 @@ import Card from "@components/Modal/Card";
 
 const NAVER_CLIENT_ID = import.meta.env.VITE_NAVER_CLIENT_ID;
 const NAVER_CLIENT_SECRET = import.meta.env.VITE_NAVER_CLIENT_SECRET;
+const API_BASE_URL = import.meta.env.DEV
+  ? "/api"
+  : import.meta.env.VITE_NAVER_API_URL;
+
+const SearchView = () => {
+  const [datas, setDatas] = useState<Data[]>();
 
   const sendFormData = async (form: HTMLFormElement) => {
     const formData = new FormData(form);
@@ -34,12 +40,6 @@ const NAVER_CLIENT_SECRET = import.meta.env.VITE_NAVER_CLIENT_SECRET;
     event.preventDefault();
     sendFormData(event.currentTarget);
   };
-const API_BASE_URL = import.meta.env.DEV
-  ? "/api"
-  : import.meta.env.VITE_NAVER_API_URL;
-
-const SearchView = () => {
-  const [datas, setDatas] = useState<Data[]>();
 
   useEffect(() => {}, [datas]);
 
@@ -63,7 +63,7 @@ const SearchView = () => {
         </button>
       </form>
       {datas && (
-        <div className="mt-6 max-h-72 overflow-y-scroll scroll-smooth">
+        <div className="scrollbar mt-6 max-h-72 overflow-y-scroll scroll-smooth">
           {datas.map((book) => (
             <Card book={book} />
           ))}
