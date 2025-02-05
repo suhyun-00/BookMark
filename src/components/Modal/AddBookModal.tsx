@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Scan, Search } from "lucide-react";
-import SearchView from "@components/Modal/SearchView";
+import { useState } from 'react';
+import { Scan, Search } from 'lucide-react';
+import SearchView from '@components/Modal/SearchView';
 
 interface AddBookModalProps {
   isOpen: boolean;
@@ -8,12 +8,12 @@ interface AddBookModalProps {
 }
 
 const AddBookModal = ({ isOpen, onClose }: AddBookModalProps) => {
-  const [selectedButton, setSelectedButton] = useState("search");
+  const [selectedButton, setSelectedButton] = useState('search');
 
   return (
     <div
       onClick={onClose}
-      className={`fixed inset-0 flex items-center justify-center ${isOpen ? "visible bg-gray-900/20" : "invisible"}`}
+      className={`fixed inset-0 flex items-center justify-center ${isOpen ? 'visible bg-gray-900/20' : 'invisible'}`}
     >
       <div
         onClick={(e) => e.stopPropagation()}
@@ -22,22 +22,22 @@ const AddBookModal = ({ isOpen, onClose }: AddBookModalProps) => {
         <div className="mb-6 flex items-center justify-center gap-3">
           <button
             value="search"
-            onClick={() => setSelectedButton("search")}
-            className={`flex items-center justify-center gap-5 rounded-lg px-20 py-2 text-sm ${selectedButton === "search" ? "bg-gray-900 text-white" : "bg-white hover:bg-gray-200"} hover:cursor-pointer hover:inset-shadow-sm`}
+            onClick={() => setSelectedButton('search')}
+            className={`flex items-center justify-center gap-5 rounded-lg px-20 py-2 text-sm ${selectedButton === 'search' ? 'bg-gray-900 text-white' : 'bg-white hover:bg-gray-200'} hover:cursor-pointer hover:inset-shadow-sm`}
           >
             <Search className="h-4 w-4" />
             검색으로 추가
           </button>
           <button
             value="barcode"
-            onClick={() => setSelectedButton("barcode")}
-            className={`flex items-center justify-center gap-5 rounded-lg px-20 py-2 text-sm ${selectedButton === "barcode" ? "bg-gray-900 text-white" : "bg-white hover:bg-gray-200"} hover:cursor-pointer hover:inset-shadow-sm`}
+            onClick={() => setSelectedButton('barcode')}
+            className={`flex items-center justify-center gap-5 rounded-lg px-20 py-2 text-sm ${selectedButton === 'barcode' ? 'bg-gray-900 text-white' : 'bg-white hover:bg-gray-200'} hover:cursor-pointer hover:inset-shadow-sm`}
           >
             <Scan className="h-4 w-4" />
             바코드로 추가
           </button>
         </div>
-        {selectedButton === "search" && <SearchView />}
+        {selectedButton === 'search' && <SearchView />}
       </div>
     </div>
   );

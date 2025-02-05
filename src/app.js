@@ -1,7 +1,7 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
-import { XMLParser } from "fast-xml-parser";
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import { XMLParser } from 'fast-xml-parser';
 
 const app = express();
 
@@ -11,10 +11,8 @@ app.use(cors({ origin: true }));
 
 app.use(express.json());
 
-app.get("/search/:isbn", async (req, res) => {
-  const response = await fetch(
-    `${process.env.ALADIN_API_URL}${req.params.isbn}`,
-  );
+app.get('/search/:isbn', async (req, res) => {
+  const response = await fetch(`${process.env.ALADIN_API_URL}${req.params.isbn}`);
   const text = await response.text();
 
   const parser = new XMLParser();

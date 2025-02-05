@@ -1,8 +1,8 @@
-import { defineConfig } from "vite";
-import { resolve } from "path";
-import react from "@vitejs/plugin-react";
-import tailwindcss from "@tailwindcss/vite";
-import "dotenv/config";
+import { defineConfig } from 'vite';
+import { resolve } from 'path';
+import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
+import 'dotenv/config';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -10,24 +10,24 @@ export default defineConfig({
   server: {
     open: true,
     proxy: {
-      "/naverApi": {
+      '/naverApi': {
         target: process.env.VITE_NAVER_API_URL,
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/naverApi/, ""),
+        rewrite: (path) => path.replace(/^\/naverApi/, ''),
       },
-      "/aladinApi": {
+      '/aladinApi': {
         target: process.env.VITE_SERVER_URL,
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/aladinApi/, ""),
+        rewrite: (path) => path.replace(/^\/aladinApi/, ''),
       },
     },
   },
   resolve: {
     alias: {
-      "@": resolve(__dirname, "src"),
-      "@mocks": resolve(__dirname, "src/mocks"),
-      "@components": resolve(__dirname, "src/components"),
-      "@customTypes": resolve(__dirname, "src/types"),
+      '@': resolve(__dirname, 'src'),
+      '@mocks': resolve(__dirname, 'src/mocks'),
+      '@components': resolve(__dirname, 'src/components'),
+      '@customTypes': resolve(__dirname, 'src/types'),
     },
   },
 });

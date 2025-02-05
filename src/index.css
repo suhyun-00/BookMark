@@ -1,9 +1,9 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @layer base {
   html,
   body {
-    font-family: "Pretendard Variable";
+    font-family: 'Pretendard Variable';
   }
 }
 

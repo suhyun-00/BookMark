@@ -1,5 +1,5 @@
-import Header from "@components/Dashboard/Header";
-import View from "@components/Dashboard/View";
+import Header from '@components/Dashboard/Header';
+import View from '@components/Dashboard/View';
 
 interface DashboardProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
