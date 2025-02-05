@@ -1,20 +1,16 @@
 import { doc, collection, setDoc, addDoc } from "firebase/firestore";
-import { XMLParser } from "fast-xml-parser";
 import { Plus } from "lucide-react";
 import type { Data } from "@customTypes/data";
 import db from "@/fireabase";
 
 const API_BASE_URL = import.meta.env.DEV
   ? "/aladinApi"
-  : import.meta.env.VITE_ALADIN_API_URL;
+  : import.meta.env.VITE_SERVER_URL;
 
 const Card = ({ book }: { book: Data }) => {
   const addBook = async () => {
-    const response = await fetch(`${API_BASE_URL}${book.isbn}`);
-    const text = await response.text();
-    const parser = new XMLParser();
-    const json = parser.parse(text);
-    const page = json.object.item.bookinfo.itemPage;
+    const response = await fetch(`${API_BASE_URL}/search/${book.isbn}`);
+    const page = await response.json();
 
     await setDoc(doc(db, "books", book.isbn), {
       title: book.title,

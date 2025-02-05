@@ -16,7 +16,7 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/naverApi/, ""),
       },
       "/aladinApi": {
-        target: process.env.VITE_ALADIN_API_URL,
+        target: process.env.VITE_SERVER_URL,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/aladinApi/, ""),
       },
