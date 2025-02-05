@@ -6,7 +6,7 @@ import Card from "@components/Modal/Card";
 const NAVER_CLIENT_ID = import.meta.env.VITE_NAVER_CLIENT_ID;
 const NAVER_CLIENT_SECRET = import.meta.env.VITE_NAVER_CLIENT_SECRET;
 const API_BASE_URL = import.meta.env.DEV
-  ? "/api"
+  ? "/naverApi"
   : import.meta.env.VITE_NAVER_API_URL;
 
 const SearchView = () => {

@@ -10,10 +10,15 @@ export default defineConfig({
   server: {
     open: true,
     proxy: {
-      "/api": {
+      "/naverApi": {
         target: process.env.VITE_NAVER_API_URL,
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
+        rewrite: (path) => path.replace(/^\/naverApi/, ""),
+      },
+      "/aladinApi": {
+        target: process.env.VITE_SERVER_URL,
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/aladinApi/, ""),
       },
     },
   },
