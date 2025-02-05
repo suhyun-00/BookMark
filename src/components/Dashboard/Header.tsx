@@ -1,5 +1,5 @@
-import SearchBar from "@components/common/SearchBar";
-import { Plus } from "lucide-react";
+import SearchBar from '@components/common/SearchBar';
+import { Plus } from 'lucide-react';
 
 interface HeaderProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;

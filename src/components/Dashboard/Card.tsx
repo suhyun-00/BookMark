@@ -1,5 +1,5 @@
-import type { Book } from "@customTypes/books";
-import { Star } from "lucide-react";
+import type { Book } from '@customTypes/books';
+import { Star } from 'lucide-react';
 
 interface CardProps {
   key: number;
@@ -7,10 +7,10 @@ interface CardProps {
 }
 
 const BookStatus = {
-  wishlist: "읽을 예정",
-  reading: "읽는 중",
-  completed: "완독",
-  dropped: "중단",
+  wishlist: '읽을 예정',
+  reading: '읽는 중',
+  completed: '완독',
+  dropped: '중단',
 };
 
 const Card = ({ key, book }: CardProps) => {
@@ -34,22 +34,15 @@ const Card = ({ key, book }: CardProps) => {
             {rating}
           </div>
         </div>
-        <div className="mt-2 mb-1 max-w-48 truncate text-lg font-medium">
-          {title}
-        </div>
-        <div className="mb-4 max-w-48 truncate text-sm text-gray-600">
-          {author}
-        </div>
+        <div className="mt-2 mb-1 max-w-48 truncate text-lg font-medium">{title}</div>
+        <div className="mb-4 max-w-48 truncate text-sm text-gray-600">{author}</div>
         <div className="text-xs text-gray-600">
           <div className="mb-2 flex items-center justify-between">
             <div>진행률</div>
             <div>{progress}%</div>
           </div>
           <div className="h-1.5 w-full rounded-full bg-gray-200">
-            <div
-              className="h-1.5 rounded-full bg-gray-900"
-              style={{ width: `${progress}%` }}
-            />
+            <div className="h-1.5 rounded-full bg-gray-900" style={{ width: `${progress}%` }} />
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
-import Card from "@components/Dashboard/Card";
-import books from "@mocks/books";
+import Card from '@components/Dashboard/Card';
+import books from '@mocks/books';
 
 const View = () => {
   return (

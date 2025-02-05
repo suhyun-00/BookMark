@@ -1,4 +1,4 @@
-type BookStatusType = "wishlist" | "reading" | "completed" | "dropped";
+type BookStatusType = 'wishlist' | 'reading' | 'completed' | 'dropped';
 
 export interface Book {
   id: number;

@@ -1,26 +1,24 @@
-import { useEffect, useState } from "react";
-import type { Data } from "@customTypes/data";
-import SearchBar from "@components/common/SearchBar";
-import Card from "@components/Modal/Card";
+import { useEffect, useState } from 'react';
+import type { Data } from '@customTypes/data';
+import SearchBar from '@components/common/SearchBar';
+import Card from '@components/Modal/Card';
 
 const NAVER_CLIENT_ID = import.meta.env.VITE_NAVER_CLIENT_ID;
 const NAVER_CLIENT_SECRET = import.meta.env.VITE_NAVER_CLIENT_SECRET;
-const API_BASE_URL = import.meta.env.DEV
-  ? "/naverApi"
-  : import.meta.env.VITE_NAVER_API_URL;
+const API_BASE_URL = import.meta.env.DEV ? '/naverApi' : import.meta.env.VITE_NAVER_API_URL;
 
 const SearchView = () => {
   const [datas, setDatas] = useState<Data[]>();
 
   const sendFormData = async (form: HTMLFormElement) => {
     const formData = new FormData(form);
-    const keyword = formData.get("keyword");
+    const keyword = formData.get('keyword');
 
     const response = await fetch(`${API_BASE_URL}${keyword}`, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "X-Naver-Client-Id": NAVER_CLIENT_ID,
-        "X-Naver-Client-Secret": NAVER_CLIENT_SECRET,
+        'X-Naver-Client-Id': NAVER_CLIENT_ID,
+        'X-Naver-Client-Secret': NAVER_CLIENT_SECRET,
       },
     });
 
@@ -29,7 +27,7 @@ const SearchView = () => {
   };
 
   const handleOnKeyDown = (event: React.KeyboardEvent<HTMLFormElement>) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       event.preventDefault();
       const form = event.currentTarget;
       sendFormData(form);
