@@ -6,13 +6,6 @@ interface CardProps {
   book: Book;
 }
 
-const BookStatus = {
-  wishlist: '읽을 예정',
-  reading: '읽는 중',
-  completed: '완독',
-  dropped: '중단',
-};
-
 const Card = ({ key, book }: CardProps) => {
   const { title, author, cover, progress, rating, status } = book;
 
@@ -28,7 +21,7 @@ const Card = ({ key, book }: CardProps) => {
       />
       <div className="w-full px-1 py-2">
         <div className="flex items-center justify-between">
-          <div className="text-xs text-gray-500">{BookStatus[status]}</div>
+          <div className="text-xs text-gray-500">{STATUS[status]}</div>
           <div className="flex items-center gap-1 text-sm text-amber-500">
             <Star className="h-4 w-4 fill-current" />
             {rating}
