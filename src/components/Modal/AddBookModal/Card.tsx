@@ -1,4 +1,4 @@
-import { doc, collection, setDoc, addDoc } from 'firebase/firestore';
+import { doc, collection, setDoc, addDoc, getDoc, query, where, getDocs } from 'firebase/firestore';
 import { Plus } from 'lucide-react';
 import type { Data } from '@customTypes/data';
 import db from '@/fireabase';
@@ -7,30 +7,42 @@ const API_BASE_URL = import.meta.env.DEV ? '/aladinApi' : import.meta.env.VITE_S
 
 const Card = ({ book }: { book: Data }) => {
   const addBook = async () => {
-    const response = await fetch(`${API_BASE_URL}/search/${book.isbn}`);
-    const { page, description, categoryName } = await response.json();
+    const booksRef = await getDoc(doc(db, 'books', book.isbn));
+    const condition = query(
+      collection(db, 'userBooks'),
+      where('userId', '==', 'test'),
+      where('bookId', '==', book.isbn),
+    );
+    const userBooksSanpshot = await getDocs(condition);
 
-    await setDoc(doc(db, 'books', book.isbn), {
-      title: book.title,
-      author: book.author,
-      cover: book.image,
-      publisher: book.publisher,
-      pubDate: book.pubdate,
-      page: page,
-      description: description,
-      category: categoryName.split('>'),
-    });
+    if (!booksRef.exists()) {
+      const response = await fetch(`${API_BASE_URL}/search/${book.isbn}`);
+      const { page, description, categoryName } = await response.json();
 
-    await addDoc(collection(db, 'userBooks'), {
-      userId: 'test',
-      bookId: book.isbn,
-      status: 'wishlist',
-      currentPage: 0,
-      startAt: null,
-      finishedAt: null,
-      rating: 0,
-      notes: [],
-    });
+      await setDoc(doc(db, 'books', book.isbn), {
+        title: book.title,
+        author: book.author,
+        cover: book.image,
+        publisher: book.publisher,
+        pubDate: book.pubdate,
+        page: page,
+        description: description,
+        category: categoryName.split('>'),
+      });
+    }
+
+    if (userBooksSanpshot.docs.length === 0) {
+      await addDoc(collection(db, 'userBooks'), {
+        userId: 'test',
+        bookId: book.isbn,
+        status: 'wishlist',
+        currentPage: 0,
+        startAt: null,
+        finishedAt: null,
+        rating: 0,
+        notes: [],
+      });
+    }
   };
 
   return (
@@ -49,7 +61,7 @@ const Card = ({ book }: { book: Data }) => {
           className="my-auto flex items-center justify-center gap-3 rounded-lg bg-gray-900 px-4 py-2 text-sm text-white hover:cursor-pointer hover:bg-neutral-700"
         >
           <Plus className="h-3 w-3" />
-          추가
+          등록
         </button>
       </div>
     </div>
