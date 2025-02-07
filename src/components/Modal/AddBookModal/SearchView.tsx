@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { Data } from '@customTypes/data';
 import SearchBar from '@components/common/SearchBar';
-import Card from '@components/Modal/Card';
+import Card from '@components/Modal/AddBookModal/Card';
 
 const NAVER_CLIENT_ID = import.meta.env.VITE_NAVER_CLIENT_ID;
 const NAVER_CLIENT_SECRET = import.meta.env.VITE_NAVER_CLIENT_SECRET;

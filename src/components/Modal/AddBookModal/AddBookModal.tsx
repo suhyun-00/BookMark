@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Scan, Search } from 'lucide-react';
-import SearchView from '@components/Modal/SearchView';
+import SearchView from '@components/Modal/AddBookModal/SearchView';
 
 interface AddBookModalProps {
   isOpen: boolean;
