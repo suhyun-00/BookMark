@@ -8,7 +8,7 @@ const API_BASE_URL = import.meta.env.DEV ? '/aladinApi' : import.meta.env.VITE_S
 const Card = ({ book }: { book: Data }) => {
   const addBook = async () => {
     const response = await fetch(`${API_BASE_URL}/search/${book.isbn}`);
-    const page = await response.json();
+    const { page, description, categoryName } = await response.json();
 
     await setDoc(doc(db, 'books', book.isbn), {
       title: book.title,
@@ -17,7 +17,8 @@ const Card = ({ book }: { book: Data }) => {
       publisher: book.publisher,
       pubDate: book.pubdate,
       page: page,
-      description: book.description,
+      description: description,
+      category: categoryName.split('>'),
     });
 
     await addDoc(collection(db, 'userBooks'), {
@@ -25,6 +26,8 @@ const Card = ({ book }: { book: Data }) => {
       bookId: book.isbn,
       status: 'wishlist',
       currentPage: 0,
+      startAt: null,
+      finishedAt: null,
       rating: 0,
       notes: [],
     });
