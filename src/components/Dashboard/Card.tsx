@@ -1,17 +1,24 @@
 import type { Book } from '@customTypes/books';
 import { Star } from 'lucide-react';
+import STATUS from '@constants/STATUS';
 
 interface CardProps {
   key: number;
   book: Book;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  selected: React.Dispatch<React.SetStateAction<Book>>;
 }
 
-const Card = ({ key, book }: CardProps) => {
+const Card = ({ key, book, setIsOpen, selected }: CardProps) => {
   const { title, author, cover, progress, rating, status } = book;
 
   return (
     <div
       key={key}
+      onClick={() => {
+        setIsOpen(true);
+        selected(book);
+      }}
       className="group flex h-full max-w-md min-w-sm gap-4 rounded-xl bg-gray-100/80 p-5 inset-shadow-sm hover:cursor-pointer hover:bg-gray-200/60"
     >
       <img

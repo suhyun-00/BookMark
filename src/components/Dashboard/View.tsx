@@ -3,9 +3,13 @@ import { doc, collection, getDoc, getDocs, query, where } from 'firebase/firesto
 import { Book, BookStatusType } from '@customTypes/books';
 import db from '@/fireabase';
 import Card from '@components/Dashboard/Card';
-// import books from '@mocks/books';
 
-const View = () => {
+interface ViewProps {
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setSelectedBook: React.Dispatch<React.SetStateAction<Book>>;
+}
+
+const View = ({ setIsOpen, setSelectedBook }: ViewProps) => {
   const [books, setBooks] = useState<Book[]>([]);
 
   const fetchBooks = async () => {
@@ -44,7 +48,7 @@ const View = () => {
   return (
     <div className="mr-4 ml-9 grid grid-cols-2 grid-rows-3 gap-5">
       {books.map((book) => (
-        <Card key={book.id} book={book} />
+        <Card key={book.id} book={book} setIsOpen={setIsOpen} selected={setSelectedBook} />
       ))}
     </div>
   );
