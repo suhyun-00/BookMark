@@ -16,6 +16,7 @@ const SearchBar = ({ name, className, placeholder }: SearchBarProps) => {
         type="text"
         name={name}
         placeholder={placeholder}
+        autoComplete="off"
         className="w-full px-3 py-2.5 text-sm text-gray-500 focus:outline-none"
       />
     </div>
