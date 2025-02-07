@@ -22,11 +22,13 @@ const View = () => {
         const bookData = bookSnap.data();
 
         return {
-          id: bookData.id,
+          id: data.bookId,
           title: bookData.title,
           author: bookData.author,
           cover: bookData.cover,
-          progress: (data.currentPage / bookData.page) * 100,
+          progress: Math.floor((data.currentPage / bookData.page) * 100),
+          startAt: data.startAt,
+          finishedAt: data.finishedAt,
           rating: data.rating,
           status: data.status as BookStatusType,
         };

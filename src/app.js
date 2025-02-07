@@ -17,9 +17,11 @@ app.get('/search/:isbn', async (req, res) => {
 
   const parser = new XMLParser();
   const json = parser.parse(text);
-  const data = json.object.item.bookinfo.itemPage;
+  const page = json.object.item.bookinfo.itemPage;
+  const description = json.object.item.description;
+  const categoryName = json.object.item.categoryName;
 
-  res.json(data);
+  res.json({ page, description, categoryName });
 });
 
 app.listen(process.env.PORT, () => {
