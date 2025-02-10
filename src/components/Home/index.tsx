@@ -3,24 +3,13 @@ import SideBar from '@components/SideBar';
 import Dashboard from '@components/Dashboard';
 import AddBookModal from '@components/Modal/AddBookModal/AddBookModal';
 import BookDetailModal from '@components/Modal/BookDetailModal/BookDetailModal';
-import { Book } from '@customTypes/books';
-
-const defaultBook: Book = {
-  id: 0,
-  title: '',
-  author: '',
-  cover: '',
-  progress: 0,
-  startAt: null,
-  finishedAt: null,
-  rating: 0,
-  status: 'wishlist',
-};
+import type { Book } from '@customTypes/books';
+import DEFAULT_BOOK from '@constants/DEFAULT_BOOK';
 
 const Home = () => {
   const [isAddBookModalOpen, setIsAddBookModalOpen] = useState(false);
   const [isBookDetailModalOpen, setIsBoookDetailModalOpen] = useState(false);
-  const [selectedBook, setSelectedBook] = useState<Book>(defaultBook);
+  const [selectedBook, setSelectedBook] = useState<Book>(DEFAULT_BOOK);
 
   return (
     <div className="whitespace-nowrap text-gray-900">
