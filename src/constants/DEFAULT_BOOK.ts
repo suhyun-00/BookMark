@@ -9,7 +9,7 @@ const DEFAULT_BOOK: Book = {
   startAt: null,
   finishedAt: null,
   rating: 0,
-  status: 'wishlist',
+  status: 'planned',
 };
 
 export default DEFAULT_BOOK;

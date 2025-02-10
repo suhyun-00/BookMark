@@ -5,11 +5,12 @@ import db from '@/fireabase';
 import Card from '@components/Dashboard/Card';
 
 interface ViewProps {
+  currentMenu: string;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedBook: React.Dispatch<React.SetStateAction<Book>>;
 }
 
-const View = ({ setIsOpen, setSelectedBook }: ViewProps) => {
+const View = ({ currentMenu, setIsOpen, setSelectedBook }: ViewProps) => {
   const [books, setBooks] = useState<Book[]>([]);
 
   const fetchBooks = async () => {
@@ -38,12 +39,18 @@ const View = ({ setIsOpen, setSelectedBook }: ViewProps) => {
         };
       }),
     );
-    setBooks(booksData.filter((book) => book !== null));
+    if (currentMenu === 'all') {
+      setBooks(booksData.filter((book) => book !== null));
+    } else {
+      setBooks(
+        booksData.filter((book) => book !== null).filter((book) => book.status === currentMenu),
+      );
+    }
   };
 
   useEffect(() => {
     fetchBooks();
-  }, []);
+  });
 
   return (
     <div className="mr-4 ml-9 grid grid-cols-2 grid-rows-3 gap-5">
