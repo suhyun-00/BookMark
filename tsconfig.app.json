@@ -3,7 +3,7 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@mocks/*": ["src/mocks/*"],
+      "@api/*": ["src/api/*"],
       "@components/*": ["src/components/*"],
       "@customTypes/*": ["src/types/*"],
       "@constants/*": ["src/constants/*"]

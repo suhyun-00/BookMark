@@ -1,6 +1,6 @@
 import { Timestamp } from 'firebase/firestore';
 
-type BookStatusType = 'wishlist' | 'reading' | 'completed' | 'dropped';
+export type BookStatusType = 'planned' | 'reading' | 'completed' | 'paused';
 
 export interface Book {
   id: number;

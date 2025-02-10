@@ -35,7 +35,7 @@ const Card = ({ book }: { book: Data }) => {
       await addDoc(collection(db, 'userBooks'), {
         userId: 'test',
         bookId: book.isbn,
-        status: 'wishlist',
+        status: 'planned',
         currentPage: 0,
         startAt: null,
         finishedAt: null,
