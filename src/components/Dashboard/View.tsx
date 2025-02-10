@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import { doc, collection, getDoc, getDocs, query, where } from 'firebase/firestore';
-import { Book, BookStatusType } from '@customTypes/books';
-import db from '@/fireabase';
+import type { Book } from '@customTypes/books';
 import Card from '@components/Dashboard/Card';
+import { fetchBooks } from '@api/bookApi';
 
 interface ViewProps {
   currentMenu: string;
@@ -12,45 +11,23 @@ interface ViewProps {
 
 const View = ({ currentMenu, setIsOpen, setSelectedBook }: ViewProps) => {
   const [books, setBooks] = useState<Book[]>([]);
-
-  const fetchBooks = async () => {
-    const condition = query(collection(db, 'userBooks'), where('userId', '==', 'test'));
-    const querySnapshot = await getDocs(condition);
-
-    const booksData: (Book | null)[] = await Promise.all(
-      querySnapshot.docs.map(async (document) => {
-        const data = document.data();
-        const bookRef = doc(db, 'books', data.bookId);
-        const bookSnap = await getDoc(bookRef);
-
-        if (!bookSnap.exists()) return null;
-        const bookData = bookSnap.data();
-
-        return {
-          id: data.bookId,
-          title: bookData.title,
-          author: bookData.author,
-          cover: bookData.cover,
-          progress: Math.floor((data.currentPage / bookData.page) * 100),
-          startAt: data.startAt,
-          finishedAt: data.finishedAt,
-          rating: data.rating,
-          status: data.status as BookStatusType,
-        };
-      }),
-    );
-    if (currentMenu === 'all') {
-      setBooks(booksData.filter((book) => book !== null));
-    } else {
-      setBooks(
-        booksData.filter((book) => book !== null).filter((book) => book.status === currentMenu),
-      );
-    }
-  };
+  const userId = 'test';
 
   useEffect(() => {
-    fetchBooks();
-  });
+    const getBooks = async () => {
+      const booksData = await fetchBooks({ userId });
+
+      if (currentMenu === 'all') {
+        setBooks(booksData.filter((book) => book !== null));
+      } else {
+        setBooks(
+          booksData.filter((book) => book !== null).filter((book) => book.status === currentMenu),
+        );
+      }
+    };
+
+    getBooks();
+  }, [currentMenu]);
 
   return (
     <div className="mr-4 ml-9 grid grid-cols-2 grid-rows-3 gap-5">
