@@ -25,7 +25,6 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
-      '@mocks': resolve(__dirname, 'src/mocks'),
       '@constants': resolve(__dirname, 'src/constants'),
       '@components': resolve(__dirname, 'src/components'),
       '@customTypes': resolve(__dirname, 'src/types'),
