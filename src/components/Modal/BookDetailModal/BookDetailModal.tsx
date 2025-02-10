@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { Book } from '@customTypes/books';
 import STATUS from '@constants/STATUS';
 import { BookOpen, Calendar, Star, X } from 'lucide-react';
-import { doc, DocumentData, getDoc } from 'firebase/firestore';
-import db from '@/fireabase';
+import { DocumentData } from 'firebase/firestore';
 import BookDescription from '@components/Modal/BookDetailModal/BookDescription';
+import { fetchBook } from '@api/bookApi';
 
 interface BookDetailModalProps {
   isOpen: boolean;
@@ -16,17 +16,14 @@ const BookDetailModal = ({ isOpen, onClose, book }: BookDetailModalProps) => {
   const [bookSnap, setBookSnap] = useState<DocumentData>();
   const [selected, setSelected] = useState('description');
 
-  const fetchBook = async () => {
-    const bookRef = doc(db, 'books', book.id.toString());
-    const bookSnap = await getDoc(bookRef);
-
-    if (!bookSnap.exists()) return null;
-    setBookSnap(bookSnap.data());
-  };
-
   useEffect(() => {
-    fetchBook();
-  });
+    const getBook = async () => {
+      const bookSnap = await fetchBook(book.id.toString());
+      if (bookSnap.exists()) setBookSnap(bookSnap.data());
+    };
+
+    getBook();
+  }, [book.id]);
 
   return (
     <div

@@ -15,7 +15,7 @@ const View = ({ currentMenu, setIsOpen, setSelectedBook }: ViewProps) => {
 
   useEffect(() => {
     const getBooks = async () => {
-      const booksData = await fetchBooks({ userId });
+      const booksData = await fetchBooks(userId);
 
       if (currentMenu === 'all') {
         setBooks(booksData.filter((book) => book !== null));

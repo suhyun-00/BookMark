@@ -2,11 +2,7 @@ import { doc, collection, getDoc, getDocs, query, where } from 'firebase/firesto
 import type { Book, BookStatusType } from '@customTypes/books';
 import db from '@/fireabase';
 
-interface fetchBooksProps {
-  userId: string;
-}
-
-export const fetchBooks = async ({ userId }: fetchBooksProps) => {
+export const fetchBooks = async (userId: string) => {
   const condition = query(collection(db, 'userBooks'), where('userId', '==', userId));
   const querySnapshot = await getDocs(condition);
 
@@ -33,4 +29,11 @@ export const fetchBooks = async ({ userId }: fetchBooksProps) => {
     }),
   );
   return booksData;
+};
+
+export const fetchBook = async (bookId: string) => {
+  const bookRef = doc(db, 'books', bookId);
+  const bookSnap = await getDoc(bookRef);
+
+  return bookSnap;
 };
