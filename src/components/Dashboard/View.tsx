@@ -22,8 +22,14 @@ const View = ({ allBooks, keyword, currentMenu, setIsOpen, setSelectedBook }: Vi
       }
 
       if (keyword !== '') {
+        const formattedKeyword = keyword.replace(/\s/g, '').toLowerCase();
+
         setFilteredBooks((books) =>
-          books.filter((book) => book.author.includes(keyword) || book.title.includes(keyword)),
+          books.filter(
+            (book) =>
+              book.title.replace(/\s/g, '').toLowerCase().includes(formattedKeyword) ||
+              book.author.replace(/\s/g, '').toLowerCase().includes(formattedKeyword),
+          ),
         );
       }
     };
