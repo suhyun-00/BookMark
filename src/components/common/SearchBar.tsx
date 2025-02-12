@@ -13,7 +13,7 @@ const SearchBar = ({ name, className, placeholder }: SearchBarProps) => {
     >
       <Search className="ml-5 h-3 w-3" />
       <input
-        type="text"
+        type="search"
         name={name}
         placeholder={placeholder}
         autoComplete="off"
