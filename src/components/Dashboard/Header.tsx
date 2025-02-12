@@ -1,24 +1,27 @@
 import { Search, Plus } from 'lucide-react';
 
 interface HeaderProps {
+  keyword: string;
+  setKeyword: React.Dispatch<React.SetStateAction<string>>;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Header = ({ setIsOpen }: HeaderProps) => {
+const Header = ({ keyword, setKeyword, setIsOpen }: HeaderProps) => {
   return (
     <div className="m-4 flex items-center justify-between">
       <h2 className="p-5 text-2xl font-medium">내 서재</h2>
       <div className="flex items-center gap-3">
-        <form className="flex w-64 items-center justify-center rounded-lg bg-white inset-shadow-sm">
+        <div className="flex w-64 items-center justify-center rounded-lg bg-white inset-shadow-sm">
           <Search className="ml-5 h-3 w-3" />
           <input
             type="search"
-            name="keyword"
+            value={keyword}
             placeholder="책 검색하기"
             autoComplete="off"
+            onChange={(e) => setKeyword(e.target.value)}
             className="w-full px-3 py-2.5 text-sm text-gray-500 focus:outline-none"
           />
-        </form>
+        </div>
         <button
           onClick={() => {
             setIsOpen((isOpen) => !isOpen);

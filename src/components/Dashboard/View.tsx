@@ -4,12 +4,13 @@ import Card from '@components/Dashboard/Card';
 
 interface ViewProps {
   allBooks: Book[];
+  keyword: string;
   currentMenu: string;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedBook: React.Dispatch<React.SetStateAction<Book>>;
 }
 
-const View = ({ allBooks, currentMenu, setIsOpen, setSelectedBook }: ViewProps) => {
+const View = ({ allBooks, keyword, currentMenu, setIsOpen, setSelectedBook }: ViewProps) => {
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
 
   useEffect(() => {
@@ -19,10 +20,16 @@ const View = ({ allBooks, currentMenu, setIsOpen, setSelectedBook }: ViewProps) 
       } else {
         setFilteredBooks(allBooks.filter((book) => book.status === currentMenu));
       }
+
+      if (keyword !== '') {
+        setFilteredBooks((books) =>
+          books.filter((book) => book.author.includes(keyword) || book.title.includes(keyword)),
+        );
+      }
     };
 
     filterBooks();
-  }, [allBooks, currentMenu]);
+  }, [allBooks, keyword, currentMenu]);
 
   return (
     <div className="mr-4 ml-9 grid grid-cols-2 grid-rows-3 gap-5">
