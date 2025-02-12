@@ -18,7 +18,7 @@ const Dashboard = ({
   setSelectedBook,
 }: DashboardProps) => {
   const [allBooks, setAllBooks] = useState<Book[]>([]);
-  const [keyword, setKeyWord] = useState<string>('');
+  const [debouncedKeyword, setDebouncedKeyword] = useState<string>('');
   const userId = 'test';
 
   useEffect(() => {
@@ -31,10 +31,10 @@ const Dashboard = ({
 
   return (
     <div className="ml-64 min-h-screen w-screen">
-      <Header keyword={keyword} setKeyword={setKeyWord} setIsOpen={setIsAddBookModalOpen} />
+      <Header setDebouncedKeyword={setDebouncedKeyword} setIsOpen={setIsAddBookModalOpen} />
       <View
         allBooks={allBooks}
-        keyword={keyword}
+        keyword={debouncedKeyword}
         currentMenu={currentMenu}
         setIsOpen={setIsBoookDetailModalOpen}
         setSelectedBook={setSelectedBook}
