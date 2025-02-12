@@ -1,16 +1,34 @@
-import SearchBar from '@components/common/SearchBar';
-import { Plus } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Search, Plus } from 'lucide-react';
 
 interface HeaderProps {
+  setDebouncedKeyword: React.Dispatch<React.SetStateAction<string>>;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Header = ({ setIsOpen }: HeaderProps) => {
+const Header = ({ setDebouncedKeyword, setIsOpen }: HeaderProps) => {
+  const [keyword, setKeyword] = useState<string>('');
+
+  useEffect(() => {
+    const timeout = setTimeout(() => setDebouncedKeyword(keyword), 500);
+    return () => clearTimeout(timeout);
+  }, [keyword, setDebouncedKeyword]);
+
   return (
     <div className="m-4 flex items-center justify-between">
       <h2 className="p-5 text-2xl font-medium">내 서재</h2>
       <div className="flex items-center gap-3">
-        <SearchBar className="w-64" placeholder="책 검색하기" />
+        <div className="flex w-64 items-center justify-center rounded-lg bg-white inset-shadow-sm">
+          <Search className="ml-5 h-3 w-3" />
+          <input
+            type="search"
+            value={keyword}
+            placeholder="책 검색하기"
+            autoComplete="off"
+            onChange={(e) => setKeyword(e.target.value)}
+            className="w-full px-3 py-2.5 text-sm text-gray-500 focus:outline-none"
+          />
+        </div>
         <button
           onClick={() => {
             setIsOpen((isOpen) => !isOpen);

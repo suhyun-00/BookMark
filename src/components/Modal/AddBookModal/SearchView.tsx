@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { Search } from 'lucide-react';
 import type { Data } from '@customTypes/data';
-import SearchBar from '@components/common/SearchBar';
 import Card from '@components/Modal/AddBookModal/Card';
 
 const NAVER_CLIENT_ID = import.meta.env.VITE_NAVER_CLIENT_ID;
@@ -39,7 +39,7 @@ const SearchView = () => {
     sendFormData(event.currentTarget);
   };
 
-  useEffect(() => {}, [datas]);
+  // useEffect(() => {}, [datas]);
 
   return (
     <div>
@@ -48,11 +48,16 @@ const SearchView = () => {
         onKeyDown={handleOnKeyDown}
         className="flex items-start justify-center gap-3"
       >
-        <SearchBar
-          name="keyword"
-          className="w-full justify-start"
-          placeholder="책 제목, 저자, ISBN으로 검색하기"
-        />
+        <div className="flex w-full items-center justify-start rounded-lg bg-white inset-shadow-sm">
+          <Search className="ml-5 h-3 w-3" />
+          <input
+            type="search"
+            name="keyword"
+            placeholder="책 제목, 저자, ISBN으로 검색하기"
+            autoComplete="off"
+            className="w-full px-3 py-2.5 text-sm text-gray-500 focus:outline-none"
+          />
+        </div>
         <button
           type="submit"
           className="w-30 rounded-lg bg-gray-900 px-5 py-2 text-sm text-white hover:cursor-pointer hover:bg-neutral-700"

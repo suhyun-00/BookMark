@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { fetchBooks } from '@/api/bookApi';
 import Header from '@components/Dashboard/Header';
 import View from '@components/Dashboard/View';
 import { Book } from '@customTypes/books';
@@ -15,10 +17,24 @@ const Dashboard = ({
   setIsBoookDetailModalOpen,
   setSelectedBook,
 }: DashboardProps) => {
+  const [allBooks, setAllBooks] = useState<Book[]>([]);
+  const [debouncedKeyword, setDebouncedKeyword] = useState<string>('');
+  const userId = 'test';
+
+  useEffect(() => {
+    const getBooks = async () => {
+      const booksData = await fetchBooks(userId);
+      setAllBooks(booksData.filter((book) => book !== null));
+    };
+    getBooks();
+  });
+
   return (
     <div className="ml-64 min-h-screen w-screen">
-      <Header setIsOpen={setIsAddBookModalOpen} />
+      <Header setDebouncedKeyword={setDebouncedKeyword} setIsOpen={setIsAddBookModalOpen} />
       <View
+        allBooks={allBooks}
+        keyword={debouncedKeyword}
         currentMenu={currentMenu}
         setIsOpen={setIsBoookDetailModalOpen}
         setSelectedBook={setSelectedBook}

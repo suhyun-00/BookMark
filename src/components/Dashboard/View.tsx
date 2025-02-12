@@ -1,37 +1,45 @@
 import { useEffect, useState } from 'react';
 import type { Book } from '@customTypes/books';
 import Card from '@components/Dashboard/Card';
-import { fetchBooks } from '@api/bookApi';
 
 interface ViewProps {
+  allBooks: Book[];
+  keyword: string;
   currentMenu: string;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedBook: React.Dispatch<React.SetStateAction<Book>>;
 }
 
-const View = ({ currentMenu, setIsOpen, setSelectedBook }: ViewProps) => {
-  const [books, setBooks] = useState<Book[]>([]);
-  const userId = 'test';
+const View = ({ allBooks, keyword, currentMenu, setIsOpen, setSelectedBook }: ViewProps) => {
+  const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
 
   useEffect(() => {
-    const getBooks = async () => {
-      const booksData = await fetchBooks(userId);
-
+    const filterBooks = async () => {
       if (currentMenu === 'all') {
-        setBooks(booksData.filter((book) => book !== null));
+        setFilteredBooks(allBooks);
       } else {
-        setBooks(
-          booksData.filter((book) => book !== null).filter((book) => book.status === currentMenu),
+        setFilteredBooks(allBooks.filter((book) => book.status === currentMenu));
+      }
+
+      if (keyword !== '') {
+        const formattedKeyword = keyword.replace(/\s/g, '').toLowerCase();
+
+        setFilteredBooks((books) =>
+          books.filter(
+            (book) =>
+              book.title.replace(/\s/g, '').toLowerCase().includes(formattedKeyword) ||
+              book.author.replace(/\s/g, '').toLowerCase().includes(formattedKeyword),
+          ),
         );
       }
     };
 
-    getBooks();
-  }, [currentMenu]);
+    filterBooks();
+  }, [allBooks, keyword, currentMenu]);
 
   return (
     <div className="mr-4 ml-9 grid grid-cols-2 grid-rows-3 gap-5">
-      {books.map((book) => (
+      {filteredBooks.map((book) => (
         <Card key={book.id} book={book} setIsOpen={setIsOpen} selected={setSelectedBook} />
       ))}
     </div>
