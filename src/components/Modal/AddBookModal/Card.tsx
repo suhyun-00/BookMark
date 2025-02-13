@@ -16,8 +16,8 @@ const Card = ({ book }: { book: Data }) => {
     const userBooksSanpshot = await getDocs(condition);
 
     if (!booksRef.exists()) {
-      const response = await fetch(`${API_BASE_URL}/search/${book.isbn}`);
-      const { page, description, categoryName } = await response.json();
+      const response = await fetch(`${API_BASE_URL}/lookup/${book.isbn13}`);
+      const { page } = await response.json();
 
       await setDoc(doc(db, 'books', book.isbn13), {
         title: book.title,
