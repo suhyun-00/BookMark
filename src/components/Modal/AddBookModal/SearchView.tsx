@@ -3,9 +3,7 @@ import { Search } from 'lucide-react';
 import type { Data } from '@customTypes/data';
 import Card from '@components/Modal/AddBookModal/Card';
 
-const NAVER_CLIENT_ID = import.meta.env.VITE_NAVER_CLIENT_ID;
-const NAVER_CLIENT_SECRET = import.meta.env.VITE_NAVER_CLIENT_SECRET;
-const API_BASE_URL = import.meta.env.DEV ? '/naverApi' : import.meta.env.VITE_NAVER_API_URL;
+const API_BASE_URL = import.meta.env.DEV ? '/api' : import.meta.env.VITE_NAVER_API_URL;
 
 const SearchView = () => {
   const [datas, setDatas] = useState<Data[]>();
@@ -14,16 +12,9 @@ const SearchView = () => {
     const formData = new FormData(form);
     const keyword = formData.get('keyword');
 
-    const response = await fetch(`${API_BASE_URL}${keyword}`, {
-      method: 'GET',
-      headers: {
-        'X-Naver-Client-Id': NAVER_CLIENT_ID,
-        'X-Naver-Client-Secret': NAVER_CLIENT_SECRET,
-      },
-    });
-
+    const response = await fetch(`${API_BASE_URL}/search/${keyword}`);
     const data = await response.json();
-    setDatas(data.items);
+    setDatas(data);
   };
 
   const handleOnKeyDown = (event: React.KeyboardEvent<HTMLFormElement>) => {
