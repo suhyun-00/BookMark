@@ -1,11 +1,11 @@
 export interface Data {
   title: string;
-  link: string;
-  image: string;
   author: string;
+  pubDate: string;
+  isbn13: string;
+  cover: string;
   discount: string;
   publisher: string;
-  pubdate: string;
-  isbn: string;
   description: string;
+  categoryName: string;
 }

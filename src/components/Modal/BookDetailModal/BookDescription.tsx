@@ -29,13 +29,7 @@ const BookDescription = ({ bookSnap, book }: BookDescriptionProps) => {
         </div>
         <div>
           <h5 className="mb-1 text-gray-700">출간일</h5>
-          <p>
-            {[
-              bookSnap?.pubDate.slice(0, 4),
-              bookSnap?.pubDate.slice(4, 6),
-              bookSnap?.pubDate.slice(6, 8),
-            ].join('. ')}
-          </p>
+          <p>{bookSnap?.pubDate.split('-').join('. ')}</p>
         </div>
       </div>
     </div>
