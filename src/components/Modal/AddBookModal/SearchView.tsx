@@ -39,8 +39,6 @@ const SearchView = () => {
     sendFormData(event.currentTarget);
   };
 
-  // useEffect(() => {}, [datas]);
-
   return (
     <div>
       <form
