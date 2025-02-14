@@ -7,12 +7,11 @@ import BookDescription from '@components/Modal/BookDetailModal/BookDescription';
 import { fetchBook } from '@api/bookApi';
 
 interface BookDetailModalProps {
-  isOpen: boolean;
   onClose: () => void;
   book: Book;
 }
 
-const BookDetailModal = ({ isOpen, onClose, book }: BookDetailModalProps) => {
+const BookDetailModal = ({ onClose, book }: BookDetailModalProps) => {
   const [bookSnap, setBookSnap] = useState<DocumentData>();
   const [selected, setSelected] = useState('description');
 
@@ -28,7 +27,7 @@ const BookDetailModal = ({ isOpen, onClose, book }: BookDetailModalProps) => {
   return (
     <div
       onClick={onClose}
-      className={`fixed inset-0 flex items-center justify-center ${isOpen ? 'visible bg-gray-900/20' : 'invisible'}`}
+      className="fixed inset-0 flex items-center justify-center bg-gray-900/20"
     >
       <div
         onClick={(e) => e.stopPropagation()}

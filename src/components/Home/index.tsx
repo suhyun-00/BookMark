@@ -23,12 +23,10 @@ const Home = () => {
           setSelectedBook={setSelectedBook}
         />
       </div>
-      <AddBookModal isOpen={isAddBookModalOpen} onClose={() => setIsAddBookModalOpen(false)} />
-      <BookDetailModal
-        isOpen={isBookDetailModalOpen}
-        onClose={() => setIsBoookDetailModalOpen(false)}
-        book={selectedBook}
-      />
+      {isAddBookModalOpen && <AddBookModal onClose={() => setIsAddBookModalOpen(false)} />}
+      {isBookDetailModalOpen && (
+        <BookDetailModal onClose={() => setIsBoookDetailModalOpen(false)} book={selectedBook} />
+      )}
     </div>
   );
 };
