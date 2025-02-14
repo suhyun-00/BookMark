@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Book } from '@customTypes/books';
 import STATUS from '@constants/STATUS';
-import { BookOpen, Calendar, Star, X } from 'lucide-react';
+import { BookOpen, Star, X } from 'lucide-react';
 import { DocumentData } from 'firebase/firestore';
 import BookDescription from '@components/Modal/BookDetailModal/BookDescription';
-import { fetchBook } from '@api/bookApi';
+import DateField from '@components/Modal/BookDetailModal/DateField';
 
 interface BookDetailModalProps {
   onClose: () => void;
@@ -13,7 +13,40 @@ interface BookDetailModalProps {
 
 const BookDetailModal = ({ onClose, book }: BookDetailModalProps) => {
   const [bookSnap, setBookSnap] = useState<DocumentData>();
-  const [selected, setSelected] = useState('description');
+  const [selected, setSelected] = useState<string>('description');
+const [isEditting, setIsEditting] = useState<boolean>(false);
+  const [startAt, setStartAt] = useState<string>(
+    book.startAt
+      ? book.startAt
+          .toDate()
+          .toLocaleDateString('ko-kr', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+          })
+          .replace(/\./g, '-')
+      : '',
+  );
+  const [finishedAt, setFinishedAt] = useState<string>(
+    book.finishedAt
+      ? book.finishedAt
+          .toDate()
+          .toLocaleDateString('ko-kr', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+          })
+          .replace(/\./g, '-')
+      : '',
+  );
+
+  const handleUpdate = async () => {
+    const docRef = await findDocumentId(book.id.toString());
+    await updateDoc(docRef!, {
+      startAt: Timestamp.fromDate(new Date(startAt)),
+      finishedAt: Timestamp.fromDate(new Date(finishedAt)),
+    });
+  };
 
   useEffect(() => {
     const getBook = async () => {
@@ -41,57 +74,42 @@ const BookDetailModal = ({ onClose, book }: BookDetailModalProps) => {
                 {STATUS[book.status]}
               </div>
               <div className="flex items-center gap-1 text-sm text-amber-500">
-                <Star className="h-4 w-4 fill-current" /> {book.rating}
+            <div className="absolute -top-4 -right-4 flex items-center gap-1">
+              <button
+                onClick={() => setIsEditting((status) => !status)}
+                className="rounded-lg bg-gray-200 px-3 py-1 text-sm text-gray-600 inset-shadow-sm hover:cursor-pointer hover:bg-gray-300"
+              >
+                {isEditting ? '완료' : '수정'}
+              </button>
+              <div
+                onClick={onClose}
+                className="rounded-lg px-2 py-1 text-gray-600 hover:cursor-pointer hover:bg-gray-200 hover:inset-shadow-sm"
+              >
+                <X className="h-5 w-5" />
               </div>
             </div>
-            <X
-              onClick={onClose}
-              className="absolute -top-4 -right-4 h-4 w-4 hover:cursor-pointer hover:text-gray-500"
-            />
             <div className="w-full truncate">
               <div className="mb-2 text-2xl font-medium">{book.title}</div>
               <div className="mb-5 text-gray-500">{book.author}</div>
             </div>
             <div className="mb-5 grid grid-cols-3 gap-4 text-gray-500">
-              <div className="flex items-center gap-3">
-                <Calendar className="h-4 w-4" />
-                <div>
-                  <span className="text-xs">시작일</span>
-                  <div className="text-sm">
-                    {book.startAt
-                      ? book.startAt
-                          .toDate()
-                          .toLocaleDateString('ko-kr', {
-                            year: 'numeric',
-                            month: '2-digit',
-                            day: '2-digit',
-                          })
-                          .replace(/\.$/, '')
-                      : '---- . -- . --'}
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <Calendar className="h-4 w-4" />
-                <div className="flex flex-col">
-                  <span className="text-xs">완독일</span>
-                  <div className="text-sm">
-                    {book.finishedAt
-                      ? book.finishedAt
-                          .toDate()
-                          .toLocaleDateString('ko-kr', {
-                            year: 'numeric',
-                            month: '2-digit',
-                            day: '2-digit',
-                          })
-                          .replace(/\.$/, '')
-                      : '---- . -- . --'}
-                  </div>
-                </div>
-              </div>
+              <DateField
+                isEditting={isEditting}
+                text="시작일"
+                timestamp={book.startAt}
+                date={startAt}
+                setDate={setStartAt}
+              />
+              <DateField
+                isEditting={isEditting}
+                text="완독일"
+                timestamp={book.finishedAt}
+                date={finishedAt}
+                setDate={setFinishedAt}
+              />
               <div className="flex items-center gap-3">
                 <BookOpen className="h-4 w-4" />
-                <div>
+                <div className="flex flex-col">
                   <span className="text-xs">총 페이지</span>
                   <div className="text-sm">{bookSnap?.page.toLocaleString()} 페이지</div>
                 </div>
