@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Book } from '@customTypes/books';
 import STATUS from '@constants/STATUS';
 import { BookOpen, Star, X } from 'lucide-react';
-import { DocumentData } from 'firebase/firestore';
+import { DocumentData, Timestamp, updateDoc } from 'firebase/firestore';
 import BookDescription from '@components/Modal/BookDetailModal/BookDescription';
+import { fetchBook, findDocumentId } from '@api/bookApi';
 import DateField from '@components/Modal/BookDetailModal/DateField';
 
 interface BookDetailModalProps {
@@ -15,37 +16,38 @@ const BookDetailModal = ({ onClose, book }: BookDetailModalProps) => {
   const [bookSnap, setBookSnap] = useState<DocumentData>();
   const [selected, setSelected] = useState<string>('description');
 const [isEditting, setIsEditting] = useState<boolean>(false);
-  const [startAt, setStartAt] = useState<string>(
-    book.startAt
-      ? book.startAt
-          .toDate()
-          .toLocaleDateString('ko-kr', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-          })
-          .replace(/\./g, '-')
-      : '',
-  );
+
+  const formatDate = (timestamp: Timestamp) => {
+    return new Date(timestamp.toDate().getTime() - timestamp.toDate().getTimezoneOffset() * 60000)
+      .toISOString()
+      .split('T')[0];
+  };
+
+  const [startAt, setStartAt] = useState<string>(book.startAt ? formatDate(book.startAt) : '');
   const [finishedAt, setFinishedAt] = useState<string>(
-    book.finishedAt
-      ? book.finishedAt
-          .toDate()
-          .toLocaleDateString('ko-kr', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-          })
-          .replace(/\./g, '-')
-      : '',
+    book.finishedAt ? formatDate(book.finishedAt) : '',
   );
 
+  const prevStartAt = useRef<string>(startAt);
+  const prevFinishedAt = useRef<string>(finishedAt);
+
   const handleUpdate = async () => {
+    const updateFields: Record<string, Timestamp | number> = {};
+
+    if (prevStartAt.current !== startAt) {
+      updateFields.startAt = Timestamp.fromDate(new Date(startAt + 'T00:00:00'));
+      prevStartAt.current = startAt;
+    }
+
+    if (prevFinishedAt.current !== finishedAt) {
+      updateFields.finishedAt = Timestamp.fromDate(new Date(finishedAt + 'T00:00:00'));
+      prevFinishedAt.current = finishedAt;
+    }
+
+    if (Object.keys(updateFields).length !== 0) {
     const docRef = await findDocumentId(book.id.toString());
-    await updateDoc(docRef!, {
-      startAt: Timestamp.fromDate(new Date(startAt)),
-      finishedAt: Timestamp.fromDate(new Date(finishedAt)),
-    });
+      await updateDoc(docRef!, updateFields);
+    }
   };
 
   useEffect(() => {
@@ -76,7 +78,12 @@ const [isEditting, setIsEditting] = useState<boolean>(false);
               <div className="flex items-center gap-1 text-sm text-amber-500">
             <div className="absolute -top-4 -right-4 flex items-center gap-1">
               <button
-                onClick={() => setIsEditting((status) => !status)}
+                onClick={() => {
+                  if (isEditting) {
+                    handleUpdate();
+                  }
+                  setIsEditting((status) => !status);
+                }}
                 className="rounded-lg bg-gray-200 px-3 py-1 text-sm text-gray-600 inset-shadow-sm hover:cursor-pointer hover:bg-gray-300"
               >
                 {isEditting ? '완료' : '수정'}
@@ -96,14 +103,12 @@ const [isEditting, setIsEditting] = useState<boolean>(false);
               <DateField
                 isEditting={isEditting}
                 text="시작일"
-                timestamp={book.startAt}
                 date={startAt}
                 setDate={setStartAt}
               />
               <DateField
                 isEditting={isEditting}
                 text="완독일"
-                timestamp={book.finishedAt}
                 date={finishedAt}
                 setDate={setFinishedAt}
               />
