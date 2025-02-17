@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Star from '@components/Modal/BookDetailModal/Star';
 
 interface DrawStarProps {
   rating: number;
@@ -14,14 +15,15 @@ const DrawStar = ({ rating, setRating }: DrawStarProps) => {
   };
 
   return (
-    <span className="relative text-lg text-gray-200">
-      ★★★★★
-      <span
-        style={{ width: width }}
-        className="pointer-events-none absolute left-0 w-0 overflow-hidden text-amber-500"
-      >
-        ★★★★★
-      </span>
+    <span className="relative flex text-gray-200">
+      {[...Array(5)].map((_, idx) => (
+        <Star idx={idx} width={20} height={20} />
+      ))}
+      <div style={{ width }} className="absolute left-0 flex w-0 overflow-hidden text-amber-500">
+        {[...Array(5)].map((_, idx) => (
+          <Star idx={idx} width={20} height={20} />
+        ))}
+      </div>
       <input
         type="range"
         onChange={(e) => calculateWidth(parseFloat(e.target.value))}
@@ -29,7 +31,7 @@ const DrawStar = ({ rating, setRating }: DrawStarProps) => {
         step="0.5"
         min="0"
         max="5"
-        className="absolute left-0 h-full w-full opacity-0"
+        className="absolute left-0 mr-1 h-full w-full cursor-pointer opacity-0"
       />
     </span>
   );
