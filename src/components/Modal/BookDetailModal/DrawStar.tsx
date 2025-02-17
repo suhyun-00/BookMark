@@ -31,7 +31,7 @@ const DrawStar = ({ rating, setRating }: DrawStarProps) => {
         step="0.5"
         min="0"
         max="5"
-        className="absolute left-0 mr-1 h-full w-full cursor-pointer opacity-0"
+        className="absolute left-0 h-full w-full cursor-pointer opacity-0"
       />
     </span>
   );
