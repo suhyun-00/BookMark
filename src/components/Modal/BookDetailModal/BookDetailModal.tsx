@@ -187,9 +187,9 @@ const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalPro
                   <div>
                     <input
                       type="number"
-                      value={currentPage}
+                      value={currentPage.toString()}
                       onChange={(e) => setCurrentPage(Number(e.target.value))}
-                      className={`w-16 px-2 text-center font-medium focus:outline-none ${isEditting ? 'hover: cursor-pointer' : ''}`}
+                      className={`w-16 border-b px-2 text-center font-medium focus:outline-none ${isEditting ? 'hover: cursor-pointer' : ''}`}
                     />
                     페이지
                   </div>
