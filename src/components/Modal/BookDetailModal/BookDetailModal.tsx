@@ -7,6 +7,7 @@ import { fetchBook, fetchUserBook } from '@api/bookApi';
 import BookDescription from '@components/Modal/BookDetailModal/BookDescription';
 import DateField from '@components/Modal/BookDetailModal/DateField';
 import DrawStar from '@components/Modal/BookDetailModal/DrawStar';
+import ScaleLoader from 'react-spinners/ScaleLoader';
 
 interface BookDetailModalProps {
   onClose: () => void;
@@ -26,6 +27,7 @@ const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalPro
 
   const [selected, setSelected] = useState<string>('description');
   const [isEditting, setIsEditting] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [status, setStatus] = useState<BookStatusType>(book.status);
   const [currentPage, setCurrentPage] = useState<number>(0);
@@ -42,6 +44,7 @@ const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalPro
   const prevStatus = useRef<BookStatusType>(status);
 
   const handleUpdate = async () => {
+    setIsLoading(true);
     const updateFields: Record<string, Timestamp | BookStatusType | number> = {};
 
     if (prevStartAt.current !== startAt) {
@@ -75,6 +78,7 @@ const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalPro
         await handleBookUpdate();
       }
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -221,6 +225,11 @@ const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalPro
           {selected === 'note' && <></>}
         </div>
       </div>
+      {isLoading && (
+        <div className="fixed inset-0 flex h-full w-full items-center justify-center bg-gray-900/20">
+          <ScaleLoader color="#101828" />
+        </div>
+      )}
     </div>
   );
 };
