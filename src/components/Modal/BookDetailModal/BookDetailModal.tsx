@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Book } from '@customTypes/books';
+import { Book, BookStatusType } from '@customTypes/books';
 import STATUS from '@constants/STATUS';
 import { BookOpen, Star, X } from 'lucide-react';
 import { DocumentData, DocumentReference, Timestamp, updateDoc } from 'firebase/firestore';
@@ -27,6 +27,7 @@ const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalPro
   const [selected, setSelected] = useState<string>('description');
   const [isEditting, setIsEditting] = useState<boolean>(false);
 
+  const [status, setStatus] = useState<BookStatusType>(book.status);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [rating, setRating] = useState<number>(book.rating);
   const [startAt, setStartAt] = useState<string>(book.startAt ? formatDate(book.startAt) : '');
@@ -38,9 +39,10 @@ const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalPro
   const prevFinishedAt = useRef<string>(finishedAt);
   const prevRating = useRef<number>(rating);
   const prevCurrentPage = useRef<number>(currentPage);
+  const prevStatus = useRef<BookStatusType>(status);
 
   const handleUpdate = async () => {
-    const updateFields: Record<string, Timestamp | number> = {};
+    const updateFields: Record<string, Timestamp | BookStatusType | number> = {};
 
     if (prevStartAt.current !== startAt) {
       updateFields.startAt = Timestamp.fromDate(new Date(startAt + 'T00:00:00'));
@@ -60,6 +62,11 @@ const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalPro
     if (prevCurrentPage.current !== currentPage) {
       updateFields.currentPage = currentPage;
       prevCurrentPage.current = currentPage;
+    }
+
+    if (prevStatus.current !== status) {
+      updateFields.status = status;
+      prevStatus.current = status;
     }
 
     if (Object.keys(updateFields).length !== 0) {
@@ -97,7 +104,20 @@ const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalPro
           <div className="relative flex w-full flex-col">
             <div className="mb-3 flex items-center gap-4">
               <div className="rounded-lg bg-gray-200 px-2 py-1 text-xs font-normal text-gray-600 inset-shadow-sm">
-                {STATUS[book.status]}
+                {isEditting ? (
+                  <select
+                    onChange={(e) => setStatus(e.target.value as BookStatusType)}
+                    className="focus:outline-none"
+                  >
+                    {Object.entries(STATUS).map(([key, value]) => (
+                      <option value={key} selected={book.status === key}>
+                        {value}
+                      </option>
+                    ))}
+                  </select>
+                ) : (
+                  STATUS[book.status]
+                )}
               </div>
               {isEditting ? (
                 <DrawStar rating={rating} setRating={setRating} />
@@ -114,7 +134,7 @@ const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalPro
                   if (isEditting) {
                     handleUpdate();
                   }
-                  setIsEditting((status) => !status);
+                  setIsEditting((prevStatus) => !prevStatus);
                 }}
                 className="rounded-lg bg-gray-200 px-3 py-1 text-sm text-gray-600 inset-shadow-sm hover:cursor-pointer hover:bg-gray-300"
               >
