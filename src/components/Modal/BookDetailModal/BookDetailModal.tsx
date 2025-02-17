@@ -3,9 +3,10 @@ import { Book } from '@customTypes/books';
 import STATUS from '@constants/STATUS';
 import { BookOpen, Star, X } from 'lucide-react';
 import { DocumentData, Timestamp, updateDoc } from 'firebase/firestore';
-import BookDescription from '@components/Modal/BookDetailModal/BookDescription';
 import { fetchBook, findDocumentId } from '@api/bookApi';
+import BookDescription from '@components/Modal/BookDetailModal/BookDescription';
 import DateField from '@components/Modal/BookDetailModal/DateField';
+import DrawStar from '@components/Modal/BookDetailModal/DrawStar';
 
 interface BookDetailModalProps {
   onClose: () => void;
@@ -13,16 +14,16 @@ interface BookDetailModalProps {
 }
 
 const BookDetailModal = ({ onClose, book }: BookDetailModalProps) => {
-  const [bookSnap, setBookSnap] = useState<DocumentData>();
-  const [selected, setSelected] = useState<string>('description');
-const [isEditting, setIsEditting] = useState<boolean>(false);
-
   const formatDate = (timestamp: Timestamp) => {
     return new Date(timestamp.toDate().getTime() - timestamp.toDate().getTimezoneOffset() * 60000)
       .toISOString()
       .split('T')[0];
   };
 
+  const [bookSnap, setBookSnap] = useState<DocumentData>();
+  const [selected, setSelected] = useState<string>('description');
+  const [isEditting, setIsEditting] = useState<boolean>(false);
+  const [rating, setRating] = useState<number>(book.rating);
   const [startAt, setStartAt] = useState<string>(book.startAt ? formatDate(book.startAt) : '');
   const [finishedAt, setFinishedAt] = useState<string>(
     book.finishedAt ? formatDate(book.finishedAt) : '',
@@ -30,6 +31,7 @@ const [isEditting, setIsEditting] = useState<boolean>(false);
 
   const prevStartAt = useRef<string>(startAt);
   const prevFinishedAt = useRef<string>(finishedAt);
+  const prevRating = useRef<number>(rating);
 
   const handleUpdate = async () => {
     const updateFields: Record<string, Timestamp | number> = {};
@@ -42,6 +44,11 @@ const [isEditting, setIsEditting] = useState<boolean>(false);
     if (prevFinishedAt.current !== finishedAt) {
       updateFields.finishedAt = Timestamp.fromDate(new Date(finishedAt + 'T00:00:00'));
       prevFinishedAt.current = finishedAt;
+    }
+
+    if (prevRating.current !== rating) {
+      updateFields.rating = rating;
+      prevRating.current = rating;
     }
 
     if (Object.keys(updateFields).length !== 0) {
@@ -75,7 +82,15 @@ const [isEditting, setIsEditting] = useState<boolean>(false);
               <div className="rounded-lg bg-gray-200 px-2 py-1 text-xs font-normal text-gray-600 inset-shadow-sm">
                 {STATUS[book.status]}
               </div>
+              {isEditting ? (
+                <DrawStar rating={rating} setRating={setRating} />
+              ) : (
               <div className="flex items-center gap-1 text-sm text-amber-500">
+                  <Star className="h-4 w-4 fill-current" />
+                  {rating}
+                </div>
+              )}
+            </div>
             <div className="absolute -top-4 -right-4 flex items-center gap-1">
               <button
                 onClick={() => {
