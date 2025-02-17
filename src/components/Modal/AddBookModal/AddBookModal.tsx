@@ -3,17 +3,16 @@ import { Scan, Search } from 'lucide-react';
 import SearchView from '@components/Modal/AddBookModal/SearchView';
 
 interface AddBookModalProps {
-  isOpen: boolean;
   onClose: () => void;
 }
 
-const AddBookModal = ({ isOpen, onClose }: AddBookModalProps) => {
+const AddBookModal = ({ onClose }: AddBookModalProps) => {
   const [selectedButton, setSelectedButton] = useState('search');
 
   return (
     <div
       onClick={onClose}
-      className={`fixed inset-0 flex items-center justify-center ${isOpen ? 'visible bg-gray-900/20' : 'invisible'}`}
+      className="fixed inset-0 flex items-center justify-center bg-gray-900/20"
     >
       <div
         onClick={(e) => e.stopPropagation()}

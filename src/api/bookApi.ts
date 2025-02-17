@@ -37,3 +37,14 @@ export const fetchBook = async (bookId: string) => {
 
   return bookSnap;
 };
+
+export const fetchUserBook = async (bookId: string) => {
+  const condition = query(collection(db, 'userBooks'), where('bookId', '==', bookId));
+  const querySnapshot = await getDocs(condition);
+
+  const docId = querySnapshot.docs[0].id;
+  const docRef = doc(db, 'userBooks', docId);
+  const docSnap = await getDoc(docRef);
+
+  return { docRef, docSnap };
+};
