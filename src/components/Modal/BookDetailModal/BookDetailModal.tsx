@@ -11,9 +11,10 @@ import DrawStar from '@components/Modal/BookDetailModal/DrawStar';
 interface BookDetailModalProps {
   onClose: () => void;
   book: Book;
+  handleBookUpdate: () => Promise<void>;
 }
 
-const BookDetailModal = ({ onClose, book }: BookDetailModalProps) => {
+const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalProps) => {
   const formatDate = (timestamp: Timestamp) => {
     return new Date(timestamp.toDate().getTime() - timestamp.toDate().getTimezoneOffset() * 60000)
       .toISOString()
@@ -62,7 +63,10 @@ const BookDetailModal = ({ onClose, book }: BookDetailModalProps) => {
     }
 
     if (Object.keys(updateFields).length !== 0) {
-      if (docRef) await updateDoc(docRef, updateFields);
+      if (docRef) {
+        await updateDoc(docRef, updateFields);
+        await handleBookUpdate();
+      }
     }
   };
 
@@ -100,7 +104,7 @@ const BookDetailModal = ({ onClose, book }: BookDetailModalProps) => {
               ) : (
                 <div className="flex items-center gap-1 text-sm text-amber-500">
                   <Star className="h-4 w-4 fill-current" />
-                  {rating}
+                  {book.rating}
                 </div>
               )}
             </div>
@@ -131,12 +135,14 @@ const BookDetailModal = ({ onClose, book }: BookDetailModalProps) => {
               <DateField
                 isEditting={isEditting}
                 text="시작일"
+                timestamp={book.startAt}
                 date={startAt}
                 setDate={setStartAt}
               />
               <DateField
                 isEditting={isEditting}
                 text="완독일"
+                timestamp={book.finishedAt}
                 date={finishedAt}
                 setDate={setFinishedAt}
               />
@@ -161,6 +167,7 @@ const BookDetailModal = ({ onClose, book }: BookDetailModalProps) => {
                       onChange={(e) => setCurrentPage(Number(e.target.value))}
                       className={`w-16 px-2 text-center font-medium focus:outline-none ${isEditting ? 'hover: cursor-pointer' : ''}`}
                     />
+                    페이지
                   </div>
                 ) : (
                   <div>{book.progress}%</div>
