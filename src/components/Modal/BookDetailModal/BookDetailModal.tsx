@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { Book } from '@customTypes/books';
 import STATUS from '@constants/STATUS';
 import { BookOpen, Star, X } from 'lucide-react';
-import { DocumentData, Timestamp, updateDoc } from 'firebase/firestore';
-import { fetchBook, findDocumentId } from '@api/bookApi';
+import { DocumentData, DocumentReference, Timestamp, updateDoc } from 'firebase/firestore';
+import { fetchBook, fetchUserBook } from '@api/bookApi';
 import BookDescription from '@components/Modal/BookDetailModal/BookDescription';
 import DateField from '@components/Modal/BookDetailModal/DateField';
 import DrawStar from '@components/Modal/BookDetailModal/DrawStar';
@@ -21,8 +21,12 @@ const BookDetailModal = ({ onClose, book }: BookDetailModalProps) => {
   };
 
   const [bookSnap, setBookSnap] = useState<DocumentData>();
+  const [docRef, setDocRef] = useState<DocumentReference<DocumentData, DocumentData>>();
+
   const [selected, setSelected] = useState<string>('description');
   const [isEditting, setIsEditting] = useState<boolean>(false);
+
+  const [currentPage, setCurrentPage] = useState<number>(0);
   const [rating, setRating] = useState<number>(book.rating);
   const [startAt, setStartAt] = useState<string>(book.startAt ? formatDate(book.startAt) : '');
   const [finishedAt, setFinishedAt] = useState<string>(
@@ -32,6 +36,7 @@ const BookDetailModal = ({ onClose, book }: BookDetailModalProps) => {
   const prevStartAt = useRef<string>(startAt);
   const prevFinishedAt = useRef<string>(finishedAt);
   const prevRating = useRef<number>(rating);
+  const prevCurrentPage = useRef<number>(currentPage);
 
   const handleUpdate = async () => {
     const updateFields: Record<string, Timestamp | number> = {};
@@ -51,9 +56,13 @@ const BookDetailModal = ({ onClose, book }: BookDetailModalProps) => {
       prevRating.current = rating;
     }
 
+    if (prevCurrentPage.current !== currentPage) {
+      updateFields.currentPage = currentPage;
+      prevCurrentPage.current = currentPage;
+    }
+
     if (Object.keys(updateFields).length !== 0) {
-    const docRef = await findDocumentId(book.id.toString());
-      await updateDoc(docRef!, updateFields);
+      if (docRef) await updateDoc(docRef, updateFields);
     }
   };
 
@@ -61,6 +70,10 @@ const BookDetailModal = ({ onClose, book }: BookDetailModalProps) => {
     const getBook = async () => {
       const bookSnap = await fetchBook(book.id.toString());
       if (bookSnap.exists()) setBookSnap(bookSnap.data());
+
+      const { docRef, docSnap } = await fetchUserBook(book.id.toString());
+      if (docRef) setDocRef(docRef);
+      if (docSnap.exists()) setCurrentPage(docSnap.data().currentPage);
     };
 
     getBook();
@@ -85,7 +98,7 @@ const BookDetailModal = ({ onClose, book }: BookDetailModalProps) => {
               {isEditting ? (
                 <DrawStar rating={rating} setRating={setRating} />
               ) : (
-              <div className="flex items-center gap-1 text-sm text-amber-500">
+                <div className="flex items-center gap-1 text-sm text-amber-500">
                   <Star className="h-4 w-4 fill-current" />
                   {rating}
                 </div>
@@ -136,13 +149,26 @@ const BookDetailModal = ({ onClose, book }: BookDetailModalProps) => {
               </div>
             </div>
             <div className="text-sm text-gray-500">
-              <div className="mb-2 flex items-center justify-between">
+              <div
+                className={`mb-3 flex items-center justify-between ${isEditting ? 'text-blue-500' : ''}`}
+              >
                 <div>진행률</div>
-                <div>{book.progress}%</div>
+                {isEditting ? (
+                  <div>
+                    <input
+                      type="number"
+                      value={currentPage}
+                      onChange={(e) => setCurrentPage(Number(e.target.value))}
+                      className={`w-16 px-2 text-center font-medium focus:outline-none ${isEditting ? 'hover: cursor-pointer' : ''}`}
+                    />
+                  </div>
+                ) : (
+                  <div>{book.progress}%</div>
+                )}
               </div>
               <div className="h-2 w-full rounded-full bg-gray-200">
                 <div
-                  className="h-2 rounded-full bg-gray-900"
+                  className={`h-2 rounded-full ${isEditting ? 'bg-blue-500' : 'bg-gray-900'}`}
                   style={{ width: `${book.progress}%` }}
                 />
               </div>
