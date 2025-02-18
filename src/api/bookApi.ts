@@ -1,4 +1,4 @@
-import { doc, collection, getDoc, getDocs, query, where } from 'firebase/firestore';
+import { doc, collection, getDoc, getDocs, query, where, deleteDoc } from 'firebase/firestore';
 import type { Book, BookStatusType } from '@customTypes/books';
 import db from '@/fireabase';
 
@@ -38,13 +38,22 @@ export const fetchBook = async (bookId: string) => {
   return bookSnap;
 };
 
-export const fetchUserBook = async (bookId: string) => {
+const fetchDocId = async (bookId: string) => {
   const condition = query(collection(db, 'userBooks'), where('bookId', '==', bookId));
   const querySnapshot = await getDocs(condition);
 
-  const docId = querySnapshot.docs[0].id;
+  return querySnapshot.docs[0].id;
+};
+
+export const fetchUserBook = async (bookId: string) => {
+  const docId = await fetchDocId(bookId);
   const docRef = doc(db, 'userBooks', docId);
   const docSnap = await getDoc(docRef);
 
   return { docRef, docSnap };
+};
+
+export const deleteBook = async (bookId: string) => {
+  const docId = await fetchDocId(bookId);
+  await deleteDoc(doc(db, 'userBooks', docId));
 };
