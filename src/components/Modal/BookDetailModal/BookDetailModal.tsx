@@ -3,7 +3,7 @@ import { Book, BookStatusType } from '@customTypes/books';
 import STATUS from '@constants/STATUS';
 import { BookOpen, Star, X } from 'lucide-react';
 import { DocumentData, DocumentReference, Timestamp, updateDoc } from 'firebase/firestore';
-import { fetchBook, fetchUserBook } from '@api/bookApi';
+import { deleteBook, fetchBook, fetchUserBook } from '@api/bookApi';
 import BookDescription from '@components/Modal/BookDetailModal/BookDescription';
 import DateField from '@components/Modal/BookDetailModal/DateField';
 import DrawStar from '@components/Modal/BookDetailModal/DrawStar';
@@ -28,6 +28,7 @@ const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalPro
   const [selected, setSelected] = useState<string>('description');
   const [isEditting, setIsEditting] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isClicked, setIsClicekd] = useState<boolean>(false);
 
   const [status, setStatus] = useState<BookStatusType>(book.status);
   const [currentPage, setCurrentPage] = useState<number>(0);
@@ -42,6 +43,12 @@ const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalPro
   const prevRating = useRef<number>(rating);
   const prevCurrentPage = useRef<number>(currentPage);
   const prevStatus = useRef<BookStatusType>(status);
+
+  const handleDelete = async () => {
+    await deleteBook(book.id.toString());
+    setIsClicekd(false);
+    onClose();
+  };
 
   const handleUpdate = async () => {
     setIsLoading(true);
@@ -101,7 +108,7 @@ const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalPro
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="flex max-h-[40rem] w-4xl min-w-4xl flex-col gap-6 rounded-xl bg-gray-100 p-10 inset-shadow-sm"
+        className="flex max-h-[42rem] w-4xl min-w-4xl flex-col gap-6 rounded-xl bg-gray-100 p-10 inset-shadow-sm"
       >
         <div className="flex items-start gap-8">
           <img src={book.cover} alt={book.title} className="h-56 w-40" />
@@ -224,6 +231,35 @@ const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalPro
           {selected === 'description' && <BookDescription bookSnap={bookSnap} book={book} />}
           {selected === 'note' && <></>}
         </div>
+        {isEditting && (
+          <button
+            onClick={() => setIsClicekd(true)}
+            className="flex items-center justify-center py-2 text-red-500 hover:cursor-pointer"
+          >
+            서재에서 삭제하기
+          </button>
+        )}
+        {isClicked && (
+          <div className="fixed inset-0 flex items-center justify-center bg-gray-900/20 text-gray-500">
+            <div className="flex h-40 w-80 flex-col items-center gap-4 rounded-2xl bg-gray-200">
+              <div className="mt-14 text-lg">책을 삭제하시겠습니까?</div>
+              <div className="mt-3 flex w-full items-center justify-around border-t border-gray-300">
+                <button
+                  onClick={() => setIsClicekd(false)}
+                  className="h-full w-full rounded-bl-2xl border-r border-gray-300 py-3 hover:cursor-pointer hover:bg-gray-300"
+                >
+                  취소
+                </button>
+                <button
+                  onClick={handleDelete}
+                  className="h-full w-full rounded-br-2xl py-3 text-red-500 hover:cursor-pointer hover:bg-gray-300"
+                >
+                  삭제
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
       {isLoading && (
         <div className="fixed inset-0 flex h-full w-full items-center justify-center bg-gray-900/20">
