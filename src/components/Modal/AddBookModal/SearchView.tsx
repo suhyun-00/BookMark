@@ -6,7 +6,11 @@ import ScaleLoader from 'react-spinners/ScaleLoader';
 
 const API_BASE_URL = import.meta.env.DEV ? '/api' : import.meta.env.VITE_NAVER_API_URL;
 
-const SearchView = () => {
+interface SearchViewProps {
+  onClose: () => void;
+}
+
+const SearchView = ({ onClose }: SearchViewProps) => {
   const [datas, setDatas] = useState<Data[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -61,12 +65,12 @@ const SearchView = () => {
       {datas && (
         <div className="scrollbar mt-6 max-h-72 overflow-y-scroll scroll-smooth">
           {datas.map((book) => (
-            <Card book={book} />
+            <Card book={book} onClose={onClose} />
           ))}
         </div>
       )}
       {isLoading && (
-        <div className="flex justify-center pt-8">
+        <div className="flex justify-center py-8">
           <ScaleLoader color="#101828" />
         </div>
       )}

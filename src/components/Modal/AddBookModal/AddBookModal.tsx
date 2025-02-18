@@ -37,8 +37,8 @@ const AddBookModal = ({ onClose }: AddBookModalProps) => {
             바코드로 추가
           </button>
         </div>
-        {selectedButton === 'search' && <SearchView />}
-        {selectedButton === 'barcode' && <BarcodeView />}
+        {selectedButton === 'search' && <SearchView onClose={onClose} />}
+        {selectedButton === 'barcode' && <BarcodeView onClose={onClose} />}
       </div>
     </div>
   );

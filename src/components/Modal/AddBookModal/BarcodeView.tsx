@@ -6,7 +6,11 @@ import ScaleLoader from 'react-spinners/ScaleLoader';
 
 const API_BASE_URL = import.meta.env.DEV ? '/api' : import.meta.env.VITE_NAVER_API_URL;
 
-const BarcodeView = () => {
+interface BarcodeViewProps {
+  onClose: () => void;
+}
+
+const BarcodeView = ({ onClose }: BarcodeViewProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [data, setData] = useState<Data>();
   const [result, setResult] = useState<string>('');
@@ -38,7 +42,7 @@ const BarcodeView = () => {
   return (
     <div>
       {result === '' && <video ref={ref} className="rounded-xl border border-gray-100" />}
-      {data && <Card book={data} />}
+      {data && <Card book={data} onClose={onClose} />}
       {isLoading && (
         <div className="flex justify-center py-8">
           <ScaleLoader color="#101828" />
