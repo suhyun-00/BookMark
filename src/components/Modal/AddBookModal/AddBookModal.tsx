@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Scan, Search } from 'lucide-react';
 import SearchView from '@components/Modal/AddBookModal/SearchView';
+import BarcodeView from './BarcodeView';
 
 interface AddBookModalProps {
   onClose: () => void;
@@ -37,6 +38,7 @@ const AddBookModal = ({ onClose }: AddBookModalProps) => {
           </button>
         </div>
         {selectedButton === 'search' && <SearchView />}
+        {selectedButton === 'barcode' && <BarcodeView />}
       </div>
     </div>
   );
