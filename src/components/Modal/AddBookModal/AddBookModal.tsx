@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Scan, Search } from 'lucide-react';
 import SearchView from '@components/Modal/AddBookModal/SearchView';
+import BarcodeView from './BarcodeView';
 
 interface AddBookModalProps {
   onClose: () => void;
@@ -8,6 +9,15 @@ interface AddBookModalProps {
 
 const AddBookModal = ({ onClose }: AddBookModalProps) => {
   const [selectedButton, setSelectedButton] = useState('search');
+  const userCamera = useRef<MediaStream>();
+
+  const checkCamera = async () => {
+    const camera = await navigator?.mediaDevices
+      ?.getUserMedia({ video: true })
+      .catch(() => console.log('camera unavailable'));
+
+    if (camera) userCamera.current = camera;
+  };
 
   return (
     <div
@@ -29,14 +39,20 @@ const AddBookModal = ({ onClose }: AddBookModalProps) => {
           </button>
           <button
             value="barcode"
-            onClick={() => setSelectedButton('barcode')}
+            onClick={async () => {
+              await checkCamera();
+              setSelectedButton('barcode');
+            }}
             className={`flex items-center justify-center gap-5 rounded-lg px-20 py-2 text-sm ${selectedButton === 'barcode' ? 'bg-gray-900 text-white' : 'bg-white hover:bg-gray-200'} hover:cursor-pointer hover:inset-shadow-sm`}
           >
             <Scan className="h-4 w-4" />
             바코드로 추가
           </button>
         </div>
-        {selectedButton === 'search' && <SearchView />}
+        {selectedButton === 'search' && <SearchView onClose={onClose} />}
+        {selectedButton === 'barcode' && (
+          <BarcodeView onClose={onClose} camera={userCamera.current} />
+        )}
       </div>
     </div>
   );

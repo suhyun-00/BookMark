@@ -5,7 +5,12 @@ import db from '@/fireabase';
 
 const API_BASE_URL = import.meta.env.DEV ? '/api' : import.meta.env.VITE_SERVER_URL;
 
-const Card = ({ book }: { book: Data }) => {
+interface CardProps {
+  book: Data;
+  onClose: () => void;
+}
+
+const Card = ({ book, onClose }: CardProps) => {
   const addBook = async () => {
     const booksRef = await getDoc(doc(db, 'books', book.isbn13));
     const condition = query(
@@ -43,6 +48,8 @@ const Card = ({ book }: { book: Data }) => {
         notes: [],
       });
     }
+
+    onClose();
   };
 
   return (

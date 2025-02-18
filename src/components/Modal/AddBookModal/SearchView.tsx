@@ -2,19 +2,27 @@ import { useState } from 'react';
 import { Search } from 'lucide-react';
 import type { Data } from '@customTypes/data';
 import Card from '@components/Modal/AddBookModal/Card';
+import ScaleLoader from 'react-spinners/ScaleLoader';
 
 const API_BASE_URL = import.meta.env.DEV ? '/api' : import.meta.env.VITE_NAVER_API_URL;
 
-const SearchView = () => {
+interface SearchViewProps {
+  onClose: () => void;
+}
+
+const SearchView = ({ onClose }: SearchViewProps) => {
   const [datas, setDatas] = useState<Data[]>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const sendFormData = async (form: HTMLFormElement) => {
     const formData = new FormData(form);
     const keyword = formData.get('keyword');
 
+    setIsLoading(true);
     const response = await fetch(`${API_BASE_URL}/search/${keyword}`);
     const data = await response.json();
     setDatas(data);
+    setIsLoading(false);
   };
 
   const handleOnKeyDown = (event: React.KeyboardEvent<HTMLFormElement>) => {
@@ -57,8 +65,13 @@ const SearchView = () => {
       {datas && (
         <div className="scrollbar mt-6 max-h-72 overflow-y-scroll scroll-smooth">
           {datas.map((book) => (
-            <Card book={book} />
+            <Card book={book} onClose={onClose} />
           ))}
+        </div>
+      )}
+      {isLoading && (
+        <div className="flex justify-center py-8">
+          <ScaleLoader color="#101828" />
         </div>
       )}
     </div>
