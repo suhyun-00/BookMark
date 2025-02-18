@@ -8,9 +8,10 @@ const API_BASE_URL = import.meta.env.DEV ? '/api' : import.meta.env.VITE_NAVER_A
 
 interface BarcodeViewProps {
   onClose: () => void;
+  camera: MediaStream | undefined;
 }
 
-const BarcodeView = ({ onClose }: BarcodeViewProps) => {
+const BarcodeView = ({ onClose, camera }: BarcodeViewProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [data, setData] = useState<Data>();
   const [result, setResult] = useState<string>('');
@@ -41,7 +42,14 @@ const BarcodeView = ({ onClose }: BarcodeViewProps) => {
 
   return (
     <div>
-      {result === '' && <video ref={ref} className="rounded-xl border border-gray-100" />}
+      {camera === undefined && (
+        <div className="flex items-center justify-center py-8 text-gray-500">
+          카메라를 찾을 수 없습니다.
+        </div>
+      )}
+      {camera !== undefined && result === '' && (
+        <video ref={ref} className="w-full rounded-xl border border-gray-100" />
+      )}
       {data && <Card book={data} onClose={onClose} />}
       {isLoading && (
         <div className="flex justify-center py-8">
