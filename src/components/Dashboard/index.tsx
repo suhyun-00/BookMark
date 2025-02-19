@@ -27,7 +27,7 @@ const Dashboard = ({
       setAllBooks(booksData.filter((book) => book !== null));
     };
     getBooks();
-  });
+  }, []);
 
   return (
     <div className="ml-64 min-h-screen w-screen">
