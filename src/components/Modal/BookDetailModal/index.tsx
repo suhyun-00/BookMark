@@ -1,13 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
-import { Book, BookStatusType } from '@customTypes/books';
-import STATUS from '@constants/STATUS';
-import { BookOpen, Star, X } from 'lucide-react';
+
 import { DocumentData, DocumentReference, Timestamp, updateDoc } from 'firebase/firestore';
+import { BookOpen, Star, X } from 'lucide-react';
+import ScaleLoader from 'react-spinners/ScaleLoader';
+
+import STATUS from '@constants/STATUS';
+import { Book, BookStatusType } from '@customTypes/books';
+
 import { deleteBook, fetchBook, fetchUserBook } from '@api/bookApi';
+
 import BookDescription from '@components/Modal/BookDetailModal/BookDescription';
 import DateField from '@components/Modal/BookDetailModal/DateField';
 import DrawStar from '@components/Modal/BookDetailModal/DrawStar';
-import ScaleLoader from 'react-spinners/ScaleLoader';
 
 interface BookDetailModalProps {
   onClose: () => void;

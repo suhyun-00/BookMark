@@ -1,8 +1,11 @@
 import { useState } from 'react';
+
 import { Search } from 'lucide-react';
-import type { Data } from '@customTypes/data';
-import Card from '@components/Modal/AddBookModal/Card';
 import ScaleLoader from 'react-spinners/ScaleLoader';
+
+import type { Data } from '@customTypes/data';
+
+import Card from '@components/Modal/AddBookModal/Card';
 
 const API_BASE_URL = import.meta.env.DEV ? '/api' : import.meta.env.VITE_NAVER_API_URL;
 

@@ -1,11 +1,14 @@
 import { useState } from 'react';
-import SideBar from '@components/SideBar';
+
+import DEFAULT_BOOK from '@constants/DEFAULT_BOOK';
+import type { Book, BookStatusType } from '@customTypes/books';
+
+import { fetchBook, fetchUserBook } from '@api/bookApi';
+
 import Dashboard from '@components/Dashboard';
 import AddBookModal from '@components/Modal/AddBookModal';
 import BookDetailModal from '@components/Modal/BookDetailModal';
-import type { Book, BookStatusType } from '@customTypes/books';
-import DEFAULT_BOOK from '@constants/DEFAULT_BOOK';
-import { fetchBook, fetchUserBook } from '@/api/bookApi';
+import SideBar from '@components/SideBar';
 
 const Home = () => {
   const [currentMenu, setCurrentMenu] = useState('all');

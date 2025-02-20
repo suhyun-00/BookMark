@@ -1,6 +1,8 @@
 import { doc, collection, setDoc, addDoc, getDoc, query, where, getDocs } from 'firebase/firestore';
 import { Plus } from 'lucide-react';
+
 import type { Data } from '@customTypes/data';
+
 import db from '@/fireabase';
 
 const API_BASE_URL = import.meta.env.DEV ? '/api' : import.meta.env.VITE_SERVER_URL;

@@ -1,7 +1,9 @@
 import { useRef, useState } from 'react';
+
 import { Scan, Search } from 'lucide-react';
+
+import BarcodeView from '@components/Modal/AddBookModal/BarcodeView';
 import SearchView from '@components/Modal/AddBookModal/SearchView';
-import BarcodeView from './BarcodeView';
 
 interface AddBookModalProps {
   onClose: () => void;

@@ -1,4 +1,5 @@
 import { Home, BookMarked, CircleCheckBig, Clock, Pause } from 'lucide-react';
+
 const MENU_ITEMS = [
   {
     icon: Home,

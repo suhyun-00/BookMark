@@ -1,5 +1,6 @@
-import { Book } from '@customTypes/books';
 import { DocumentData } from 'firebase/firestore';
+
+import { Book } from '@customTypes/books';
 
 interface BookDescriptionProps {
   bookSnap: DocumentData | undefined;

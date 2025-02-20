@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
-import { fetchBooks } from '@/api/bookApi';
+
+import { Book } from '@customTypes/books';
+
+import { fetchBooks } from '@api/bookApi';
+
 import Header from '@components/Dashboard/Header';
 import View from '@components/Dashboard/View';
-import { Book } from '@customTypes/books';
 
 interface DashboardProps {
   currentMenu: string;
