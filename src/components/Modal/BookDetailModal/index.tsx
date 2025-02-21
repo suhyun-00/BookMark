@@ -9,7 +9,7 @@ import { fetchBook, deleteBook } from '@api/bookApi';
 
 import BookContent from '@components/Modal/BookDetailModal/BookContent';
 import BookOverview from '@components/Modal/BookDetailModal/BookOverview';
-import ConfirmDelete from '@components/Modal/BookDetailModal/ConfirmDelete';
+import DeleteModal from '@components/Modal/BookDetailModal/DeleteModal';
 
 interface BookDetailModalProps {
   onClose: () => void;
@@ -61,7 +61,7 @@ const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalPro
         >
           서재에서 삭제하기
         </button>
-        {isClicked && <ConfirmDelete setIsClicked={setIsClicked} handleDelete={handleDelete} />}
+        {isClicked && <DeleteModal setIsClicked={setIsClicked} handleDelete={handleDelete} />}
       </div>
       {isLoading && (
         <div className="fixed inset-0 flex h-full w-full items-center justify-center bg-gray-900/20">

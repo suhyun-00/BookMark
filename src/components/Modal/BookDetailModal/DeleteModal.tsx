@@ -3,7 +3,7 @@ interface ConfirmDeleteProps {
   handleDelete: () => Promise<void>;
 }
 
-const ConfirmDelete = ({ setIsClicked, handleDelete }: ConfirmDeleteProps) => {
+const DeleteModal = ({ setIsClicked, handleDelete }: ConfirmDeleteProps) => {
   return (
     <div
       onClick={() => setIsClicked(false)}
@@ -30,4 +30,4 @@ const ConfirmDelete = ({ setIsClicked, handleDelete }: ConfirmDeleteProps) => {
   );
 };
 
-export default ConfirmDelete;
+export default DeleteModal;

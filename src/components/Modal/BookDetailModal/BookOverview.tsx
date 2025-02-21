@@ -8,7 +8,7 @@ import { Book, BookStatusType } from '@customTypes/books';
 import useBookOverview from '@hooks/useBookOverview';
 
 import DateField from '@components/Modal/BookDetailModal/DateField';
-import DrawStar from '@components/Modal/BookDetailModal/DrawStar';
+import StarRate from '@components/Modal/BookDetailModal/StarRate';
 
 interface BookOverviewProps {
   book: Book;
@@ -62,7 +62,7 @@ const BookOverview = ({
             )}
           </div>
           {isEditting ? (
-            <DrawStar rating={rating} setRating={setRating} />
+            <StarRate rating={rating} setRating={setRating} />
           ) : (
             <div className="flex items-center gap-1 text-sm text-amber-500">
               <Star className="h-4 w-4 fill-current" />
