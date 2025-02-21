@@ -1,7 +1,7 @@
 interface SideBarMenuProps {
   icon: React.ElementType;
   label: string;
-  active?: boolean;
+  active: boolean;
   setCurrentMenu: () => void;
 }
 
