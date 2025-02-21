@@ -1,12 +1,11 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 
-import { DocumentData, DocumentReference, updateDoc, Timestamp } from 'firebase/firestore';
 import { BookOpen, Star, X } from 'lucide-react';
 
 import STATUS from '@constants/STATUS';
 import { Book, BookStatusType } from '@customTypes/books';
 
-import { fetchUserBook } from '@api/bookApi';
+import useBookOverview from '@hooks/useBookOverview';
 
 import DateField from '@components/Modal/BookDetailModal/DateField';
 import DrawStar from '@components/Modal/BookDetailModal/DrawStar';
@@ -19,12 +18,6 @@ interface BookOverviewProps {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const formatDate = (timestamp: Timestamp) => {
-  return new Date(timestamp.toDate().getTime() - timestamp.toDate().getTimezoneOffset() * 60000)
-    .toISOString()
-    .split('T')[0];
-};
-
 const BookOverview = ({
   book,
   totalPage,
@@ -32,61 +25,20 @@ const BookOverview = ({
   handleBookUpdate,
   setIsLoading,
 }: BookOverviewProps) => {
-  const [docRef, setDocRef] = useState<DocumentReference<DocumentData, DocumentData>>();
   const [isEditting, setIsEditting] = useState<boolean>(false);
 
-  const [status, setStatus] = useState<BookStatusType>(book.status);
-  const [currentPage, setCurrentPage] = useState<number>(0);
-  const [rating, setRating] = useState<number>(book.rating);
-  const [startAt, setStartAt] = useState<string>(book.startAt ? formatDate(book.startAt) : '');
-  const [finishedAt, setFinishedAt] = useState<string>(
-    book.finishedAt ? formatDate(book.finishedAt) : '',
-  );
-
-  const prevCurrentPage = useRef<number>(currentPage);
-
-  const handleUpdate = async () => {
-    setIsLoading(true);
-    const updateFields: Record<string, Timestamp | BookStatusType | number> = {};
-
-    if (String(book.startAt) !== startAt) {
-      updateFields.startAt = Timestamp.fromDate(new Date(startAt + 'T00:00:00'));
-    }
-
-    if (String(book.finishedAt) !== finishedAt) {
-      updateFields.finishedAt = Timestamp.fromDate(new Date(finishedAt + 'T00:00:00'));
-    }
-
-    if (book.rating !== rating) {
-      updateFields.rating = rating;
-    }
-
-    if (prevCurrentPage.current !== currentPage) {
-      updateFields.currentPage = currentPage;
-    }
-
-    if (book.status !== status) {
-      updateFields.status = status;
-    }
-
-    if (Object.keys(updateFields).length !== 0) {
-      if (docRef) {
-        await updateDoc(docRef, updateFields);
-        await handleBookUpdate();
-      }
-    }
-    setIsLoading(false);
-  };
-
-  useEffect(() => {
-    const getData = async () => {
-      const { docRef, docSnap } = await fetchUserBook(book.id.toString());
-      if (docRef) setDocRef(docRef);
-      if (docSnap.exists()) setCurrentPage(docSnap.data().currentPage);
-    };
-
-    getData();
-  }, [book.id]);
+  const {
+    currentPage,
+    rating,
+    startAt,
+    finishedAt,
+    setStatus,
+    setCurrentPage,
+    setRating,
+    setStartAt,
+    setFinishedAt,
+    handleUpdate,
+  } = useBookOverview({ book, handleBookUpdate, setIsLoading });
 
   return (
     <div className="flex items-start gap-8">
