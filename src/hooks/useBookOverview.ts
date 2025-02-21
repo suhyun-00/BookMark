@@ -19,8 +19,6 @@ const formatDate = (timestamp: Timestamp) => {
 };
 
 const useBookOverview = ({ book, handleBookUpdate, setIsLoading }: useBookOverviewProps) => {
-  const [docRef, setDocRef] = useState<DocumentReference<DocumentData, DocumentData>>();
-
   const [status, setStatus] = useState<BookStatusType>(book.status);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [rating, setRating] = useState<number>(book.rating);
@@ -29,6 +27,7 @@ const useBookOverview = ({ book, handleBookUpdate, setIsLoading }: useBookOvervi
     book.finishedAt ? formatDate(book.finishedAt) : '',
   );
 
+  const documentRef = useRef<DocumentReference<DocumentData, DocumentData>>();
   const prevCurrentPage = useRef<number>(currentPage);
 
   const handleUpdate = async () => {
@@ -56,8 +55,8 @@ const useBookOverview = ({ book, handleBookUpdate, setIsLoading }: useBookOvervi
     }
 
     if (Object.keys(updateFields).length !== 0) {
-      if (docRef) {
-        await updateDoc(docRef, updateFields);
+      if (documentRef.current) {
+        await updateDoc(documentRef.current, updateFields);
         await handleBookUpdate();
       }
     }
@@ -67,7 +66,7 @@ const useBookOverview = ({ book, handleBookUpdate, setIsLoading }: useBookOvervi
   useEffect(() => {
     const getData = async () => {
       const { docRef, docSnap } = await fetchUserBook(book.id.toString());
-      if (docRef) setDocRef(docRef);
+      if (docRef) documentRef.current = docRef;
       if (docSnap.exists()) setCurrentPage(docSnap.data().currentPage);
     };
     getData();
