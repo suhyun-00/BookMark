@@ -42,11 +42,7 @@ const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalPro
     book.finishedAt ? formatDate(book.finishedAt) : '',
   );
 
-  const prevStartAt = useRef<string>(startAt);
-  const prevFinishedAt = useRef<string>(finishedAt);
-  const prevRating = useRef<number>(rating);
   const prevCurrentPage = useRef<number>(currentPage);
-  const prevStatus = useRef<BookStatusType>(status);
 
   const handleDelete = async () => {
     await deleteBook(book.id.toString());
@@ -58,29 +54,24 @@ const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalPro
     setIsLoading(true);
     const updateFields: Record<string, Timestamp | BookStatusType | number> = {};
 
-    if (prevStartAt.current !== startAt) {
+    if (String(book.startAt) !== startAt) {
       updateFields.startAt = Timestamp.fromDate(new Date(startAt + 'T00:00:00'));
-      prevStartAt.current = startAt;
     }
 
-    if (prevFinishedAt.current !== finishedAt) {
+    if (String(book.finishedAt) !== finishedAt) {
       updateFields.finishedAt = Timestamp.fromDate(new Date(finishedAt + 'T00:00:00'));
-      prevFinishedAt.current = finishedAt;
     }
 
-    if (prevRating.current !== rating) {
+    if (book.rating !== rating) {
       updateFields.rating = rating;
-      prevRating.current = rating;
     }
 
     if (prevCurrentPage.current !== currentPage) {
       updateFields.currentPage = currentPage;
-      prevCurrentPage.current = currentPage;
     }
 
-    if (prevStatus.current !== status) {
+    if (book.status !== status) {
       updateFields.status = status;
-      prevStatus.current = status;
     }
 
     if (Object.keys(updateFields).length !== 0) {
