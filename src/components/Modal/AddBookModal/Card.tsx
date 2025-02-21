@@ -1,11 +1,8 @@
-import { doc, collection, setDoc, addDoc, getDoc, query, where, getDocs } from 'firebase/firestore';
 import { Plus } from 'lucide-react';
 
 import type { Data } from '@customTypes/data';
 
-import db from '@/fireabase';
-
-const API_BASE_URL = import.meta.env.DEV ? '/api' : import.meta.env.VITE_SERVER_URL;
+import { addBook } from '@api/bookApi';
 
 interface CardProps {
   book: Data;
@@ -13,44 +10,8 @@ interface CardProps {
 }
 
 const Card = ({ book, onClose }: CardProps) => {
-  const addBook = async () => {
-    const booksRef = await getDoc(doc(db, 'books', book.isbn13));
-    const condition = query(
-      collection(db, 'userBooks'),
-      where('userId', '==', 'test'),
-      where('bookId', '==', book.isbn13),
-    );
-    const userBooksSanpshot = await getDocs(condition);
-
-    if (!booksRef.exists()) {
-      const response = await fetch(`${API_BASE_URL}/lookup/${book.isbn13}`);
-      const { page } = await response.json();
-
-      await setDoc(doc(db, 'books', book.isbn13), {
-        title: book.title,
-        author: book.author.replace(/ 지음.*/, ''),
-        cover: book.cover,
-        publisher: book.publisher,
-        pubDate: book.pubDate,
-        page: page,
-        description: book.description,
-        category: book.categoryName.split('>'),
-      });
-    }
-
-    if (userBooksSanpshot.docs.length === 0) {
-      await addDoc(collection(db, 'userBooks'), {
-        userId: 'test',
-        bookId: book.isbn13,
-        status: 'planned',
-        currentPage: 0,
-        startAt: null,
-        finishedAt: null,
-        rating: 0,
-        notes: [],
-      });
-    }
-
+  const handleAddBook = async () => {
+    await addBook(book);
     onClose();
   };
 
@@ -66,7 +27,7 @@ const Card = ({ book, onClose }: CardProps) => {
           </div>
         </div>
         <button
-          onClick={addBook}
+          onClick={handleAddBook}
           className="my-auto flex items-center justify-center gap-3 rounded-lg bg-gray-900 px-4 py-2 text-sm text-white hover:cursor-pointer hover:bg-neutral-700"
         >
           <Plus className="h-3 w-3" />
