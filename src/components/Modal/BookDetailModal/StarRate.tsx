@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import Star from '@components/Modal/BookDetailModal/Star';
 
 interface DrawStarProps {
@@ -6,7 +7,7 @@ interface DrawStarProps {
   setRating: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const DrawStar = ({ rating, setRating }: DrawStarProps) => {
+const StarRate = ({ rating, setRating }: DrawStarProps) => {
   const [width, setWidth] = useState<string>(`${rating * 20}%`);
 
   const calculateWidth = (value: number) => {
@@ -37,4 +38,4 @@ const DrawStar = ({ rating, setRating }: DrawStarProps) => {
   );
 };
 
-export default DrawStar;
+export default StarRate;

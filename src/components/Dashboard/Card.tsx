@@ -1,6 +1,7 @@
-import type { Book } from '@customTypes/books';
 import { Star } from 'lucide-react';
+
 import STATUS from '@constants/STATUS';
+import type { Book } from '@customTypes/books';
 
 interface CardProps {
   key: number;

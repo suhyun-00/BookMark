@@ -1,6 +1,8 @@
 import { Bookmark } from 'lucide-react';
-import SideBarMenu from '@components/SideBar/SideBarMenu';
+
 import MENU_ITEMS from '@constants/MENU_ITEMS';
+
+import SideBarMenu from '@components/SideBar/SideBarMenu';
 
 interface SideBarProps {
   currentMenu: string;

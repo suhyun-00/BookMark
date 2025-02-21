@@ -1,5 +1,19 @@
-import { doc, collection, getDoc, getDocs, query, where, deleteDoc } from 'firebase/firestore';
+import {
+  doc,
+  collection,
+  getDoc,
+  getDocs,
+  query,
+  where,
+  deleteDoc,
+  setDoc,
+  addDoc,
+} from 'firebase/firestore';
+
+import API_BASE_URL from '@constants/API_BASE_URL';
 import type { Book, BookStatusType } from '@customTypes/books';
+import { Data } from '@customTypes/data';
+
 import db from '@/fireabase';
 
 export const fetchBooks = async (userId: string) => {
@@ -56,4 +70,43 @@ export const fetchUserBook = async (bookId: string) => {
 export const deleteBook = async (bookId: string) => {
   const docId = await fetchDocId(bookId);
   await deleteDoc(doc(db, 'userBooks', docId));
+};
+
+export const addBook = async (book: Data, userId: string) => {
+  const booksRef = await getDoc(doc(db, 'books', book.isbn13));
+  const condition = query(
+    collection(db, 'userBooks'),
+    where('userId', '==', userId),
+    where('bookId', '==', book.isbn13),
+  );
+  const userBooksSanpshot = await getDocs(condition);
+
+  if (!booksRef.exists()) {
+    const response = await fetch(`${API_BASE_URL}/lookup/${book.isbn13}`);
+    const { page } = await response.json();
+
+    await setDoc(doc(db, 'books', book.isbn13), {
+      title: book.title,
+      author: book.author.replace(/ 지음.*/, ''),
+      cover: book.cover,
+      publisher: book.publisher,
+      pubDate: book.pubDate,
+      page: page,
+      description: book.description,
+      category: book.categoryName.split('>'),
+    });
+  }
+
+  if (userBooksSanpshot.docs.length === 0) {
+    await addDoc(collection(db, 'userBooks'), {
+      userId: userId,
+      bookId: book.isbn13,
+      status: 'planned',
+      currentPage: 0,
+      startAt: null,
+      finishedAt: null,
+      rating: 0,
+      notes: [],
+    });
+  }
 };

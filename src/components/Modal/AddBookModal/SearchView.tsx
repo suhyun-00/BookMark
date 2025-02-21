@@ -1,10 +1,12 @@
 import { useState } from 'react';
+
 import { Search } from 'lucide-react';
-import type { Data } from '@customTypes/data';
-import Card from '@components/Modal/AddBookModal/Card';
 import ScaleLoader from 'react-spinners/ScaleLoader';
 
-const API_BASE_URL = import.meta.env.DEV ? '/api' : import.meta.env.VITE_NAVER_API_URL;
+import API_BASE_URL from '@constants/API_BASE_URL';
+import type { Data } from '@customTypes/data';
+
+import Card from '@components/Modal/AddBookModal/Card';
 
 interface SearchViewProps {
   onClose: () => void;

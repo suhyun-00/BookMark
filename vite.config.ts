@@ -1,7 +1,10 @@
-import { defineConfig } from 'vite';
 import { resolve } from 'path';
-import react from '@vitejs/plugin-react';
+
+import { defineConfig } from 'vite';
+
 import tailwindcss from '@tailwindcss/vite';
+import react from '@vitejs/plugin-react';
+
 import 'dotenv/config';
 
 // https://vite.dev/config/
@@ -21,6 +24,7 @@ export default defineConfig({
     alias: {
       '@': resolve(__dirname, 'src'),
       '@api': resolve(__dirname, 'src/api'),
+      '@hooks': resolve(__dirname, 'src/hooks'),
       '@constants': resolve(__dirname, 'src/constants'),
       '@components': resolve(__dirname, 'src/components'),
       '@customTypes': resolve(__dirname, 'src/types'),
