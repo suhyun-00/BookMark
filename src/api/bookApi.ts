@@ -73,11 +73,11 @@ export const deleteBook = async (bookId: string) => {
   await deleteDoc(doc(db, 'userBooks', docId));
 };
 
-export const addBook = async (book: Data) => {
+export const addBook = async (book: Data, userId: string) => {
   const booksRef = await getDoc(doc(db, 'books', book.isbn13));
   const condition = query(
     collection(db, 'userBooks'),
-    where('userId', '==', 'test'),
+    where('userId', '==', userId),
     where('bookId', '==', book.isbn13),
   );
   const userBooksSanpshot = await getDocs(condition);
@@ -100,7 +100,7 @@ export const addBook = async (book: Data) => {
 
   if (userBooksSanpshot.docs.length === 0) {
     await addDoc(collection(db, 'userBooks'), {
-      userId: 'test',
+      userId: userId,
       bookId: book.isbn13,
       status: 'planned',
       currentPage: 0,

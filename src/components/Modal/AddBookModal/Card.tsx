@@ -10,8 +10,10 @@ interface CardProps {
 }
 
 const Card = ({ book, onClose }: CardProps) => {
+  const userId = 'test';
+
   const handleAddBook = async () => {
-    await addBook(book);
+    await addBook(book, userId);
     onClose();
   };
 
