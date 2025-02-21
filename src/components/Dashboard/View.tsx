@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-
 import type { Book } from '@customTypes/books';
+
+import useBookFilter from '@hooks/useBookFilter';
 
 import Card from '@components/Dashboard/Card';
 
@@ -13,31 +13,7 @@ interface ViewProps {
 }
 
 const View = ({ allBooks, keyword, currentMenu, setIsOpen, setSelectedBook }: ViewProps) => {
-  const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
-
-  useEffect(() => {
-    const filterBooks = async () => {
-      if (currentMenu === 'all') {
-        setFilteredBooks(allBooks);
-      } else {
-        setFilteredBooks(allBooks.filter((book) => book.status === currentMenu));
-      }
-
-      if (keyword !== '') {
-        const formattedKeyword = keyword.replace(/\s/g, '').toLowerCase();
-
-        setFilteredBooks((books) =>
-          books.filter(
-            (book) =>
-              book.title.replace(/\s/g, '').toLowerCase().includes(formattedKeyword) ||
-              book.author.replace(/\s/g, '').toLowerCase().includes(formattedKeyword),
-          ),
-        );
-      }
-    };
-
-    filterBooks();
-  }, [allBooks, keyword, currentMenu]);
+  const filteredBooks = useBookFilter({ allBooks, keyword, currentMenu });
 
   return (
     <div className="mr-4 ml-9 grid grid-cols-2 grid-rows-3 gap-5">
