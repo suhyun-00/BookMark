@@ -10,12 +10,11 @@ import {
   addDoc,
 } from 'firebase/firestore';
 
+import API_BASE_URL from '@constants/API_BASE_URL';
 import type { Book, BookStatusType } from '@customTypes/books';
 import { Data } from '@customTypes/data';
 
 import db from '@/fireabase';
-
-const API_BASE_URL = import.meta.env.DEV ? '/api' : import.meta.env.VITE_SERVER_URL;
 
 export const fetchBooks = async (userId: string) => {
   const condition = query(collection(db, 'userBooks'), where('userId', '==', userId));

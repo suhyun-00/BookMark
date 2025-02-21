@@ -3,11 +3,10 @@ import { useEffect, useState } from 'react';
 import ScaleLoader from 'react-spinners/ScaleLoader';
 import { useZxing } from 'react-zxing';
 
+import API_BASE_URL from '@constants/API_BASE_URL';
 import { Data } from '@customTypes/data';
 
 import Card from '@components/Modal/AddBookModal/Card';
-
-const API_BASE_URL = import.meta.env.DEV ? '/api' : import.meta.env.VITE_NAVER_API_URL;
 
 interface BarcodeViewProps {
   onClose: () => void;
