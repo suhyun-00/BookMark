@@ -89,9 +89,9 @@ const BookOverview = ({
             <X className="h-5 w-5" />
           </div>
         </div>
-        <div className="w-full truncate">
-          <div className="mb-2 text-2xl font-medium">{book.title}</div>
-          <div className="mb-5 text-gray-500">{book.author}</div>
+        <div className="w-[39.5rem]">
+          <div className="mb-2 truncate text-2xl font-medium">{book.title}</div>
+          <div className="mb-5 truncate text-gray-500">{book.author}</div>
         </div>
         <div className="mb-5 grid grid-cols-3 gap-4 text-gray-500">
           <DateField
