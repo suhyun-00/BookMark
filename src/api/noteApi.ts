@@ -1,4 +1,12 @@
-import { doc, getDoc } from 'firebase/firestore';
+import {
+  collection,
+  doc,
+  addDoc,
+  getDoc,
+  updateDoc,
+  Timestamp,
+  arrayUnion,
+} from 'firebase/firestore';
 
 import { Note } from '@customTypes/note';
 
@@ -9,8 +17,28 @@ export const fetchNotes = async (notesId: Array<string>) => {
     notesId.map(async (noteId) => {
       const noteRef = doc(db, 'notes', noteId);
       const noteData = await getDoc(noteRef);
-      return noteData.data() as Note;
+      return { id: noteRef.id, ...noteData.data() } as Note;
     }),
   );
   return notes;
+};
+
+export const addNote = async (userId: string, userBookId: string, content: string) => {
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+
+  const noteRef = await addDoc(collection(db, 'notes'), {
+    userBookId: userBookId,
+    userId: userId,
+    content: content,
+    createAt: Timestamp.fromDate(now),
+    updatedAt: Timestamp.fromDate(now),
+  });
+
+  const bookRef = doc(db, 'userBooks', userBookId);
+  if (bookRef) {
+    await updateDoc(bookRef, {
+      notes: arrayUnion(noteRef.id),
+    });
+  }
 };

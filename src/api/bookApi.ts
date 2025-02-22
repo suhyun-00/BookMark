@@ -64,7 +64,7 @@ export const fetchUserBook = async (bookId: string) => {
   const docRef = doc(db, 'userBooks', docId);
   const docSnap = await getDoc(docRef);
 
-  return { docRef, docSnap };
+  return { docRef, docSnap, docId };
 };
 
 export const deleteBook = async (bookId: string) => {

@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 import { DocumentData } from 'firebase/firestore';
+import ScaleLoader from 'react-spinners/ScaleLoader';
 
 import { Book } from '@customTypes/books';
 
@@ -17,12 +18,16 @@ interface BookContentProps {
 const BookContent = ({ book, bookSnap }: BookContentProps) => {
   const [selected, setSelected] = useState<string>('description');
   const [notesId, setNotesId] = useState<Array<string>>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const userBookId = useRef<string>('');
 
   useEffect(() => {
     const handleNotesId = async () => {
-      const { docSnap } = await fetchUserBook(book.id.toString());
+      const { docSnap, docId } = await fetchUserBook(book.id.toString());
       const data = docSnap.data();
       if (data) setNotesId(data.notes);
+      if (docId) userBookId.current = docId;
     };
 
     handleNotesId();
@@ -45,7 +50,14 @@ const BookContent = ({ book, bookSnap }: BookContentProps) => {
         </button>
       </div>
       {selected === 'description' && <BookDetails bookSnap={bookSnap} book={book} />}
-      {selected === 'note' && <BookNotes notesId={notesId} />}
+      {selected === 'note' && (
+        <BookNotes userBookId={userBookId.current} notesId={notesId} setIsLoading={setIsLoading} />
+      )}
+      {isLoading && (
+        <div className="fixed inset-0 flex items-center justify-center">
+          <ScaleLoader color="#101828" />
+        </div>
+      )}
     </div>
   );
 };
