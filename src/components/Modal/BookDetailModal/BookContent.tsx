@@ -4,8 +4,10 @@ import { DocumentData } from 'firebase/firestore';
 import ScaleLoader from 'react-spinners/ScaleLoader';
 
 import { Book } from '@customTypes/books';
+import { Note } from '@customTypes/note';
 
 import { fetchUserBook } from '@api/bookApi';
+import { fetchNotes } from '@api/noteApi';
 
 import BookDetails from '@components/Modal/BookDetailModal/BookDetails';
 import BookNotes from '@components/Modal/BookDetailModal/BookNotes';
@@ -19,8 +21,14 @@ const BookContent = ({ book, bookSnap }: BookContentProps) => {
   const [selected, setSelected] = useState<string>('description');
   const [notesId, setNotesId] = useState<Array<string>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [notes, setNotes] = useState<Note[]>([]);
 
   const userBookId = useRef<string>('');
+
+  const handleNotes = async () => {
+    const notes = await fetchNotes(notesId);
+    setNotes(notes);
+  };
 
   useEffect(() => {
     const handleNotesId = async () => {
@@ -28,6 +36,7 @@ const BookContent = ({ book, bookSnap }: BookContentProps) => {
       const data = docSnap.data();
       if (data) setNotesId(data.notes);
       if (docId) userBookId.current = docId;
+      handleNotes();
     };
 
     handleNotesId();
@@ -51,7 +60,12 @@ const BookContent = ({ book, bookSnap }: BookContentProps) => {
       </div>
       {selected === 'description' && <BookDetails bookSnap={bookSnap} book={book} />}
       {selected === 'note' && (
-        <BookNotes userBookId={userBookId.current} notesId={notesId} setIsLoading={setIsLoading} />
+        <BookNotes
+          notes={notes}
+          userBookId={userBookId.current}
+          setIsLoading={setIsLoading}
+          handleNotes={handleNotes}
+        />
       )}
       {isLoading && (
         <div className="fixed inset-0 flex items-center justify-center">

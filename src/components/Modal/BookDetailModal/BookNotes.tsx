@@ -1,33 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { Feather } from 'lucide-react';
 
 import { Note } from '@customTypes/note';
 
-import { fetchNotes } from '@api/noteApi';
-
 import Card from '@components/Modal/BookDetailModal/Card';
 import NoteModal from '@components/Modal/BookDetailModal/NoteModal';
 
 interface BookNotesProps {
+  notes: Note[];
   userBookId: string;
-  notesId: Array<string>;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  handleNotes: () => Promise<void>;
 }
 
-const BookNotes = ({ userBookId, notesId, setIsLoading }: BookNotesProps) => {
-  const [notes, setNotes] = useState<Note[]>([]);
+const BookNotes = ({ notes, userBookId, setIsLoading, handleNotes }: BookNotesProps) => {
   const [selectedNote, setSelectedNote] = useState<Note | undefined>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  useEffect(() => {
-    const handleNotes = async () => {
-      const notes = await fetchNotes(notesId);
-      setNotes(notes);
-    };
-
-    handleNotes();
-  }, [notesId]);
 
   return (
     <div className="flex flex-col items-end justify-center gap-2">
@@ -56,6 +45,7 @@ const BookNotes = ({ userBookId, notesId, setIsLoading }: BookNotesProps) => {
           setIsOpen={setIsOpen}
           setIsLoading={setIsLoading}
           setSelectedNote={setSelectedNote}
+          handleNotes={handleNotes}
         />
       )}
     </div>

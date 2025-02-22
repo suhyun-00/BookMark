@@ -14,6 +14,7 @@ interface AddNoteModalProps {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedNote: React.Dispatch<React.SetStateAction<Note | undefined>>;
+  handleNotes: () => void;
 }
 
 const NoteModal = ({
@@ -22,6 +23,7 @@ const NoteModal = ({
   setIsOpen,
   setIsLoading,
   setSelectedNote,
+  handleNotes,
 }: AddNoteModalProps) => {
   const selectedNoteId = useRef<string>(selectedNote ? selectedNote.id : '');
   const selectedNoteContent = useRef<string>(selectedNote ? selectedNote.content : '');
@@ -46,6 +48,7 @@ const NoteModal = ({
         await addNote(userId, userBookId, content.toString());
       }
       setIsLoading(false);
+      handleNotes();
     }
     setIsOpen(false);
   };
