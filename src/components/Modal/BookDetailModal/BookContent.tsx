@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { DocumentData } from 'firebase/firestore';
 
 import { Book } from '@customTypes/books';
 
+import { fetchUserBook } from '@api/bookApi';
+
 import BookDetails from '@components/Modal/BookDetailModal/BookDetails';
+import BookNotes from '@components/Modal/BookDetailModal/BookNotes';
 
 interface BookContentProps {
   book: Book;
@@ -13,6 +16,17 @@ interface BookContentProps {
 
 const BookContent = ({ book, bookSnap }: BookContentProps) => {
   const [selected, setSelected] = useState<string>('description');
+  const [notesId, setNotesId] = useState<Array<string>>([]);
+
+  useEffect(() => {
+    const handleNotesId = async () => {
+      const { docSnap } = await fetchUserBook(book.id.toString());
+      const data = docSnap.data();
+      if (data) setNotesId(data.notes);
+    };
+
+    handleNotesId();
+  }, [book.id]);
 
   return (
     <div>
@@ -31,7 +45,7 @@ const BookContent = ({ book, bookSnap }: BookContentProps) => {
         </button>
       </div>
       {selected === 'description' && <BookDetails bookSnap={bookSnap} book={book} />}
-      {selected === 'note' && <></>}
+      {selected === 'note' && <BookNotes notesId={notesId} />}
     </div>
   );
 };
