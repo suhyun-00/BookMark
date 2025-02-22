@@ -55,7 +55,7 @@ const NoteModal = ({
 
   const handleDelete = async () => {
     setIsLoading(true);
-    await deleteNote(selectedNoteId.current, userBookId);
+    await deleteNote(selectedNoteId.current);
     setIsLoading(false);
     setIsOpen(false);
   };

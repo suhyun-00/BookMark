@@ -19,22 +19,19 @@ interface BookContentProps {
 
 const BookContent = ({ book, bookSnap }: BookContentProps) => {
   const [selected, setSelected] = useState<string>('description');
-  const [notesId, setNotesId] = useState<Array<string>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [notes, setNotes] = useState<Note[]>([]);
 
   const userBookId = useRef<string>('');
 
   const handleNotes = async () => {
-    const notes = await fetchNotes(notesId);
+    const notes = await fetchNotes(userBookId.current);
     setNotes(notes);
   };
 
   useEffect(() => {
     const handleNotesId = async () => {
-      const { docSnap, docId } = await fetchUserBook(book.id.toString());
-      const data = docSnap.data();
-      if (data) setNotesId(data.notes);
+      const { docId } = await fetchUserBook(book.id.toString());
       if (docId) userBookId.current = docId;
       handleNotes();
     };
