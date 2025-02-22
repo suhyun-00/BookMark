@@ -8,6 +8,7 @@ import {
   query,
   where,
   getDocs,
+  orderBy,
 } from 'firebase/firestore';
 
 import { Note } from '@customTypes/note';
@@ -17,7 +18,8 @@ import db from '@/fireabase';
 export const fetchNotes = async (userBookId: string) => {
   const condition = query(
     collection(db, 'notes'),
-    where('userBookId', '==', userBookId)
+    where('userBookId', '==', userBookId),
+    orderBy('updatedAt', 'desc'),
   );
   const notesSnapshot = await getDocs(condition);
   return notesSnapshot.docs.map(
@@ -36,7 +38,7 @@ export const addNote = async (userId: string, userBookId: string, content: strin
     content: content,
     createAt: Timestamp.fromDate(new Date()),
     updatedAt: Timestamp.fromDate(new Date()),
-    });
+  });
 };
 
 export const updateNote = async (noteId: string, content: string) => {
