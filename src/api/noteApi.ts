@@ -6,6 +6,7 @@ import {
   updateDoc,
   Timestamp,
   arrayUnion,
+  deleteDoc,
 } from 'firebase/firestore';
 
 import { Note } from '@customTypes/note';
@@ -49,6 +50,21 @@ export const updateNote = async (noteId: string, content: string) => {
     await updateDoc(noteRef, {
       content: content,
       updatedAt: Timestamp.fromDate(new Date()),
+    });
+  }
+};
+
+export const deleteNote = async (noteId: string, userBookId: string) => {
+  await deleteDoc(doc(db, 'notes', noteId));
+
+  const bookRef = doc(db, 'userBooks', userBookId);
+  const bookSnap = await getDoc(bookRef);
+  if (bookSnap.exists()) {
+    const bookData = bookSnap.data();
+    const notes = bookData.notes;
+    const updatedNotes = notes.filter((note: string) => note !== noteId);
+    await updateDoc(bookRef, {
+      notes: updatedNotes,
     });
   }
 };

@@ -4,7 +4,7 @@ import { X } from 'lucide-react';
 
 import { Note } from '@customTypes/note';
 
-import { addNote, updateNote } from '@api/noteApi';
+import { addNote, deleteNote, updateNote } from '@api/noteApi';
 
 import { handleOnKeyDown, handleOnSubmit } from '@utils/handleFormData';
 
@@ -50,6 +50,13 @@ const NoteModal = ({
     setIsOpen(false);
   };
 
+  const handleDelete = async () => {
+    setIsLoading(true);
+    await deleteNote(selectedNoteId.current, userBookId);
+    setIsLoading(false);
+    setIsOpen(false);
+  };
+
   return (
     <div
       onClick={handleClose}
@@ -79,6 +86,14 @@ const NoteModal = ({
           className="scrollbar h-40 w-full resize-none scroll-smooth rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-500 inset-shadow-sm focus:outline-none"
         ></textarea>
         <div className="flex gap-2">
+          {selectedNote && (
+            <button
+              onClick={handleDelete}
+              className="rounded-lg bg-gray-200 px-4 py-1 text-red-500 hover:cursor-pointer hover:text-red-700 hover:inset-shadow-sm"
+            >
+              삭제
+            </button>
+          )}
           <button
             type="submit"
             className="rounded-lg bg-gray-200 px-4 py-1 text-blue-500 hover:cursor-pointer hover:text-blue-700 hover:inset-shadow-sm"
