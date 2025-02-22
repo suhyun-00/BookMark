@@ -18,12 +18,12 @@
   }
 
   .scrollbar::-webkit-scrollbar-thumb {
-    background: #101828;
+    background: #d1d5dc;
     border-radius: 100vh;
   }
 
   .scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #737373;
+    background: #99a1af;
   }
 
   input[type='date'] {
