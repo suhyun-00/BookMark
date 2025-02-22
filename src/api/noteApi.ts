@@ -42,3 +42,13 @@ export const addNote = async (userId: string, userBookId: string, content: strin
     });
   }
 };
+
+export const updateNote = async (noteId: string, content: string) => {
+  const noteRef = doc(db, 'notes', noteId);
+  if (noteRef) {
+    await updateDoc(noteRef, {
+      content: content,
+      updatedAt: Timestamp.fromDate(new Date()),
+    });
+  }
+};

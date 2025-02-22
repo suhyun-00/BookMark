@@ -17,6 +17,7 @@ interface BookNotesProps {
 
 const BookNotes = ({ userBookId, notesId, setIsLoading }: BookNotesProps) => {
   const [notes, setNotes] = useState<Note[]>([]);
+  const [selectedNote, setSelectedNote] = useState<Note | undefined>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -39,11 +40,23 @@ const BookNotes = ({ userBookId, notesId, setIsLoading }: BookNotesProps) => {
       </button>
       <div className="scrollbar mt-1 flex h-54 flex-col gap-2 overflow-y-scroll scroll-smooth text-gray-400">
         {notes.map((note) => (
-          <Card note={note} />
+          <Card
+            note={note}
+            onClick={() => {
+              setSelectedNote(note);
+              setIsOpen(true);
+            }}
+          />
         ))}
       </div>
       {isOpen && (
-        <NoteModal userBookId={userBookId} setIsOpen={setIsOpen} setIsLoading={setIsLoading} />
+        <NoteModal
+          userBookId={userBookId}
+          selectedNote={selectedNote}
+          setIsOpen={setIsOpen}
+          setIsLoading={setIsLoading}
+          setSelectedNote={setSelectedNote}
+        />
       )}
     </div>
   );
