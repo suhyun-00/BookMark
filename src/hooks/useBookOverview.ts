@@ -52,7 +52,10 @@ const useBookOverview = ({ book, handleBookUpdate, setIsLoading }: useBookOvervi
 
     if (Object.keys(updateFields).length !== 0) {
       if (documentRef.current) {
-        await updateDoc(documentRef.current, updateFields);
+        await updateDoc(documentRef.current, {
+          ...updateFields,
+          updatedAt: Timestamp.fromDate(new Date()),
+        });
         await handleBookUpdate();
       }
     }
