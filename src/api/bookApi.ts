@@ -110,3 +110,27 @@ export const addBook = async (book: Data, userId: string) => {
     });
   }
 };
+
+export const updateBook = async (bookId: string) => {
+  const bookSnap = await fetchBook(bookId);
+  const { docSnap } = await fetchUserBook(bookId);
+
+  if (bookSnap.exists() && docSnap.exists()) {
+    const bookData = bookSnap.data();
+    const userData = docSnap.data();
+
+    const updatedBook: Book = {
+      id: Number(bookId),
+      title: bookData.title,
+      author: bookData.author,
+      cover: bookData.cover,
+      progress: Math.floor((userData.currentPage / bookData.page) * 100),
+      startAt: userData.startAt,
+      finishedAt: userData.finishedAt,
+      rating: userData.rating,
+      status: userData.status as BookStatusType,
+    };
+
+    return updatedBook;
+  }
+};
