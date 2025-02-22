@@ -27,7 +27,7 @@ const BookNotes = ({ notes, userBookId, setIsLoading, handleNotes }: BookNotesPr
         <Feather className="h-4 w-4" />
         노트 추가
       </button>
-      <div className="scrollbar mt-1 flex h-54 flex-col gap-2 overflow-y-scroll scroll-smooth text-gray-400">
+      <div className="scrollbar mt-1 flex h-54 w-full flex-col gap-2 overflow-y-scroll scroll-smooth text-gray-400">
         {notes.map((note) => (
           <Card
             note={note}
