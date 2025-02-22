@@ -4,7 +4,7 @@ import { DocumentData } from 'firebase/firestore';
 
 import { Book } from '@customTypes/books';
 
-import BookDescription from '@components/Modal/BookDetailModal/BookDescription';
+import BookDetails from '@components/Modal/BookDetailModal/BookDetails';
 
 interface BookContentProps {
   book: Book;
@@ -30,7 +30,7 @@ const BookContent = ({ book, bookSnap }: BookContentProps) => {
           독서 노트
         </button>
       </div>
-      {selected === 'description' && <BookDescription bookSnap={bookSnap} book={book} />}
+      {selected === 'description' && <BookDetails bookSnap={bookSnap} book={book} />}
       {selected === 'note' && <></>}
     </div>
   );

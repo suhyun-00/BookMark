@@ -2,12 +2,12 @@ import { DocumentData } from 'firebase/firestore';
 
 import { Book } from '@customTypes/books';
 
-interface BookDescriptionProps {
+interface BookDetailsProps {
   bookSnap: DocumentData | undefined;
   book: Book;
 }
 
-const BookDescription = ({ bookSnap, book }: BookDescriptionProps) => {
+const BookDetails = ({ bookSnap, book }: BookDetailsProps) => {
   return (
     <div className="mt-4 p-1 text-gray-500">
       <h2 className="mb-2 text-gray-900">책 소개</h2>
@@ -36,4 +36,4 @@ const BookDescription = ({ bookSnap, book }: BookDescriptionProps) => {
     </div>
   );
 };
-export default BookDescription;
+export default BookDetails;
