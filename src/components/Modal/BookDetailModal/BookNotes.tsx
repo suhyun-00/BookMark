@@ -21,7 +21,10 @@ const BookNotes = ({ notes, userBookId, setIsLoading, handleNotes }: BookNotesPr
   return (
     <div className="flex flex-col items-end justify-center gap-2">
       <button
-        onClick={() => setIsOpen(true)}
+        onClick={() => {
+          setSelectedNote(undefined);
+          setIsOpen(true);
+        }}
         className="flex items-center gap-1 rounded-lg bg-gray-200 px-4 py-1 text-sm text-gray-700 hover:cursor-pointer hover:inset-shadow-sm"
       >
         <Feather className="h-4 w-4" />
