@@ -57,6 +57,7 @@ const NoteModal = ({
     setIsLoading(true);
     await deleteNote(selectedNoteId.current);
     setIsLoading(false);
+    handleNotes();
     setIsOpen(false);
   };
 
