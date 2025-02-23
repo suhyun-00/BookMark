@@ -53,14 +53,9 @@ const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalPro
           onClose={onClose}
           handleBookUpdate={handleBookUpdate}
           setIsLoading={setIsLoading}
+          setIsClicked={setIsClicked}
         />
         <BookContent book={book} bookSnap={bookSnap!} />
-        <button
-          onClick={() => setIsClicked(true)}
-          className="flex items-center justify-center text-red-500 hover:cursor-pointer"
-        >
-          서재에서 삭제하기
-        </button>
         {isClicked && <DeleteModal setIsClicked={setIsClicked} handleDelete={handleDelete} />}
       </div>
       {isLoading && (
