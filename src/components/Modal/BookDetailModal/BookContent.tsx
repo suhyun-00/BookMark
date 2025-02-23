@@ -1,10 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 import { DocumentData } from 'firebase/firestore';
+import ScaleLoader from 'react-spinners/ScaleLoader';
 
 import { Book } from '@customTypes/books';
+import { Note } from '@customTypes/note';
 
-import BookDescription from '@components/Modal/BookDetailModal/BookDescription';
+import { fetchUserBook } from '@api/bookApi';
+import { fetchNotes } from '@api/noteApi';
+
+import BookDetails from '@components/Modal/BookDetailModal/BookDetails';
+import BookNotes from '@components/Modal/BookDetailModal/BookNotes';
 
 interface BookContentProps {
   book: Book;
@@ -13,6 +19,25 @@ interface BookContentProps {
 
 const BookContent = ({ book, bookSnap }: BookContentProps) => {
   const [selected, setSelected] = useState<string>('description');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [notes, setNotes] = useState<Note[]>([]);
+
+  const userBookId = useRef<string>('');
+
+  const handleNotes = async () => {
+    const notes = await fetchNotes(userBookId.current);
+    setNotes(notes);
+  };
+
+  useEffect(() => {
+    const handleNotesId = async () => {
+      const { docId } = await fetchUserBook(book.id.toString());
+      if (docId) userBookId.current = docId;
+      handleNotes();
+    };
+
+    handleNotesId();
+  }, [book.id]);
 
   return (
     <div>
@@ -30,8 +55,20 @@ const BookContent = ({ book, bookSnap }: BookContentProps) => {
           독서 노트
         </button>
       </div>
-      {selected === 'description' && <BookDescription bookSnap={bookSnap} book={book} />}
-      {selected === 'note' && <></>}
+      {selected === 'description' && <BookDetails bookSnap={bookSnap} book={book} />}
+      {selected === 'note' && (
+        <BookNotes
+          notes={notes}
+          userBookId={userBookId.current}
+          setIsLoading={setIsLoading}
+          handleNotes={handleNotes}
+        />
+      )}
+      {isLoading && (
+        <div className="fixed inset-0 flex items-center justify-center">
+          <ScaleLoader color="#101828" />
+        </div>
+      )}
     </div>
   );
 };

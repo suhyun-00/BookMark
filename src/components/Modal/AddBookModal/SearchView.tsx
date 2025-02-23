@@ -6,6 +6,8 @@ import ScaleLoader from 'react-spinners/ScaleLoader';
 import API_BASE_URL from '@constants/API_BASE_URL';
 import type { Data } from '@customTypes/data';
 
+import { handleOnKeyDown, handleOnSubmit } from '@utils/handleFormData';
+
 import Card from '@components/Modal/AddBookModal/Card';
 
 interface SearchViewProps {
@@ -27,24 +29,11 @@ const SearchView = ({ onClose }: SearchViewProps) => {
     setIsLoading(false);
   };
 
-  const handleOnKeyDown = (event: React.KeyboardEvent<HTMLFormElement>) => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      const form = event.currentTarget;
-      sendFormData(form);
-    }
-  };
-
-  const handleOnSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    sendFormData(event.currentTarget);
-  };
-
   return (
     <div>
       <form
-        onSubmit={handleOnSubmit}
-        onKeyDown={handleOnKeyDown}
+        onSubmit={(e) => handleOnSubmit(e, sendFormData)}
+        onKeyDown={(e) => handleOnKeyDown(e, sendFormData)}
         className="flex items-start justify-center gap-3"
       >
         <div className="flex w-full items-center justify-start rounded-lg bg-white inset-shadow-sm">

@@ -8,6 +8,8 @@ import {
   deleteDoc,
   setDoc,
   addDoc,
+  Timestamp,
+  orderBy,
 } from 'firebase/firestore';
 
 import API_BASE_URL from '@constants/API_BASE_URL';
@@ -17,7 +19,11 @@ import { Data } from '@customTypes/data';
 import db from '@/fireabase';
 
 export const fetchBooks = async (userId: string) => {
-  const condition = query(collection(db, 'userBooks'), where('userId', '==', userId));
+  const condition = query(
+    collection(db, 'userBooks'),
+    where('userId', '==', userId),
+    orderBy('updatedAt', 'desc'),
+  );
   const querySnapshot = await getDocs(condition);
 
   const booksData: (Book | null)[] = await Promise.all(
@@ -37,6 +43,7 @@ export const fetchBooks = async (userId: string) => {
         progress: Math.floor((data.currentPage / bookData.page) * 100),
         startAt: data.startAt,
         finishedAt: data.finishedAt,
+        updatedAt: data.updatedAt,
         rating: data.rating,
         status: data.status as BookStatusType,
       };
@@ -64,7 +71,7 @@ export const fetchUserBook = async (bookId: string) => {
   const docRef = doc(db, 'userBooks', docId);
   const docSnap = await getDoc(docRef);
 
-  return { docRef, docSnap };
+  return { docRef, docSnap, docId };
 };
 
 export const deleteBook = async (bookId: string) => {
@@ -105,8 +112,35 @@ export const addBook = async (book: Data, userId: string) => {
       currentPage: 0,
       startAt: null,
       finishedAt: null,
+      createdAt: Timestamp.fromDate(new Date()),
+      updatedAt: Timestamp.fromDate(new Date()),
       rating: 0,
       notes: [],
     });
+  }
+};
+
+export const updateBook = async (bookId: string) => {
+  const bookSnap = await fetchBook(bookId);
+  const { docSnap } = await fetchUserBook(bookId);
+
+  if (bookSnap.exists() && docSnap.exists()) {
+    const bookData = bookSnap.data();
+    const userData = docSnap.data();
+
+    const updatedBook: Book = {
+      id: Number(bookId),
+      title: bookData.title,
+      author: bookData.author,
+      cover: bookData.cover,
+      progress: Math.floor((userData.currentPage / bookData.page) * 100),
+      startAt: userData.startAt,
+      finishedAt: userData.finishedAt,
+      updatedAt: userData.updatedAt,
+      rating: userData.rating,
+      status: userData.status as BookStatusType,
+    };
+
+    return updatedBook;
   }
 };

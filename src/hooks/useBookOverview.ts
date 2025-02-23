@@ -6,17 +6,13 @@ import type { Book, BookStatusType } from '@customTypes/books';
 
 import { fetchUserBook } from '@api/bookApi';
 
+import formatDate from '@utils/formatDate';
+
 interface useBookOverviewProps {
   book: Book;
   handleBookUpdate: () => Promise<void>;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
-
-const formatDate = (timestamp: Timestamp) => {
-  return new Date(timestamp.toDate().getTime() - timestamp.toDate().getTimezoneOffset() * 60000)
-    .toISOString()
-    .split('T')[0];
-};
 
 const useBookOverview = ({ book, handleBookUpdate, setIsLoading }: useBookOverviewProps) => {
   const [status, setStatus] = useState<BookStatusType>(book.status);
@@ -56,7 +52,10 @@ const useBookOverview = ({ book, handleBookUpdate, setIsLoading }: useBookOvervi
 
     if (Object.keys(updateFields).length !== 0) {
       if (documentRef.current) {
-        await updateDoc(documentRef.current, updateFields);
+        await updateDoc(documentRef.current, {
+          ...updateFields,
+          updatedAt: Timestamp.fromDate(new Date()),
+        });
         await handleBookUpdate();
       }
     }

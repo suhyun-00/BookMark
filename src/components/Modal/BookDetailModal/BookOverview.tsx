@@ -16,6 +16,7 @@ interface BookOverviewProps {
   onClose: () => void;
   handleBookUpdate: () => Promise<void>;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsClicked: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const BookOverview = ({
@@ -24,6 +25,7 @@ const BookOverview = ({
   onClose,
   handleBookUpdate,
   setIsLoading,
+  setIsClicked,
 }: BookOverviewProps) => {
   const [isEditting, setIsEditting] = useState<boolean>(false);
 
@@ -72,13 +74,19 @@ const BookOverview = ({
         </div>
         <div className="absolute -top-4 -right-4 flex items-center gap-1">
           <button
+            onClick={() => setIsClicked(true)}
+            className="rounded-lg bg-gray-200 px-3 py-1 text-sm text-red-600 inset-shadow-sm hover:cursor-pointer hover:bg-gray-300"
+          >
+            삭제
+          </button>
+          <button
             onClick={() => {
               if (isEditting) {
                 handleUpdate();
               }
               setIsEditting((prevStatus) => !prevStatus);
             }}
-            className="rounded-lg bg-gray-200 px-3 py-1 text-sm text-gray-600 inset-shadow-sm hover:cursor-pointer hover:bg-gray-300"
+            className="rounded-lg bg-gray-200 px-3 py-1 text-sm text-blue-600 inset-shadow-sm hover:cursor-pointer hover:bg-gray-300"
           >
             {isEditting ? '완료' : '수정'}
           </button>

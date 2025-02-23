@@ -10,6 +10,7 @@ export interface Book {
   progress: number;
   startAt: Timestamp | null;
   finishedAt: Timestamp | null;
+  updatedAt: Timestamp;
   rating: number;
   status: BookStatusType;
 }

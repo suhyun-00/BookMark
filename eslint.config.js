@@ -36,6 +36,7 @@ export default tseslint.config(
             { pattern: '@constants/**', group: 'type' },
             { pattern: '@customTypes/**', group: 'type' },
             { pattern: '@api/**', group: 'internal', position: 'before' },
+            { pattern: '@utils/**', group: 'internal', position: 'before' },
             { pattern: '@hooks/**', group: 'internal', position: 'before' },
             { pattern: '@/*', group: 'internal' },
             { pattern: '@components/**', group: 'internal' },
