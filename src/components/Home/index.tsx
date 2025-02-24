@@ -15,6 +15,7 @@ const Home = () => {
   const [isAddBookModalOpen, setIsAddBookModalOpen] = useState(false);
   const [isBookDetailModalOpen, setIsBoookDetailModalOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState<Book>(DEFAULT_BOOK);
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
   const handleBookUpdate = async () => {
     const updatedBook = await updateBook(selectedBook.id.toString());
@@ -24,9 +25,15 @@ const Home = () => {
   return (
     <div className="whitespace-nowrap text-gray-900">
       <div className="flex min-h-screen bg-gray-100/60 backdrop-blur-xl">
-        <Sidebar currentMenu={currentMenu} setCurrentMenu={setCurrentMenu} />
+        <Sidebar
+          currentMenu={currentMenu}
+          isExpanded={isExpanded}
+          setCurrentMenu={setCurrentMenu}
+          setIsExpanded={setIsExpanded}
+        />
         <Dashboard
           currentMenu={currentMenu}
+          isExpanded={isExpanded}
           setIsAddBookModalOpen={setIsAddBookModalOpen}
           setIsBoookDetailModalOpen={setIsBoookDetailModalOpen}
           setSelectedBook={setSelectedBook}
