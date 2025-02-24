@@ -38,7 +38,7 @@ const Dashboard = ({
   }, []);
 
   return (
-    <div className="ml-64 min-h-screen w-screen">
+    <div className="min-h-screen w-[calc(100vw-16rem)]">
       <Header setDebouncedKeyword={setDebouncedKeyword} setIsOpen={setIsAddBookModalOpen} />
       {isLoading ? (
         <div className="flex h-full w-full items-center justify-center">
