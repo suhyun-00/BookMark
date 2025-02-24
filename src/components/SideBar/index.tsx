@@ -2,14 +2,14 @@ import { Bookmark } from 'lucide-react';
 
 import MENU_ITEMS from '@constants/MENU_ITEMS';
 
-import SideBarMenu from '@components/SideBar/SideBarMenu';
+import SidebarMenu from '@components/Sidebar/SidebarMenu';
 
-interface SideBarProps {
+interface SidebarProps {
   currentMenu: string;
   setCurrentMenu: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const SideBar = ({ currentMenu, setCurrentMenu }: SideBarProps) => {
+const Sidebar = ({ currentMenu, setCurrentMenu }: SidebarProps) => {
   return (
     <div className="sticky top-0 h-screen w-64 border-r border-gray-200 bg-gray-100/60 p-6 backdrop-blur-xl">
       <div className="mb-10 flex items-center gap-3">
@@ -20,7 +20,7 @@ const SideBar = ({ currentMenu, setCurrentMenu }: SideBarProps) => {
       </div>
       <div className="mb-8 space-y-1">
         {MENU_ITEMS.map((item) => (
-          <SideBarMenu
+          <SidebarMenu
             icon={item.icon}
             label={item.label}
             setCurrentMenu={() => setCurrentMenu(item.status)}
@@ -32,4 +32,4 @@ const SideBar = ({ currentMenu, setCurrentMenu }: SideBarProps) => {
   );
 };
 
-export default SideBar;
+export default Sidebar;

@@ -8,7 +8,7 @@ import { updateBook } from '@api/bookApi';
 import Dashboard from '@components/Dashboard';
 import AddBookModal from '@components/Modal/AddBookModal';
 import BookDetailModal from '@components/Modal/BookDetailModal';
-import SideBar from '@components/SideBar';
+import Sidebar from '@components/Sidebar';
 
 const Home = () => {
   const [currentMenu, setCurrentMenu] = useState('all');
@@ -24,7 +24,7 @@ const Home = () => {
   return (
     <div className="whitespace-nowrap text-gray-900">
       <div className="flex min-h-screen bg-gray-100/60 backdrop-blur-xl">
-        <SideBar currentMenu={currentMenu} setCurrentMenu={setCurrentMenu} />
+        <Sidebar currentMenu={currentMenu} setCurrentMenu={setCurrentMenu} />
         <Dashboard
           currentMenu={currentMenu}
           setIsAddBookModalOpen={setIsAddBookModalOpen}
