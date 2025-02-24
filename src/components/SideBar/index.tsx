@@ -28,7 +28,7 @@ const Sidebar = ({ currentMenu, isExpanded, setCurrentMenu, setIsExpanded }: Sid
 
   return (
     <div
-      className={`sticky top-0 h-screen ${isExpanded ? 'w-20' : 'w-64'} border-r border-gray-200 bg-gray-100/60 p-6 backdrop-blur-xl transition-all duration-300`}
+      className={`sticky top-0 h-screen border-r border-gray-200 bg-gray-100/60 backdrop-blur-xl transition-all duration-300 ${isExpanded ? 'w-64 p-6' : 'flex w-16 flex-col items-center py-6 sm:w-20 sm:p-6'}`}
     >
       <div className="mb-10 flex items-center gap-3">
         <button
@@ -42,7 +42,6 @@ const Sidebar = ({ currentMenu, isExpanded, setCurrentMenu, setIsExpanded }: Sid
         >
           BookMark.
         </h1>
-        {/* {!isClosed && <h1 className="text-xl font-medium">BookMark</h1>} */}
       </div>
       <div className="mb-8 space-y-1">
         {MENU_ITEMS.map((item) => (

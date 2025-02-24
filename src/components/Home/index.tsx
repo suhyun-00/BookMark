@@ -15,7 +15,7 @@ const Home = () => {
   const [isAddBookModalOpen, setIsAddBookModalOpen] = useState(false);
   const [isBookDetailModalOpen, setIsBoookDetailModalOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState<Book>(DEFAULT_BOOK);
-  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+  const [isExpanded, setIsExpanded] = useState<boolean>(true);
 
   const handleBookUpdate = async () => {
     const updatedBook = await updateBook(selectedBook.id.toString());

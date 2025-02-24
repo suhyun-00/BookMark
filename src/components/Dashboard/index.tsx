@@ -41,7 +41,7 @@ const Dashboard = ({
 
   return (
     <div
-      className={`min-h-screen ${isExpanded ? 'w-[calc(100vw-5rem)]' : 'w-[calc(100vw-16rem)]'}`}
+      className={`min-h-screen ${isExpanded ? 'w-[calc(100vw-16rem)]' : 'w-[calc(100vw-5rem)]'}`}
     >
       <Header setDebouncedKeyword={setDebouncedKeyword} setIsOpen={setIsAddBookModalOpen} />
       {isLoading ? (
