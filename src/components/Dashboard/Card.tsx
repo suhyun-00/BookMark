@@ -20,7 +20,7 @@ const Card = ({ key, book, setIsOpen, selected }: CardProps) => {
         setIsOpen(true);
         selected(book);
       }}
-      className="group flex h-full max-w-md min-w-sm gap-4 rounded-xl bg-gray-100/80 p-5 inset-shadow-sm hover:cursor-pointer hover:bg-gray-200/60"
+      className="group flex max-w-full gap-4 rounded-xl bg-gray-100/80 p-5 inset-shadow-sm hover:cursor-pointer hover:bg-gray-200/60 sm:min-w-sm"
     >
       <img
         src={cover}
