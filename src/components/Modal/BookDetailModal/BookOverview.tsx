@@ -145,7 +145,7 @@ const BookOverview = ({
             </div>
           </div>
         </div>
-        <div className="w-[75vw] text-sm text-gray-500 sm:w-fit">
+        <div className="w-[75vw] text-sm text-gray-500 sm:w-full">
           <div
             className={`mb-3 flex items-center justify-between ${isEditting ? 'text-blue-500' : ''}`}
           >
