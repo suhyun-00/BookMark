@@ -59,7 +59,7 @@ const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalPro
         {isClicked && <DeleteModal setIsClicked={setIsClicked} handleDelete={handleDelete} />}
         <button
           onClick={() => setIsClicked(true)}
-          className="block w-[70vw] py-2 text-red-600 sm:hidden"
+          className="block w-[75vw] py-2 text-red-600 sm:hidden"
         >
           책 삭제하기
         </button>

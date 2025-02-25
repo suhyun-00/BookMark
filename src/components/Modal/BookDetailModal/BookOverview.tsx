@@ -44,7 +44,7 @@ const BookOverview = ({
 
   return (
     <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start sm:gap-8">
-      <div className="flex w-[75vw] items-center justify-between sm:hidden">
+      <div className="flex w-[75vw] items-center justify-between sm:hidden sm:w-auto">
         <button
           onClick={onClose}
           className="rounded-lg py-1 text-gray-600 hover:cursor-pointer hover:bg-gray-200 hover:inset-shadow-sm"
@@ -118,7 +118,7 @@ const BookOverview = ({
             <X className="h-6 w-6 sm:h-5 sm:w-5" />
           </button>
         </div>
-        <div className="w-[70vw] sm:w-[39.5rem]">
+        <div className="w-[75vw] sm:w-[39.5rem]">
           <div className="mb-2 truncate text-xl font-medium sm:text-2xl">{book.title}</div>
           <div className="mb-5 truncate text-sm text-gray-500 sm:text-base">{book.author}</div>
         </div>
@@ -139,13 +139,13 @@ const BookOverview = ({
           />
           <div className="flex items-center gap-3">
             <BookOpen className="h-4 w-4" />
-            <div className="flex w-[63vw] flex-row items-center justify-between gap-3 sm:w-fit sm:flex-col sm:items-start sm:gap-0">
+            <div className="flex w-[68vw] flex-row items-center justify-between gap-3 sm:w-fit sm:flex-col sm:items-start sm:gap-0">
               <span className="text-sm sm:text-xs">총 페이지</span>
               <div className="text-sm">{totalPage} 페이지</div>
             </div>
           </div>
         </div>
-        <div className="w-[70vw] text-sm text-gray-500 sm:w-fit">
+        <div className="w-[75vw] text-sm text-gray-500 sm:w-fit">
           <div
             className={`mb-3 flex items-center justify-between ${isEditting ? 'text-blue-500' : ''}`}
           >
