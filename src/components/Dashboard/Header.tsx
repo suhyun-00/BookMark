@@ -19,7 +19,7 @@ const Header = ({ setDebouncedKeyword, setIsOpen }: HeaderProps) => {
     <div className="m-4 mr-0 flex items-center justify-end sm:mr-4 sm:justify-between">
       <h2 className="hidden p-2 font-medium sm:block sm:p-5 sm:text-2xl">내 서재</h2>
       <div className="flex items-center gap-3">
-        <div className="flex w-64 items-center justify-center rounded-lg bg-white inset-shadow-sm">
+        <div className="flex w-[50vw] items-center justify-center rounded-lg bg-white inset-shadow-sm sm:w-64">
           <span className="hidden sm:visible">
             <Search className="ml-5 h-3 w-3" />
           </span>
