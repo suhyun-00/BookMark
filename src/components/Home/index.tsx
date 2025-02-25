@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import DEFAULT_BOOK from '@constants/DEFAULT_BOOK';
 import type { Book } from '@customTypes/books';
@@ -8,25 +8,52 @@ import { updateBook } from '@api/bookApi';
 import Dashboard from '@components/Dashboard';
 import AddBookModal from '@components/Modal/AddBookModal';
 import BookDetailModal from '@components/Modal/BookDetailModal';
-import SideBar from '@components/SideBar';
+import Sidebar from '@components/Sidebar';
+
+const BREAKPOINT_SM_REM = 67;
 
 const Home = () => {
   const [currentMenu, setCurrentMenu] = useState('all');
   const [isAddBookModalOpen, setIsAddBookModalOpen] = useState(false);
   const [isBookDetailModalOpen, setIsBoookDetailModalOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState<Book>(DEFAULT_BOOK);
+  const [isExpanded, setIsExpanded] = useState<boolean>(true);
+  const [isClosed, setIsClosed] = useState<boolean>(false);
 
   const handleBookUpdate = async () => {
     const updatedBook = await updateBook(selectedBook.id.toString());
     setSelectedBook(updatedBook!);
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsExpanded(window.innerWidth >= BREAKPOINT_SM_REM * 16);
+      setIsClosed(window.innerWidth < BREAKPOINT_SM_REM * 16);
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <div className="whitespace-nowrap text-gray-900">
       <div className="flex min-h-screen bg-gray-100/60 backdrop-blur-xl">
-        <SideBar currentMenu={currentMenu} setCurrentMenu={setCurrentMenu} />
+        <Sidebar
+          currentMenu={currentMenu}
+          isExpanded={isExpanded}
+          isClosed={isClosed}
+          setCurrentMenu={setCurrentMenu}
+          setIsExpanded={setIsExpanded}
+          setIsClosed={setIsClosed}
+        />
         <Dashboard
           currentMenu={currentMenu}
+          isExpanded={isExpanded}
           setIsAddBookModalOpen={setIsAddBookModalOpen}
           setIsBoookDetailModalOpen={setIsBoookDetailModalOpen}
           setSelectedBook={setSelectedBook}

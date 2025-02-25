@@ -11,6 +11,7 @@ import View from '@components/Dashboard/View';
 
 interface DashboardProps {
   currentMenu: string;
+  isExpanded: boolean;
   setIsAddBookModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setIsBoookDetailModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedBook: React.Dispatch<React.SetStateAction<Book>>;
@@ -18,6 +19,7 @@ interface DashboardProps {
 
 const Dashboard = ({
   currentMenu,
+  isExpanded,
   setIsAddBookModalOpen,
   setIsBoookDetailModalOpen,
   setSelectedBook,
@@ -38,7 +40,9 @@ const Dashboard = ({
   }, []);
 
   return (
-    <div className="ml-64 min-h-screen w-screen">
+    <div
+      className={`min-h-screen ${isExpanded ? 'w-[calc(100vw-16rem)]' : 'w-[calc(100vw-5rem)]'}`}
+    >
       <Header setDebouncedKeyword={setDebouncedKeyword} setIsOpen={setIsAddBookModalOpen} />
       {isLoading ? (
         <div className="flex h-full w-full items-center justify-center">

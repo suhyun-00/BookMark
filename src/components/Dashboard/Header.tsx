@@ -16,11 +16,13 @@ const Header = ({ setDebouncedKeyword, setIsOpen }: HeaderProps) => {
   }, [keyword, setDebouncedKeyword]);
 
   return (
-    <div className="m-4 flex items-center justify-between">
-      <h2 className="p-5 text-2xl font-medium">내 서재</h2>
+    <div className="m-4 mr-0 flex items-center justify-end sm:mr-4 sm:justify-between">
+      <h2 className="hidden p-2 font-medium sm:block sm:p-5 sm:text-2xl">내 서재</h2>
       <div className="flex items-center gap-3">
-        <div className="flex w-64 items-center justify-center rounded-lg bg-white inset-shadow-sm">
-          <Search className="ml-5 h-3 w-3" />
+        <div className="flex w-[50vw] items-center justify-center rounded-lg bg-white inset-shadow-sm sm:w-64">
+          <span className="hidden sm:visible">
+            <Search className="ml-5 h-3 w-3" />
+          </span>
           <input
             type="search"
             value={keyword}
@@ -36,7 +38,10 @@ const Header = ({ setDebouncedKeyword, setIsOpen }: HeaderProps) => {
           }}
           className="flex h-10 items-center gap-3 rounded-lg bg-gray-900 px-4 text-sm text-white hover:cursor-pointer hover:bg-neutral-700"
         >
-          <Plus className="h-4 w-4" />책 등록
+          <span className="hidden sm:visible">
+            <Plus className="h-4 w-4" />
+          </span>
+          책 등록
         </button>
       </div>
     </div>

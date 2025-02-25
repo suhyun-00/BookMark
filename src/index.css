@@ -1,5 +1,13 @@
 @import 'tailwindcss';
 
+@theme {
+  --breakpoint-sm: 67rem;
+  --breakpoint-md: 92.75rem;
+  --breakpoint-lg: 120rem;
+  --breakpoint-xl: 143.25rem;
+  --breakpoint-2xl: 168.5rem;
+}
+
 @layer base {
   html,
   body {

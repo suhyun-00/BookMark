@@ -28,13 +28,13 @@ const AddBookModal = ({ onClose }: AddBookModalProps) => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="w-[40rem] rounded-xl bg-gray-100 p-10 inset-shadow-sm"
+        className="w-[90vw] rounded-xl bg-gray-100 p-5 inset-shadow-sm sm:w-[40rem] sm:p-10"
       >
         <div className="mb-6 flex items-center justify-center gap-3">
           <button
             value="search"
             onClick={() => setSelectedButton('search')}
-            className={`flex items-center justify-center gap-5 rounded-lg px-20 py-2 text-sm ${selectedButton === 'search' ? 'bg-gray-900 text-white' : 'bg-white hover:bg-gray-200'} hover:cursor-pointer hover:inset-shadow-sm`}
+            className={`flex w-[40vw] items-center justify-center gap-5 rounded-lg px-4 py-2 text-sm sm:px-20 ${selectedButton === 'search' ? 'bg-gray-900 text-white' : 'bg-white hover:bg-gray-200'} hover:cursor-pointer hover:inset-shadow-sm`}
           >
             <Search className="h-4 w-4" />
             검색으로 추가
@@ -45,7 +45,7 @@ const AddBookModal = ({ onClose }: AddBookModalProps) => {
               await checkCamera();
               setSelectedButton('barcode');
             }}
-            className={`flex items-center justify-center gap-5 rounded-lg px-20 py-2 text-sm ${selectedButton === 'barcode' ? 'bg-gray-900 text-white' : 'bg-white hover:bg-gray-200'} hover:cursor-pointer hover:inset-shadow-sm`}
+            className={`flex w-[40vw] items-center justify-center gap-5 rounded-lg px-4 py-2 text-sm sm:px-20 ${selectedButton === 'barcode' ? 'bg-gray-900 text-white' : 'bg-white hover:bg-gray-200'} hover:cursor-pointer hover:inset-shadow-sm`}
           >
             <Scan className="h-4 w-4" />
             바코드로 추가

@@ -40,17 +40,17 @@ const BookContent = ({ book, bookSnap }: BookContentProps) => {
   }, [book.id]);
 
   return (
-    <div>
+    <div className="w-[75vw] sm:w-full">
       <div className="flex w-fit gap-2">
         <button
           onClick={() => setSelected('description')}
-          className={`rounded-lg px-4 py-1 text-sm text-gray-500 ${selected === 'description' ? 'bg-gray-200 text-gray-700' : 'hover:bg-gray-200 hover:text-gray-700'} hover:cursor-pointer hover:inset-shadow-sm`}
+          className={`rounded-lg px-4 py-2 text-sm text-gray-500 sm:py-1 ${selected === 'description' ? 'bg-gray-200 text-gray-700' : 'hover:bg-gray-200 hover:text-gray-700'} hover:cursor-pointer hover:inset-shadow-sm`}
         >
           책 정보
         </button>
         <button
           onClick={() => setSelected('note')}
-          className={`rounded-lg px-4 py-1 text-sm text-gray-500 ${selected === 'note' ? 'bg-gray-200 text-gray-700' : 'hover:bg-gray-200 hover:text-gray-700'} hover:cursor-pointer hover:inset-shadow-sm`}
+          className={`rounded-lg px-4 py-2 text-sm text-gray-500 sm:py-1 ${selected === 'note' ? 'bg-gray-200 text-gray-700' : 'hover:bg-gray-200 hover:text-gray-700'} hover:cursor-pointer hover:inset-shadow-sm`}
         >
           독서 노트
         </button>

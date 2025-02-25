@@ -70,14 +70,14 @@ const NoteModal = ({
         onClick={(e) => e.stopPropagation()}
         onSubmit={(e) => handleOnSubmit(e, handleNote)}
         onKeyDown={(e) => handleOnKeyDown(e, handleNote)}
-        className="flex h-72 w-96 flex-col items-center justify-center gap-4 rounded-2xl bg-gray-100 px-8 py-4"
+        className="flex h-[40vh] w-[90vw] flex-col items-center justify-center gap-4 rounded-2xl bg-gray-100 px-8 py-4 sm:h-72 sm:w-96"
       >
         <div className="relative w-full">
           <div className="text-lg font-medium text-gray-700">
             {selectedNote ? '독서 노트 수정' : '새 독서 노트'}
           </div>
           <button onClick={handleClose} className="absolute top-0 -right-4 hover:cursor-pointer">
-            <X className="h-5 w-5" />
+            <X className="h-6 w-6 sm:h-5 sm:w-5" />
           </button>
         </div>
         <textarea
@@ -93,14 +93,14 @@ const NoteModal = ({
           {selectedNote && (
             <button
               onClick={handleDelete}
-              className="rounded-lg bg-gray-200 px-4 py-1 text-red-500 hover:cursor-pointer hover:text-red-700 hover:inset-shadow-sm"
+              className="rounded-lg bg-gray-200 px-8 py-2 text-red-500 hover:cursor-pointer hover:text-red-700 hover:inset-shadow-sm sm:px-4 sm:py-1"
             >
               삭제
             </button>
           )}
           <button
             type="submit"
-            className="rounded-lg bg-gray-200 px-4 py-1 text-blue-500 hover:cursor-pointer hover:text-blue-700 hover:inset-shadow-sm"
+            className="rounded-lg bg-gray-200 px-8 py-2 text-blue-500 hover:cursor-pointer hover:text-blue-700 hover:inset-shadow-sm sm:px-4 sm:py-1"
           >
             {selectedNote ? '수정' : '등록'}
           </button>
