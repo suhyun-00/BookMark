@@ -40,7 +40,7 @@ const BookContent = ({ book, bookSnap }: BookContentProps) => {
   }, [book.id]);
 
   return (
-    <div className="w-[75vw] sm:w-auto">
+    <div className="w-[75vw] sm:w-full">
       <div className="flex w-fit gap-2">
         <button
           onClick={() => setSelected('description')}

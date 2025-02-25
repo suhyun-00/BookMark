@@ -45,7 +45,7 @@ const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalPro
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="scrollbar flex h-[80vh] w-[90vw] flex-col items-center gap-6 overflow-y-scroll rounded-xl bg-gray-100 pt-5 pb-10 inset-shadow-sm sm:max-h-[42rem] sm:w-4xl sm:min-w-4xl sm:items-start sm:p-10"
+        className="scrollbar flex h-[80vh] w-[90vw] flex-col items-center gap-6 overflow-y-scroll rounded-xl bg-gray-100 pt-5 pb-10 inset-shadow-sm sm:h-auto sm:max-h-[42rem] sm:w-4xl sm:min-w-4xl sm:items-start sm:p-10"
       >
         <BookOverview
           book={book}
