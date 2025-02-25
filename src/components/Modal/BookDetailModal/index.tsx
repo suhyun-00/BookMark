@@ -45,7 +45,7 @@ const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalPro
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="flex max-h-[42rem] w-4xl min-w-4xl flex-col gap-6 rounded-xl bg-gray-100 p-10 inset-shadow-sm"
+        className="scrollbar flex h-[80vh] w-[90vw] flex-col items-center gap-6 overflow-y-scroll rounded-xl bg-gray-100 pt-5 pb-10 inset-shadow-sm sm:max-h-[42rem] sm:w-4xl sm:min-w-4xl sm:items-start sm:p-10"
       >
         <BookOverview
           book={book}
@@ -57,6 +57,12 @@ const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalPro
         />
         <BookContent book={book} bookSnap={bookSnap!} />
         {isClicked && <DeleteModal setIsClicked={setIsClicked} handleDelete={handleDelete} />}
+        <button
+          onClick={() => setIsClicked(true)}
+          className="block w-[70vw] py-2 text-red-600 sm:hidden"
+        >
+          책 삭제하기
+        </button>
       </div>
       {isLoading && (
         <div className="fixed inset-0 flex h-full w-full items-center justify-center bg-gray-900/20">

@@ -10,7 +10,7 @@ const DeleteModal = ({ setIsClicked, handleDelete }: ConfirmDeleteProps) => {
       className="fixed inset-0 flex items-center justify-center bg-gray-900/20 text-gray-500"
     >
       <div className="flex h-40 w-80 flex-col items-center gap-4 rounded-2xl bg-gray-100">
-        <div className="mt-14 text-lg">책을 삭제하시겠습니까?</div>
+        <div className="mt-13 mb-1 text-lg">책을 삭제하시겠습니까?</div>
         <div className="mt-3 flex w-full items-center justify-around border-t border-gray-300">
           <button
             onClick={() => setIsClicked(false)}

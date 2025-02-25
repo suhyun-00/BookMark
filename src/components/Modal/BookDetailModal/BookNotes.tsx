@@ -25,7 +25,7 @@ const BookNotes = ({ notes, userBookId, setIsLoading, handleNotes }: BookNotesPr
           setSelectedNote(undefined);
           setIsOpen(true);
         }}
-        className="flex items-center gap-1 rounded-lg bg-gray-200 px-4 py-1 text-sm text-gray-700 hover:cursor-pointer hover:inset-shadow-sm"
+        className="flex items-center gap-1 rounded-lg bg-gray-200 px-4 py-2 text-sm text-gray-700 hover:cursor-pointer hover:inset-shadow-sm sm:py-1"
       >
         <Feather className="h-4 w-4" />
         노트 추가
