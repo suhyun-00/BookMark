@@ -20,12 +20,12 @@ const Card = ({ key, book, setIsOpen, selected }: CardProps) => {
         setIsOpen(true);
         selected(book);
       }}
-      className="group flex max-w-full gap-4 rounded-xl bg-gray-100/80 p-5 inset-shadow-sm hover:cursor-pointer hover:bg-gray-200/60 sm:min-w-sm"
+      className="group flex max-w-full gap-3 rounded-xl bg-gray-100/80 p-5 inset-shadow-sm hover:cursor-pointer hover:bg-gray-200/60 sm:min-w-sm sm:gap-4"
     >
       <img
         src={cover}
         alt={title}
-        className="h-40 w-28 rounded-lg text-sm whitespace-normal shadow-sm"
+        className="h-35 rounded-lg text-sm whitespace-normal shadow-sm sm:h-40 sm:w-28"
       />
       <div className="w-full min-w-0 px-1 py-2">
         <div className="flex items-center justify-between">
@@ -35,7 +35,7 @@ const Card = ({ key, book, setIsOpen, selected }: CardProps) => {
             {rating}
           </div>
         </div>
-        <div className="mt-2 mb-1 truncate text-lg font-medium">{title}</div>
+        <div className="mt-2 mb-1 truncate font-medium sm:text-lg">{title}</div>
         <div className="mb-4 truncate text-sm text-gray-600">{author}</div>
         <div className="text-xs text-gray-600">
           <div className="mb-2 flex items-center justify-between">
