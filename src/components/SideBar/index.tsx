@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { Bookmark } from 'lucide-react';
 
 import MENU_ITEMS from '@constants/MENU_ITEMS';
@@ -9,13 +7,20 @@ import SidebarMenu from '@components/Sidebar/SidebarMenu';
 interface SidebarProps {
   currentMenu: string;
   isExpanded: boolean;
+  isClosed: boolean;
   setCurrentMenu: React.Dispatch<React.SetStateAction<string>>;
   setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsClosed: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Sidebar = ({ currentMenu, isExpanded, setCurrentMenu, setIsExpanded }: SidebarProps) => {
-  const [isClosed, setIsClosed] = useState<boolean>(false);
-
+const Sidebar = ({
+  currentMenu,
+  isExpanded,
+  isClosed,
+  setCurrentMenu,
+  setIsExpanded,
+  setIsClosed,
+}: SidebarProps) => {
   const toggleSidebar = () => {
     if (isClosed) {
       setIsExpanded((prev) => !prev);
