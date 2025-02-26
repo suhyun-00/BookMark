@@ -52,9 +52,9 @@ const BookOverview = ({
           <X className="h-6 w-6 sm:h-5 sm:w-5" />
         </button>
         <button
-          onClick={() => {
+          onClick={async () => {
             if (isEditting) {
-              handleUpdate();
+              await handleUpdate();
             }
             setIsEditting((prevStatus) => !prevStatus);
           }}

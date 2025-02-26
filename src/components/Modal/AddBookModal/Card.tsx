@@ -7,13 +7,15 @@ import { addBook } from '@api/bookApi';
 interface CardProps {
   book: Data;
   onClose: () => void;
+  getBooks: () => Promise<void>;
 }
 
-const Card = ({ book, onClose }: CardProps) => {
+const Card = ({ book, onClose, getBooks }: CardProps) => {
   const userId = 'test';
 
   const handleAddBook = async () => {
     await addBook(book, userId);
+    await getBooks();
     onClose();
   };
 
