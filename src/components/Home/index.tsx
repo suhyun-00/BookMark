@@ -5,6 +5,8 @@ import type { Book } from '@customTypes/books';
 
 import { updateBook } from '@api/bookApi';
 
+import useGetBooks from '@hooks/useGetBooks';
+
 import Dashboard from '@components/Dashboard';
 import AddBookModal from '@components/Modal/AddBookModal';
 import BookDetailModal from '@components/Modal/BookDetailModal';
@@ -20,9 +22,16 @@ const Home = () => {
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
   const [isClosed, setIsClosed] = useState<boolean>(false);
 
+  const userId = 'test';
+
+  const { isLoading, allBooks, getBooks } = useGetBooks(userId);
+
   const handleBookUpdate = async () => {
     const updatedBook = await updateBook(selectedBook.id.toString());
-    setSelectedBook(updatedBook!);
+    if (updatedBook) {
+      setSelectedBook(updatedBook);
+      await getBooks();
+    }
   };
 
   useEffect(() => {
@@ -54,17 +63,22 @@ const Home = () => {
         <Dashboard
           currentMenu={currentMenu}
           isExpanded={isExpanded}
+          isLoading={isLoading}
+          allBooks={allBooks}
           setIsAddBookModalOpen={setIsAddBookModalOpen}
           setIsBoookDetailModalOpen={setIsBoookDetailModalOpen}
           setSelectedBook={setSelectedBook}
         />
       </div>
-      {isAddBookModalOpen && <AddBookModal onClose={() => setIsAddBookModalOpen(false)} />}
+      {isAddBookModalOpen && (
+        <AddBookModal onClose={() => setIsAddBookModalOpen(false)} getBooks={getBooks} />
+      )}
       {isBookDetailModalOpen && (
         <BookDetailModal
-          onClose={() => setIsBoookDetailModalOpen(false)}
           book={selectedBook}
+          onClose={() => setIsBoookDetailModalOpen(false)}
           handleBookUpdate={handleBookUpdate}
+          getBooks={getBooks}
         />
       )}
     </div>

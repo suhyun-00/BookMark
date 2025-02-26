@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import { Book } from '@customTypes/books';
 
@@ -8,17 +8,18 @@ const useGetBooks = (userId: string) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [allBooks, setAllBooks] = useState<Book[]>([]);
 
-  useEffect(() => {
-    const getBooks = async () => {
-      setIsLoading(true);
-      const booksData = await fetchBooks(userId);
-      setAllBooks(booksData.filter((book) => book !== null));
-      setIsLoading(false);
-    };
-    getBooks();
+  const getBooks = useCallback(async () => {
+    setIsLoading(true);
+    const booksData = await fetchBooks(userId);
+    setAllBooks(booksData.filter((book) => book !== null));
+    setIsLoading(false);
   }, [userId]);
 
-  return { isLoading, allBooks };
+  useEffect(() => {
+    getBooks();
+  }, [getBooks]);
+
+  return { isLoading, allBooks, getBooks };
 };
 
 export default useGetBooks;

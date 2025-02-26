@@ -7,9 +7,10 @@ import SearchView from '@components/Modal/AddBookModal/SearchView';
 
 interface AddBookModalProps {
   onClose: () => void;
+  getBooks: () => Promise<void>;
 }
 
-const AddBookModal = ({ onClose }: AddBookModalProps) => {
+const AddBookModal = ({ onClose, getBooks }: AddBookModalProps) => {
   const [selectedButton, setSelectedButton] = useState('search');
   const userCamera = useRef<MediaStream>();
 
@@ -51,9 +52,9 @@ const AddBookModal = ({ onClose }: AddBookModalProps) => {
             바코드로 추가
           </button>
         </div>
-        {selectedButton === 'search' && <SearchView onClose={onClose} />}
+        {selectedButton === 'search' && <SearchView onClose={onClose} getBooks={getBooks} />}
         {selectedButton === 'barcode' && (
-          <BarcodeView onClose={onClose} camera={userCamera.current} />
+          <BarcodeView onClose={onClose} camera={userCamera.current} getBooks={getBooks} />
         )}
       </div>
     </div>

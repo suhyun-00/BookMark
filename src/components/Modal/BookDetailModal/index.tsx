@@ -12,12 +12,13 @@ import BookOverview from '@components/Modal/BookDetailModal/BookOverview';
 import DeleteModal from '@components/Modal/BookDetailModal/DeleteModal';
 
 interface BookDetailModalProps {
-  onClose: () => void;
   book: Book;
+  onClose: () => void;
   handleBookUpdate: () => Promise<void>;
+  getBooks: () => Promise<void>;
 }
 
-const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalProps) => {
+const BookDetailModal = ({ book, onClose, handleBookUpdate, getBooks }: BookDetailModalProps) => {
   const [bookSnap, setBookSnap] = useState<DocumentData>();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -25,6 +26,7 @@ const BookDetailModal = ({ onClose, book, handleBookUpdate }: BookDetailModalPro
 
   const handleDelete = async () => {
     await deleteBook(book.id.toString());
+    await getBooks();
     setIsClicked(false);
     onClose();
   };

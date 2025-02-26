@@ -4,14 +4,14 @@ import ScaleLoader from 'react-spinners/ScaleLoader';
 
 import { Book } from '@customTypes/books';
 
-import useGetBooks from '@hooks/useGetBooks';
-
 import Header from '@components/Dashboard/Header';
 import View from '@components/Dashboard/View';
 
 interface DashboardProps {
   currentMenu: string;
   isExpanded: boolean;
+  isLoading: boolean;
+  allBooks: Book[];
   setIsAddBookModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setIsBoookDetailModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setSelectedBook: React.Dispatch<React.SetStateAction<Book>>;
@@ -20,14 +20,13 @@ interface DashboardProps {
 const Dashboard = ({
   currentMenu,
   isExpanded,
+  isLoading,
+  allBooks,
   setIsAddBookModalOpen,
   setIsBoookDetailModalOpen,
   setSelectedBook,
 }: DashboardProps) => {
   const [debouncedKeyword, setDebouncedKeyword] = useState<string>('');
-  const userId = 'test';
-
-  const { isLoading, allBooks } = useGetBooks(userId);
 
   return (
     <div

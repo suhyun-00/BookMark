@@ -12,9 +12,10 @@ import Card from '@components/Modal/AddBookModal/Card';
 
 interface SearchViewProps {
   onClose: () => void;
+  getBooks: () => Promise<void>;
 }
 
-const SearchView = ({ onClose }: SearchViewProps) => {
+const SearchView = ({ onClose, getBooks }: SearchViewProps) => {
   const [datas, setDatas] = useState<Data[]>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -56,7 +57,7 @@ const SearchView = ({ onClose }: SearchViewProps) => {
       {datas && (
         <div className="scrollbar mt-6 max-h-72 overflow-y-scroll scroll-smooth">
           {datas.map((book) => (
-            <Card book={book} onClose={onClose} />
+            <Card book={book} onClose={onClose} getBooks={getBooks} />
           ))}
         </div>
       )}

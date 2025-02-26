@@ -11,9 +11,10 @@ import Card from '@components/Modal/AddBookModal/Card';
 interface BarcodeViewProps {
   onClose: () => void;
   camera: MediaStream | undefined;
+  getBooks: () => Promise<void>;
 }
 
-const BarcodeView = ({ onClose, camera }: BarcodeViewProps) => {
+const BarcodeView = ({ onClose, camera, getBooks }: BarcodeViewProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [data, setData] = useState<Data>();
   const [result, setResult] = useState<string>('');
@@ -52,7 +53,7 @@ const BarcodeView = ({ onClose, camera }: BarcodeViewProps) => {
       {camera !== undefined && result === '' && (
         <video ref={ref} className="w-full rounded-xl border border-gray-100" />
       )}
-      {data && <Card book={data} onClose={onClose} />}
+      {data && <Card book={data} onClose={onClose} getBooks={getBooks} />}
       {isLoading && (
         <div className="flex justify-center py-8">
           <ScaleLoader color="#101828" />
