@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import ScaleLoader from 'react-spinners/ScaleLoader';
 
 import { Book } from '@customTypes/books';
 
-import { fetchBooks } from '@api/bookApi';
+import useGetBooks from '@hooks/useGetBooks';
 
 import Header from '@components/Dashboard/Header';
 import View from '@components/Dashboard/View';
@@ -24,20 +24,10 @@ const Dashboard = ({
   setIsBoookDetailModalOpen,
   setSelectedBook,
 }: DashboardProps) => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [allBooks, setAllBooks] = useState<Book[]>([]);
   const [debouncedKeyword, setDebouncedKeyword] = useState<string>('');
   const userId = 'test';
 
-  useEffect(() => {
-    const getBooks = async () => {
-      setIsLoading(true);
-      const booksData = await fetchBooks(userId);
-      setAllBooks(booksData.filter((book) => book !== null));
-      setIsLoading(false);
-    };
-    getBooks();
-  }, []);
+  const { isLoading, allBooks } = useGetBooks(userId);
 
   return (
     <div
