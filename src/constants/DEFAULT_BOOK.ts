@@ -1,3 +1,5 @@
+import { Timestamp } from 'firebase/firestore';
+
 import type { Book } from '@customTypes/books';
 
 const DEFAULT_BOOK: Book = {
@@ -8,6 +10,7 @@ const DEFAULT_BOOK: Book = {
   progress: 0,
   startAt: null,
   finishedAt: null,
+  updatedAt: Timestamp.fromDate(new Date()),
   rating: 0,
   status: 'planned',
 };
