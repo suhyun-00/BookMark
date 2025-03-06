@@ -20,6 +20,7 @@ const SearchView = ({ onClose, getBooks }: SearchViewProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const sendFormData = async (form: HTMLFormElement) => {
+    setDatas([]);
     const formData = new FormData(form);
     const keyword = formData.get('keyword');
 
