@@ -30,11 +30,11 @@ const useBookOverview = ({ book, handleBookUpdate, setIsLoading }: useBookOvervi
     setIsLoading(true);
     const updateFields: Record<string, Timestamp | BookStatusType | number> = {};
 
-    if (String(book.startAt) !== startAt) {
+    if (startAt && String(book.startAt) !== startAt) {
       updateFields.startAt = Timestamp.fromDate(new Date(startAt + 'T00:00:00'));
     }
 
-    if (String(book.finishedAt) !== finishedAt) {
+    if (finishedAt && String(book.finishedAt) !== finishedAt) {
       updateFields.finishedAt = Timestamp.fromDate(new Date(finishedAt + 'T00:00:00'));
     }
 
