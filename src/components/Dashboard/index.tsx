@@ -29,7 +29,7 @@ const Dashboard = ({
   const [debouncedKeyword, setDebouncedKeyword] = useState<string>('');
 
   return (
-    <div
+    <main
       className={`min-h-screen ${isExpanded ? 'w-[calc(100vw-16rem)]' : 'w-[calc(100vw-5rem)]'}`}
     >
       <Header setDebouncedKeyword={setDebouncedKeyword} setIsOpen={setIsAddBookModalOpen} />
@@ -46,7 +46,7 @@ const Dashboard = ({
           setSelectedBook={setSelectedBook}
         />
       )}
-    </div>
+    </main>
   );
 };
 

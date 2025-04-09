@@ -31,7 +31,7 @@ const BookNotes = ({ notes, userBookId, setIsLoading, handleNotes }: BookNotesPr
         노트 추가
       </button>
 
-      <div className="scrollbar mt-1 flex max-h-56 w-full flex-col gap-2 overflow-y-scroll scroll-smooth text-gray-400">
+      <ul className="scrollbar mt-1 flex max-h-56 w-full flex-col gap-2 overflow-y-scroll scroll-smooth text-gray-400">
         {notes.length !== 0 ? (
           notes.map((note) => (
             <Card
@@ -45,7 +45,7 @@ const BookNotes = ({ notes, userBookId, setIsLoading, handleNotes }: BookNotesPr
         ) : (
           <div className="m-12 text-center">작성된 독서 노트가 없습니다.</div>
         )}
-      </div>
+      </ul>
       {isOpen && (
         <NoteModal
           userBookId={userBookId}

@@ -24,15 +24,15 @@ const Card = ({ book, onClose, getBooks }: CardProps) => {
       <img src={book.cover} alt={book.title} className="h-28 w-20 rounded-md shadow-sm" />
       <div className="flex h-28 w-full justify-between">
         <div className="flex flex-col sm:max-w-76">
-          <div className="mb-1 line-clamp-2 font-medium whitespace-normal sm:line-clamp-none sm:truncate sm:text-lg sm:whitespace-nowrap">
+          <h3 className="mb-1 line-clamp-2 font-medium whitespace-normal sm:line-clamp-none sm:truncate sm:text-lg sm:whitespace-nowrap">
             {book.title}
-          </div>
-          <div className="mb-2 truncate text-xs text-gray-700 sm:text-sm">
+          </h3>
+          <h4 className="mb-2 truncate text-xs text-gray-700 sm:text-sm">
             {book.author.replace(/ 지음.*/, ' 지음')}
-          </div>
-          <div className="truncate text-xs font-light text-gray-500 sm:text-sm">
+          </h4>
+          <h5 className="truncate text-xs font-light text-gray-500 sm:text-sm">
             {book.publisher} ⋅ {book.pubDate.slice(0, 4)}
-          </div>
+          </h5>
         </div>
         <button
           onClick={handleAddBook}

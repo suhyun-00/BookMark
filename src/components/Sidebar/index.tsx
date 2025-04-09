@@ -32,7 +32,7 @@ const Sidebar = ({
   };
 
   return (
-    <div
+    <nav
       className={`sticky top-0 h-screen border-r border-gray-200 bg-gray-100/60 backdrop-blur-xl transition-all duration-300 ${isExpanded ? 'w-64 p-6' : 'flex w-16 flex-col items-center py-6 sm:w-20 sm:p-6'}`}
     >
       <div className="mb-10 flex items-center gap-3">
@@ -48,7 +48,7 @@ const Sidebar = ({
           BookMark.
         </h1>
       </div>
-      <div className="mb-8 space-y-1">
+      <ul className="mb-8 space-y-1">
         {MENU_ITEMS.map((item) => (
           <SidebarMenu
             icon={item.icon}
@@ -59,8 +59,8 @@ const Sidebar = ({
             setCurrentMenu={() => setCurrentMenu(item.status)}
           />
         ))}
-      </div>
-    </div>
+      </ul>
+    </nav>
   );
 };
 

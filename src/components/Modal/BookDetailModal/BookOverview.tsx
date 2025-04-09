@@ -119,8 +119,8 @@ const BookOverview = ({
           </button>
         </div>
         <div className="w-[75vw] sm:w-[39.5rem]">
-          <div className="mb-2 truncate text-xl font-medium sm:text-2xl">{book.title}</div>
-          <div className="mb-5 truncate text-sm text-gray-500 sm:text-base">{book.author}</div>
+          <h2 className="mb-2 truncate text-xl font-medium sm:text-2xl">{book.title}</h2>
+          <h3 className="mb-5 truncate text-sm text-gray-500 sm:text-base">{book.author}</h3>
         </div>
         <div className="mb-5 grid gap-4 text-gray-500 sm:grid-cols-3">
           <DateField
