@@ -95,7 +95,7 @@ const BookOverview = ({
           <div className="flex gap-1">
             <button
               onClick={() => setIsClicked(true)}
-              className="rounded-lg bg-gray-200 px-3 py-1 text-sm text-red-600 inset-shadow-sm hover:cursor-pointer hover:bg-gray-300 sm:block"
+              className="rounded-lg bg-gray-200 px-3 py-1 text-sm text-red-700 inset-shadow-sm hover:cursor-pointer hover:bg-gray-300 sm:block"
             >
               삭제
             </button>
@@ -120,9 +120,9 @@ const BookOverview = ({
         </div>
         <div className="w-[75vw] sm:w-[39.5rem]">
           <h2 className="mb-2 truncate text-xl font-medium sm:text-2xl">{book.title}</h2>
-          <h3 className="mb-5 truncate text-sm text-gray-500 sm:text-base">{book.author}</h3>
+          <h3 className="mb-5 truncate text-sm text-gray-600 sm:text-base">{book.author}</h3>
         </div>
-        <div className="mb-5 grid gap-4 text-gray-500 sm:grid-cols-3">
+        <div className="mb-5 grid gap-4 text-gray-600 sm:grid-cols-3">
           <DateField
             isEditting={isEditting}
             text="시작일"
@@ -145,7 +145,7 @@ const BookOverview = ({
             </div>
           </div>
         </div>
-        <div className="w-[75vw] text-sm text-gray-500 sm:w-full">
+        <div className="w-[75vw] text-sm text-gray-600 sm:w-full">
           <div
             className={`mb-3 flex items-center justify-between ${isEditting ? 'text-blue-500' : ''}`}
           >

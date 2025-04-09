@@ -87,13 +87,13 @@ const NoteModal = ({
           placeholder="노트를 입력하세요."
           value={content}
           onChange={(e) => setContet(e.target.value)}
-          className="scrollbar h-40 w-full resize-none scroll-smooth rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-500 inset-shadow-sm focus:outline-none"
+          className="scrollbar h-40 w-full resize-none scroll-smooth rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-600 inset-shadow-sm focus:outline-none"
         ></textarea>
         <div className="flex gap-2">
           {selectedNote && (
             <button
               onClick={handleDelete}
-              className="rounded-lg bg-gray-200 px-8 py-2 text-red-500 hover:cursor-pointer hover:text-red-700 hover:inset-shadow-sm sm:px-4 sm:py-1"
+              className="rounded-lg bg-gray-200 px-8 py-2 text-red-700 hover:cursor-pointer hover:text-red-700 hover:inset-shadow-sm sm:px-4 sm:py-1"
             >
               삭제
             </button>

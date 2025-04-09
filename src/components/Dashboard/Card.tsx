@@ -29,7 +29,7 @@ const Card = ({ key, book, setIsOpen, selected }: CardProps) => {
       />
       <div className="w-full min-w-0 px-1 py-2">
         <div className="flex items-center justify-between">
-          <h5 className="text-xs text-gray-500">{STATUS[status]}</h5>
+          <h5 className="text-xs text-gray-600">{STATUS[status]}</h5>
           <div className="flex items-center gap-1 text-sm text-amber-500">
             <Star className="h-4 w-4 fill-current" />
             {rating}

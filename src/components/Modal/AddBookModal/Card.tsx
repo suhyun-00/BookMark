@@ -30,7 +30,7 @@ const Card = ({ book, onClose, getBooks }: CardProps) => {
           <h4 className="mb-2 truncate text-xs text-gray-700 sm:text-sm">
             {book.author.replace(/ 지음.*/, ' 지음')}
           </h4>
-          <h5 className="truncate text-xs font-light text-gray-500 sm:text-sm">
+          <h5 className="truncate text-xs font-light text-gray-600 sm:text-sm">
             {book.publisher} ⋅ {book.pubDate.slice(0, 4)}
           </h5>
         </div>

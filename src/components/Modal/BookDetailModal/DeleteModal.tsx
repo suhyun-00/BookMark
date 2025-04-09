@@ -7,7 +7,7 @@ const DeleteModal = ({ setIsClicked, handleDelete }: ConfirmDeleteProps) => {
   return (
     <div
       onClick={() => setIsClicked(false)}
-      className="fixed inset-0 flex items-center justify-center bg-gray-900/20 text-gray-500"
+      className="fixed inset-0 flex items-center justify-center bg-gray-900/20 text-gray-600"
     >
       <div className="flex h-40 w-80 flex-col items-center gap-4 rounded-2xl bg-gray-100">
         <div className="mt-13 mb-1 text-lg">책을 삭제하시겠습니까?</div>
@@ -20,7 +20,7 @@ const DeleteModal = ({ setIsClicked, handleDelete }: ConfirmDeleteProps) => {
           </button>
           <button
             onClick={handleDelete}
-            className="h-full w-full rounded-br-2xl py-3 text-red-500 hover:cursor-pointer hover:bg-gray-300"
+            className="h-full w-full rounded-br-2xl py-3 text-red-700 hover:cursor-pointer hover:bg-gray-300"
           >
             삭제
           </button>

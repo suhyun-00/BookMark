@@ -29,7 +29,7 @@ const Header = ({ setDebouncedKeyword, setIsOpen }: HeaderProps) => {
             placeholder="책 검색하기"
             autoComplete="off"
             onChange={(e) => setKeyword(e.target.value)}
-            className="w-full px-3 py-2.5 text-sm text-gray-500 focus:outline-none"
+            className="w-full px-3 py-2.5 text-sm text-gray-600 focus:outline-none"
           />
         </div>
         <button

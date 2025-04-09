@@ -45,7 +45,7 @@ const SearchView = ({ onClose, getBooks }: SearchViewProps) => {
             name="keyword"
             placeholder="책 제목, 저자, ISBN으로 검색하기"
             autoComplete="off"
-            className="w-full px-3 py-2.5 text-sm text-gray-500 focus:outline-none"
+            className="w-full px-3 py-2.5 text-sm text-gray-600 focus:outline-none"
           />
         </div>
         <button
