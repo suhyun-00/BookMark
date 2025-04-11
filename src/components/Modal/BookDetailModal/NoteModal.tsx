@@ -71,7 +71,7 @@ const NoteModal = ({
         tabIndex={0}
         onClick={(e) => e.stopPropagation()}
         onSubmit={(e) => handleOnSubmit(e, handleNote)}
-        onKeyDown={(e) => handleOnKeyDown(e, handleNote)}
+        onKeyDown={(e) => handleOnKeyDown(e, handleNote, handleClose)}
         className="flex h-[40vh] w-[90vw] flex-col items-center justify-center gap-4 rounded-2xl bg-gray-100 px-8 py-4 sm:h-72 sm:w-96"
       >
         <div className="relative w-full">

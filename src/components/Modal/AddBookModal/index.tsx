@@ -28,9 +28,12 @@ const AddBookModal = ({ onClose, getBooks }: AddBookModalProps) => {
       className="fixed inset-0 flex items-center justify-center bg-gray-900/20"
     >
       <div
-aria-label="등록할 책 검색"
+        aria-label="등록할 책 검색"
         tabIndex={0}
         onClick={(e) => e.stopPropagation()}
+        onKeyDown={(e) => {
+          if (e.key === 'Escape') onClose();
+        }}
         className="w-[90vw] rounded-xl bg-gray-100 p-5 inset-shadow-sm sm:w-[40rem] sm:p-10"
       >
         <div className="mb-6 flex items-center justify-center gap-3">

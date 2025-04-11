@@ -46,9 +46,12 @@ const BookDetailModal = ({ book, onClose, handleBookUpdate, getBooks }: BookDeta
       className="fixed inset-0 flex items-center justify-center bg-gray-900/20"
     >
       <div
-aria-label={`책 ${book.title} 상세 정보`}
+        aria-label={`책 ${book.title} 상세 정보`}
         tabIndex={0}
         onClick={(e) => e.stopPropagation()}
+        onKeyDown={(e) => {
+          if (e.key === 'Escape') onClose();
+        }}
         className="scrollbar flex h-[80vh] w-[90vw] flex-col items-center gap-6 overflow-y-scroll rounded-xl bg-gray-100 pt-5 pb-10 inset-shadow-sm sm:h-auto sm:max-h-[42rem] sm:w-4xl sm:min-w-4xl sm:items-start sm:p-10"
       >
         <BookOverview
