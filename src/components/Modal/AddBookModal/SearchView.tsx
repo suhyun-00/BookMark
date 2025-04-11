@@ -39,7 +39,9 @@ const SearchView = ({ onClose, getBooks }: SearchViewProps) => {
         className="flex items-start justify-center gap-3"
       >
         <div className="flex w-full items-center justify-start rounded-lg bg-white inset-shadow-sm">
-          <Search className="ml-5 h-3 w-3" />
+          <span aria-hidden="true">
+            <Search className="ml-5 h-3 w-3" />
+          </span>
           <input
             type="search"
             name="keyword"

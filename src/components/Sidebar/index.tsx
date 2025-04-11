@@ -37,6 +37,7 @@ const Sidebar = ({
     >
       <div className="mb-10 flex items-center gap-3">
         <button
+          aria-label="사이드바 토글"
           onClick={toggleSidebar}
           className="flex h-8 w-8 items-center justify-center rounded-xl bg-gray-900 hover:cursor-pointer"
         >
@@ -48,7 +49,7 @@ const Sidebar = ({
           BookMark.
         </h1>
       </div>
-      <ul className="mb-8 space-y-1">
+      <div className="mb-8 space-y-1">
         {MENU_ITEMS.map((item) => (
           <SidebarMenu
             icon={item.icon}
@@ -59,7 +60,7 @@ const Sidebar = ({
             setCurrentMenu={() => setCurrentMenu(item.status)}
           />
         ))}
-      </ul>
+      </div>
     </nav>
   );
 };

@@ -14,30 +14,38 @@ const Card = ({ key, book, setIsOpen, selected }: CardProps) => {
   const { title, author, cover, progress, rating, status } = book;
 
   return (
-    <li
+    <button
       key={key}
+      aria-haspopup="true"
+      aria-expanded="false"
       onClick={() => {
         setIsOpen(true);
         selected(book);
       }}
-      className="group flex max-w-full gap-3 rounded-xl bg-gray-100/80 p-5 inset-shadow-sm hover:cursor-pointer hover:bg-gray-200/60 sm:min-w-sm sm:gap-4"
+      className="flex max-w-full gap-3 rounded-xl bg-gray-100/80 p-5 text-left inset-shadow-sm hover:cursor-pointer hover:bg-gray-200/60 sm:min-w-sm sm:gap-4"
     >
       <img
         src={cover}
         alt={title}
+        aria-hidden="true"
         className="h-35 rounded-lg text-sm whitespace-normal shadow-sm sm:h-40 sm:w-28"
       />
-      <div className="w-full min-w-0 px-1 py-2">
-        <div className="flex items-center justify-between">
+      <div className="flex w-full min-w-0 flex-col px-1 py-2">
+        <div className="order-2">
+          <h3 className="mt-2 mb-1 truncate font-medium sm:text-lg">{title}</h3>
+          <h4 className="mb-4 truncate text-sm text-gray-600">{author}</h4>
+        </div>
+        <div className="order-1 flex items-center justify-between">
           <h5 className="text-xs text-gray-600">{STATUS[status]}</h5>
-          <div className="flex items-center gap-1 text-sm text-amber-500">
+          <div
+            aria-label={`별점 ${rating}점`}
+            className="flex items-center gap-1 text-sm text-amber-500"
+          >
             <Star className="h-4 w-4 fill-current" />
             {rating}
           </div>
         </div>
-        <h3 className="mt-2 mb-1 truncate font-medium sm:text-lg">{title}</h3>
-        <h4 className="mb-4 truncate text-sm text-gray-600">{author}</h4>
-        <div className="text-xs text-gray-600">
+        <div className="order-3 text-xs text-gray-600">
           <div className="mb-2 flex items-center justify-between">
             <h5>진행률</h5>
             <h5>{progress}%</h5>
@@ -47,7 +55,7 @@ const Card = ({ key, book, setIsOpen, selected }: CardProps) => {
           </div>
         </div>
       </div>
-    </li>
+    </button>
   );
 };
 

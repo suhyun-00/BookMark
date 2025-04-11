@@ -20,7 +20,7 @@ const Header = ({ setDebouncedKeyword, setIsOpen }: HeaderProps) => {
       <h2 className="hidden p-2 font-medium sm:block sm:p-5 sm:text-2xl">내 서재</h2>
       <div className="flex items-center gap-3">
         <div className="flex w-[50vw] items-center justify-center rounded-lg bg-white inset-shadow-sm sm:w-64">
-          <span className="hidden sm:visible">
+          <span aria-hidden="true" className="hidden sm:inline">
             <Search className="ml-5 h-3 w-3" />
           </span>
           <input
@@ -28,6 +28,7 @@ const Header = ({ setDebouncedKeyword, setIsOpen }: HeaderProps) => {
             value={keyword}
             placeholder="책 검색하기"
             autoComplete="off"
+            aria-label="등록된 책 검색하기"
             onChange={(e) => setKeyword(e.target.value)}
             className="w-full px-3 py-2.5 text-sm text-gray-600 focus:outline-none"
           />

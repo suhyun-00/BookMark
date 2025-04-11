@@ -67,16 +67,22 @@ const NoteModal = ({
       className="fixed inset-0 flex items-center justify-center bg-gray-900/20"
     >
       <form
+        aria-labelledby="title"
+        tabIndex={0}
         onClick={(e) => e.stopPropagation()}
         onSubmit={(e) => handleOnSubmit(e, handleNote)}
         onKeyDown={(e) => handleOnKeyDown(e, handleNote)}
         className="flex h-[40vh] w-[90vw] flex-col items-center justify-center gap-4 rounded-2xl bg-gray-100 px-8 py-4 sm:h-72 sm:w-96"
       >
         <div className="relative w-full">
-          <div className="text-lg font-medium text-gray-700">
+          <div id="title" className="text-lg font-medium text-gray-700">
             {selectedNote ? '독서 노트 수정' : '새 독서 노트'}
           </div>
-          <button onClick={handleClose} className="absolute top-0 -right-4 hover:cursor-pointer">
+          <button
+            aria-label="닫기"
+            onClick={handleClose}
+            className="absolute top-0 -right-4 hover:cursor-pointer"
+          >
             <X className="h-6 w-6 sm:h-5 sm:w-5" />
           </button>
         </div>
@@ -85,6 +91,7 @@ const NoteModal = ({
           autoFocus
           name="content"
           placeholder="노트를 입력하세요."
+          aria-label="독서 노트 내용 입력란"
           value={content}
           onChange={(e) => setContet(e.target.value)}
           className="scrollbar h-40 w-full resize-none scroll-smooth rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm text-gray-600 inset-shadow-sm focus:outline-none"

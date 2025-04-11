@@ -12,13 +12,14 @@ interface DateFieldProps {
 const DateField = ({ isEditting, text, timestamp, date, setDate }: DateFieldProps) => {
   return (
     <div className={`flex items-center gap-3 ${isEditting ? 'text-blue-500' : ''}`}>
-      <Calendar className="h-4 w-4" />
+      <Calendar aria-hidden="true" className="h-4 w-4" />
       <div className="flex w-[68vw] items-center justify-between gap-3 sm:w-fit sm:flex-col sm:items-start sm:gap-0">
         <div className="text-sm sm:text-xs">{text}</div>
         {isEditting ? (
           <input
             type="date"
             value={date}
+            aria-label={`${text} 선택`}
             onChange={(e) => setDate(e.target.value)}
             className="w-[25vw] border-b border-blue-500 px-2 text-right text-sm focus:outline-none sm:w-fit sm:border-none"
           />
