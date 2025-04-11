@@ -32,11 +32,12 @@ const Sidebar = ({
   };
 
   return (
-    <div
+    <nav
       className={`sticky top-0 h-screen border-r border-gray-200 bg-gray-100/60 backdrop-blur-xl transition-all duration-300 ${isExpanded ? 'w-64 p-6' : 'flex w-16 flex-col items-center py-6 sm:w-20 sm:p-6'}`}
     >
       <div className="mb-10 flex items-center gap-3">
         <button
+          aria-label="사이드바 토글"
           onClick={toggleSidebar}
           className="flex h-8 w-8 items-center justify-center rounded-xl bg-gray-900 hover:cursor-pointer"
         >
@@ -60,7 +61,7 @@ const Sidebar = ({
           />
         ))}
       </div>
-    </div>
+    </nav>
   );
 };
 

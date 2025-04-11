@@ -71,7 +71,13 @@ const Home = () => {
         />
       </div>
       {isAddBookModalOpen && (
-        <AddBookModal onClose={() => setIsAddBookModalOpen(false)} getBooks={getBooks} />
+        <AddBookModal
+          onClose={() => {
+            setIsAddBookModalOpen(false);
+            document.querySelector<HTMLElement>('#addBook')?.focus();
+          }}
+          getBooks={getBooks}
+        />
       )}
       {isBookDetailModalOpen && (
         <BookDetailModal

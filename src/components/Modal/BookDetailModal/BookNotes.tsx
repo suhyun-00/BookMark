@@ -21,6 +21,7 @@ const BookNotes = ({ notes, userBookId, setIsLoading, handleNotes }: BookNotesPr
   return (
     <div className="flex flex-col items-end justify-center gap-2">
       <button
+        id="addNote"
         onClick={() => {
           setSelectedNote(undefined);
           setIsOpen(true);
@@ -31,7 +32,7 @@ const BookNotes = ({ notes, userBookId, setIsLoading, handleNotes }: BookNotesPr
         노트 추가
       </button>
 
-      <div className="scrollbar mt-1 flex max-h-56 w-full flex-col gap-2 overflow-y-scroll scroll-smooth text-gray-400">
+      <div className="scrollbar mt-1 flex max-h-56 w-full flex-col gap-2 overflow-y-scroll scroll-smooth text-gray-600">
         {notes.length !== 0 ? (
           notes.map((note) => (
             <Card
