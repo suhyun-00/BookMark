@@ -46,7 +46,7 @@ const BarcodeView = ({ onClose, camera, getBooks }: BarcodeViewProps) => {
   return (
     <div>
       {camera === undefined && (
-        <div className="flex items-center justify-center py-8 text-gray-500">
+        <div className="flex items-center justify-center py-8 text-gray-600">
           카메라를 찾을 수 없습니다.
         </div>
       )}

@@ -2,6 +2,8 @@ import { useRef, useState } from 'react';
 
 import { Scan, Search } from 'lucide-react';
 
+import useFocusTrap from '@hooks/useFocusTrap';
+
 import BarcodeView from '@components/Modal/AddBookModal/BarcodeView';
 import SearchView from '@components/Modal/AddBookModal/SearchView';
 
@@ -13,6 +15,7 @@ interface AddBookModalProps {
 const AddBookModal = ({ onClose, getBooks }: AddBookModalProps) => {
   const [selectedButton, setSelectedButton] = useState('search');
   const userCamera = useRef<MediaStream>();
+  const modalRef = useRef<HTMLDivElement>(null);
 
   const checkCamera = async () => {
     const camera = await navigator?.mediaDevices
@@ -22,13 +25,22 @@ const AddBookModal = ({ onClose, getBooks }: AddBookModalProps) => {
     if (camera) userCamera.current = camera;
   };
 
+  useFocusTrap(modalRef);
+
   return (
     <div
+      ref={modalRef}
+      tabIndex={-1}
       onClick={onClose}
       className="fixed inset-0 flex items-center justify-center bg-gray-900/20"
     >
       <div
+        aria-label="등록할 책 검색"
+        tabIndex={0}
         onClick={(e) => e.stopPropagation()}
+        onKeyDown={(e) => {
+          if (e.key === 'Escape') onClose();
+        }}
         className="w-[90vw] rounded-xl bg-gray-100 p-5 inset-shadow-sm sm:w-[40rem] sm:p-10"
       >
         <div className="mb-6 flex items-center justify-center gap-3">

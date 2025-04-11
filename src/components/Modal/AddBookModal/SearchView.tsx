@@ -39,13 +39,15 @@ const SearchView = ({ onClose, getBooks }: SearchViewProps) => {
         className="flex items-start justify-center gap-3"
       >
         <div className="flex w-full items-center justify-start rounded-lg bg-white inset-shadow-sm">
-          <Search className="ml-5 h-3 w-3" />
+          <span aria-hidden="true">
+            <Search className="ml-5 h-3 w-3" />
+          </span>
           <input
             type="search"
             name="keyword"
             placeholder="책 제목, 저자, ISBN으로 검색하기"
             autoComplete="off"
-            className="w-full px-3 py-2.5 text-sm text-gray-500 focus:outline-none"
+            className="w-full px-3 py-2.5 text-sm text-gray-600 focus:outline-none"
           />
         </div>
         <button
