@@ -8,6 +8,8 @@ import { addNote, deleteNote, updateNote } from '@api/noteApi';
 
 import { handleOnKeyDown, handleOnSubmit } from '@utils/handleFormData';
 
+import useFocusTrap from '@hooks/useFocusTrap';
+
 interface AddNoteModalProps {
   userBookId: string;
   selectedNote?: Note;
@@ -25,13 +27,17 @@ const NoteModal = ({
   setSelectedNote,
   handleNotes,
 }: AddNoteModalProps) => {
+  const modalRef = useRef<HTMLDivElement>(null);
+
   const selectedNoteId = useRef<string>(selectedNote ? selectedNote.id : '');
   const selectedNoteContent = useRef<string>(selectedNote ? selectedNote.content : '');
+
   const [content, setContet] = useState<string>(selectedNoteContent.current);
 
   const handleClose = () => {
     setSelectedNote(undefined);
     setIsOpen(false);
+    document.querySelector<HTMLElement>('#addNote')?.focus();
   };
 
   const handleNote = async (form: HTMLFormElement) => {
@@ -61,8 +67,12 @@ const NoteModal = ({
     setIsOpen(false);
   };
 
+  useFocusTrap(modalRef);
+
   return (
     <div
+      ref={modalRef}
+      tabIndex={-1}
       onClick={handleClose}
       className="fixed inset-0 flex items-center justify-center bg-gray-900/20"
     >

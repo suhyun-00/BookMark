@@ -34,6 +34,7 @@ const Header = ({ setDebouncedKeyword, setIsOpen }: HeaderProps) => {
           />
         </div>
         <button
+          id="addBook"
           onClick={() => {
             setIsOpen((isOpen) => !isOpen);
           }}

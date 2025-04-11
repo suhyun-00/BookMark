@@ -21,6 +21,7 @@ const BookNotes = ({ notes, userBookId, setIsLoading, handleNotes }: BookNotesPr
   return (
     <div className="flex flex-col items-end justify-center gap-2">
       <button
+        id="addNote"
         onClick={() => {
           setSelectedNote(undefined);
           setIsOpen(true);

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { DocumentData } from 'firebase/firestore';
 import ScaleLoader from 'react-spinners/ScaleLoader';
@@ -6,6 +6,8 @@ import ScaleLoader from 'react-spinners/ScaleLoader';
 import { Book } from '@customTypes/books';
 
 import { fetchBook, deleteBook } from '@api/bookApi';
+
+import useFocusTrap from '@hooks/useFocusTrap';
 
 import BookContent from '@components/Modal/BookDetailModal/BookContent';
 import BookOverview from '@components/Modal/BookDetailModal/BookOverview';
@@ -24,12 +26,16 @@ const BookDetailModal = ({ book, onClose, handleBookUpdate, getBooks }: BookDeta
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isClicked, setIsClicked] = useState<boolean>(false);
 
+  const modalRef = useRef<HTMLDivElement>(null);
+
   const handleDelete = async () => {
     await deleteBook(book.id.toString());
     await getBooks();
     setIsClicked(false);
     onClose();
   };
+
+  useFocusTrap(modalRef);
 
   useEffect(() => {
     const getBook = async () => {
@@ -42,11 +48,15 @@ const BookDetailModal = ({ book, onClose, handleBookUpdate, getBooks }: BookDeta
 
   return (
     <div
+      ref={modalRef}
+      tabIndex={-1}
       onClick={onClose}
       className="fixed inset-0 flex items-center justify-center bg-gray-900/20"
     >
       <div
         aria-label={`책 ${book.title} 상세 정보`}
+        role="dialog"
+        aria-modal="true"
         tabIndex={0}
         onClick={(e) => e.stopPropagation()}
         onKeyDown={(e) => {
@@ -63,7 +73,14 @@ const BookDetailModal = ({ book, onClose, handleBookUpdate, getBooks }: BookDeta
           setIsClicked={setIsClicked}
         />
         <BookContent book={book} bookSnap={bookSnap!} />
-        {isClicked && <DeleteModal setIsClicked={setIsClicked} handleDelete={handleDelete} />}
+        {isClicked && (
+          <DeleteModal
+            onClose={() => {
+              setIsClicked((prev) => !prev);
+            }}
+            handleDelete={handleDelete}
+          />
+        )}
         <button
           onClick={() => setIsClicked(true)}
           className="block w-[75vw] py-2 text-red-700 sm:hidden"

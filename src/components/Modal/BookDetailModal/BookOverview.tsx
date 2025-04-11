@@ -64,7 +64,7 @@ const BookOverview = ({
           {isEditting ? '완료' : '수정'}
         </button>
       </div>
-      <img src={book.cover} alt={book.title} className="h-56 w-40" />
+      <img aria-hidden="true" src={book.cover} alt={book.title} className="h-56 w-40" />
       <div className="relative mt-4 flex w-full flex-col sm:mt-0">
         <div className="mb-3 flex items-center gap-4">
           <div className="absolute -top-4 -right-4 hidden items-center gap-1 sm:flex">
