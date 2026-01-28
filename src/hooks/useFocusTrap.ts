@@ -12,11 +12,17 @@ const useFocusTrap = (modalRef: React.RefObject<HTMLDivElement>) => {
     const lastElement = focusableElements[focusableElements.length - 1];
 
     const handleTabKey = (event: KeyboardEvent) => {
-      if (event.key === 'Tab') {
-        if (event.shiftKey && document.activeElement === firstElement) {
+      if (event.key !== 'Tab') return;
+
+      const isInsideModal = modalElement.contains(document.activeElement);
+
+      if (event.shiftKey) {
+        if (document.activeElement === firstElement || !isInsideModal) {
           event.preventDefault();
           lastElement.focus();
-        } else if (!event.shiftKey && document.activeElement === lastElement) {
+        }
+      } else {
+        if (document.activeElement === lastElement || !isInsideModal) {
           event.preventDefault();
           firstElement.focus();
         }
@@ -24,10 +30,10 @@ const useFocusTrap = (modalRef: React.RefObject<HTMLDivElement>) => {
     };
 
     firstElement.focus();
-    modalElement.addEventListener('keydown', handleTabKey);
+    document.addEventListener('keydown', handleTabKey);
 
     return () => {
-      modalElement?.removeEventListener('keydown', handleTabKey);
+      document.removeEventListener('keydown', handleTabKey);
     };
   });
 };
